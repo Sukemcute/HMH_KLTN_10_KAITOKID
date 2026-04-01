@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l d:/HMH_KLTN/PHASE_10/stage_2/**/**/*.sv d:/HMH_KLTN/PHASE_10/stage_2/packages/*.sv d:/HMH_KLTN/PHASE_10/stage_2/sim/*.do d:/HMH_KLTN/PHASE_10/*.md d:/HMH_KLTN/PHASE_10/stage_*/*.md)",
+      "Bash(wc -l d:/HMH_KLTN/PHASE_10/stage_3/rtl/*.sv d:/HMH_KLTN/PHASE_10/stage_3/tb/*.sv d:/HMH_KLTN/PHASE_10/stage_3/sim/*.do d:/HMH_KLTN/PHASE_10/stage_3/*.md)",
+      "Bash(xargs wc:*)",
+      "Bash(find d:/HMH_KLTN/PHASE_10 -name *.sv)",
+      "Bash(find . -type f \\\\\\(-name *.pdf -o -name *.tex -o -name *.md -o -name *.txt -o -name *.py -o -name *.v -o -name *.sv \\\\\\))",
+      "WebSearch",
+      "WebFetch(domain:eems.mit.edu)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:ar5iv.labs.arxiv.org)",
+      "WebFetch(domain:singularitykchen.github.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:florian.world)",
+      "WebFetch(domain:eyeriss.mit.edu)",
+      "WebFetch(domain:people.csail.mit.edu)"
+    ],
+    "additionalDirectories": [
+      "d:\\HMH_KLTN",
+      "d:\\HMH_KLTN\\P3=d:\\HMH_KLTN\\SW_KLTN"
+    ]
+  }
+}

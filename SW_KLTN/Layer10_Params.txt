@@ -1,0 +1,29 @@
+=== Layer 10 (QPSA) Detail Extraction ===
+
+PSA c: 128
+PSA cv1: QuantizedConv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), scale=0.14505413174629211, zero_point=65)
+PSA cv2: QuantizedConv2d(256, 256, kernel_size=(1, 1), stride=(1, 1), scale=0.1369340568780899, zero_point=62)
+
+--- Attention ---
+num_heads: 2
+head_dim: 64
+key_dim: 32
+scale factor: 0.1767766952966369
+qkv conv: QuantizedConv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), scale=0.09931717813014984, zero_point=65)
+proj conv: QuantizedConv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), scale=0.08778297156095505, zero_point=62)
+pe conv: QuantizedConv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), scale=0.11746431887149811, zero_point=60, padding=(1, 1), groups=128)
+softmax: QuantizedSoftmax(dim=-1)
+mul_fn (matmul/add): QFunctional(
+  scale=0.5187007784843445, zero_point=75
+  (activation_post_process): Identity()
+)
+
+--- FFN ---
+ffn[0]: QuantizedConv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), scale=0.13425812125205994, zero_point=78)
+ffn[1]: QuantizedConv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), scale=0.07188115268945694, zero_point=58)
+
+--- PSA Globals ---
+fl (cat): QFunctional(
+  scale=0.10845226049423218, zero_point=44
+  (activation_post_process): Identity()
+)

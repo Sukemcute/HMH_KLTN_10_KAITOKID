@@ -1,0 +1,41 @@
+# Python / tooling — never commit (đây là nguyên nhân push ~8 GiB)
+.venv/
+venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Archives — không push lên GitHub (Git báo HTTP 500 / vượt giới hạn khi ~8GiB+)
+*.rar
+*.zip
+*.7z
+
+# Large artifacts (model: dùng Git LFS hoặc link ngoài)
+# *.pt
+# *.pth
+# *.onnx
+
+# Phase 4 — golden vectors (GB-scale .hex); vượt giới hạn GitHub 100MB; tạo lại local
+SW_KLTN/PHASE_4/02_golden_data/
+
+# Vivado / XSim outputs
+SW_KLTN/PHASE_4/03_rtl_cosim/vivado_work/
+SW_KLTN/PHASE_4/03_rtl_cosim/xsim.dir/
+SW_KLTN/PHASE_4/03_rtl_cosim/xsim*.log
+SW_KLTN/PHASE_4/03_rtl_cosim/xsim*.jou
+SW_KLTN/PHASE_4/03_rtl_cosim/xelab.*
+SW_KLTN/PHASE_4/03_rtl_cosim/xvlog.*
+*.wdb

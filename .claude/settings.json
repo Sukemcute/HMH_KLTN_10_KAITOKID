@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l d:/HMH_KLTN/HW_ACCEL/packages/*.sv d:/HMH_KLTN/HW_ACCEL/rtl/*.sv d:/HMH_KLTN/HW_ACCEL/tb/*.sv d:/HMH_KLTN/HW_ACCEL/sim/*.do)",
+      "Bash(\"d:/HMH_KLTN/TONG_HOP_NGHIEN_CUU.md\":*)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(f''''Total cells: {len\\(data[\"\"cells\"\"]\\)}''''\\)\")",
+      "Bash(find /d/HMH_KLTN -name qat_sttd.pt -o -name *quat* -o -name *quant*)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\SW_KLTN\\\\PHASE_3\" -name \"*.sv\" -type f -exec wc -l {} +)",
+      "Bash(sort -k2)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\HW_ACCEL\" -name \"*.sv\" -type f -exec wc -l {} +)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\HW_ACCEL\" -name \"*.do\" -type f -exec wc -l {} +)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\FUNCTION\\\\SW_KLTN\" -maxdepth 1 -name \"*.py\" -type f -exec wc -l {} +)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\FUNCTION\\\\SW_KLTN\\\\python_golden_originial\" -maxdepth 1 -name \"*.py\" -type f -exec wc -l {} +)",
+      "Bash(find \"d:\\\\HMH_KLTN\\\\FUNCTION\\\\SW_KLTN\\\\documentation\\\\3_Layer_Reports\" -name \"verify_layer_*.py\" -type f -exec wc -l {} +)",
+      "Bash(wc -l d:/HMH_KLTN/PHASE_10/**/**/*.sv d:/HMH_KLTN/PHASE_10/**/*.sv d:/HMH_KLTN/PHASE_10/sim/*.do d:/HMH_KLTN/PHASE_10/*.md)"
+    ],
+    "additionalDirectories": [
+      "d:\\HMH_KLTN\\HW_ACCEL"
+    ]
+  }
+}
