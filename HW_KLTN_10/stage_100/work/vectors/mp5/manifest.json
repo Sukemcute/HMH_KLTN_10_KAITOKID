@@ -1,0 +1,12 @@
+{
+  "primitive": "mp5",
+  "pe_mode": "PE_MP5",
+  "cin": 4,
+  "cout": 4,
+  "hin": 5,
+  "win": 20,
+  "hout": 5,
+  "wout": 20,
+  "activation": "none",
+  "seed": 42
+}

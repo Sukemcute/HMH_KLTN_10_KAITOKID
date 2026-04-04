@@ -1,0 +1,1 @@
+"work.tb_swizzle_engine" -s "sim_swz" -timescale "1ns/1ps" 

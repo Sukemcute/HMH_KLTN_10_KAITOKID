@@ -118,7 +118,8 @@ package accel_pkg;
   typedef enum logic [1:0] {
     SWZ_NORMAL     = 2'd0,  // Identity pass-through
     SWZ_UPSAMPLE2X = 2'd1,  // Nearest-neighbor 2× (P6)
-    SWZ_CONCAT     = 2'd2   // Channel concatenation (P5)
+    SWZ_CONCAT     = 2'd2,  // Channel concatenation (P5)
+    SWZ_EWISE_ADD  = 2'd3   // Element-wise add with domain alignment (P7)
   } swizzle_mode_e;
 
   // ═══════════════════════════════════════════════════════════════════

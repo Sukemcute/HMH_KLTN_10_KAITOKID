@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:13:36 2026
+# Process ID: 15736
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory
+# Command line: xsim.exe -log sim_gob.log -mode tcl -source {xsim.dir/sim_gob/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/sim_gob.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_gob/xsim_script.tcl
+run -all

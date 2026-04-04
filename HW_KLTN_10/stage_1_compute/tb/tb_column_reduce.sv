@@ -25,7 +25,7 @@ module tb_column_reduce;
 
   always #(CLK_PERIOD / 2.0) clk = ~clk;
 
-  column_reduce #(.LANES(L), .PE_ROWS(R), .PE_COLS(C)) u_dut (
+  column_reduce #(.LANES(L), .N_ROWS(R), .PE_COLS(C)) u_dut (
     .clk      (clk),
     .rst_n    (rst_n),
     .valid_in (valid_in),

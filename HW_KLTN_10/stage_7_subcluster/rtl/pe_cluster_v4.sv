@@ -13,8 +13,8 @@
 //      1 × comparator_tree (for PE_MP5 maxpool mode)
 //
 //   Dataflow:
-//     act_taps[row] = SAME activation for all 4 columns (kh parallelism)
-//     wgt_data[row][col] = DIFFERENT weight per column (★ cout parallelism)
+//     act_taps[row][col]: per-column for DW3/DW7; RS3 cols see same cin (broadcast in GLB)
+//     wgt_data[row][col] = per-column weight
 //     col_psum[col] = sum of 3 PE rows for each column → PPU[col]
 //
 // Resources per instance: 120 DSP + ~6K LUT + ~7K FF
@@ -37,9 +37,8 @@ module pe_cluster_v4
   input  logic          pe_enable,
   input  logic          pe_clear_acc,
 
-  // ── Activation input: SAME for all columns (multicast from router) ──
-  // act_taps[row][lane]: 3 rows × 20 lanes (row = kh dimension)
-  input  int8_t         act_taps [PE_ROWS][LANES],
+  // ── Activation: PE_RS3 same cin → cols identical; PE_DW3/DW7 → per-col channel
+  input  int8_t         act_taps [PE_ROWS][PE_COLS][LANES],
 
   // ── Weight input: ★ DIFFERENT per column (per-column from router) ──
   // wgt_data[row][col][lane]: 3 rows × 4 cols × 20 lanes
@@ -72,15 +71,20 @@ module pe_cluster_v4
       for (c = 0; c < PE_COLS; c++) begin : gen_pe_col
         // ────────────────────────────────────────
         // PE[row=r, col=c]:
-        //   Activation: act_taps[r] = SAME for all columns in this row
-        //   Weight:     wgt_data[r][c] = ★ DIFFERENT per column
+        //   Activation: act_taps[r][c]; Weight: wgt_data[r][c]
         //   Mode:       pe_mode (from descriptor, uniform)
         // ────────────────────────────────────────
-        pe_unit #(.LANES(LANES)) u_pe (
+        pe_unit #(
+          .LANES(LANES)
+`ifdef RTL_TRACE
+          ,
+          .TRACE_CLUSTER(((r == 0) && (c == 0)) ? 1'b1 : 1'b0)
+`endif
+        ) u_pe (
           .clk        (clk),
           .rst_n      (rst_n),
           .pe_mode    (pe_mode),
-          .x_in       (act_taps[r]),       // SAME activation (multicast)
+          .x_in       (act_taps[r][c]),
           .w_in       (wgt_data[r][c]),    // ★ DIFFERENT weight per col
           .pe_enable  (pe_enable),
           .clear_acc  (pe_clear_acc),
@@ -91,33 +95,28 @@ module pe_cluster_v4
   endgenerate
 
   // ═══════════════════════════════════════════════════════════════
-  // Column Reduce: 4 instances, each sums 3 rows for its column
-  // col_reduce[c].col_sum[l] = pe_psum[0][c][l] + pe_psum[1][c][l] + pe_psum[2][c][l]
+  // Column Reduce: 1 instance, sums 3 rows across all 4 columns
+  // col_psum[c][l] = pe_psum[0][c][l] + pe_psum[1][c][l] + pe_psum[2][c][l]
   // ═══════════════════════════════════════════════════════════════
-  int32_t reduced [PE_COLS][LANES];   // After 3-row reduction
-  logic   reduced_valid [PE_COLS];
+  int32_t reduced [PE_COLS][LANES];
+  logic   reduced_valid_w;
 
-  generate
-    for (c = 0; c < PE_COLS; c++) begin : gen_col_reduce
-      // Pack 3 rows for this column into column_reduce input format
-      int32_t col_rows [PE_ROWS][LANES];
+  // Capture pe_unit psum_valid from any PE (all same timing)
+  logic pe_valid_any;
+  assign pe_valid_any = gen_pe_row[0].gen_pe_col[0].u_pe.psum_valid;
 
-      // Assign rows for this column
-      always_comb begin
-        for (int rr = 0; rr < PE_ROWS; rr++)
-          for (int ll = 0; ll < LANES; ll++)
-            col_rows[rr][ll] = pe_psum[rr][c][ll];
-      end
-
-      column_reduce #(.LANES(LANES), .N_ROWS(PE_ROWS)) u_col_reduce (
-        .clk       (clk),
-        .row_psum  (col_rows),
-        .valid_in  (pe_enable),  // Valid follows PE enable (pipeline-matched)
-        .col_sum   (reduced[c]),
-        .valid_out (reduced_valid[c])
-      );
-    end
-  endgenerate
+  column_reduce #(
+    .LANES  (LANES),
+    .N_ROWS (PE_ROWS),
+    .PE_COLS(PE_COLS)
+  ) u_col_reduce (
+    .clk       (clk),
+    .rst_n     (rst_n),
+    .row_psum  (pe_psum),           // Full [PE_ROWS][PE_COLS][LANES]
+    .valid_in  (pe_valid_any),      // Delayed from PE pipeline (5 cycles)
+    .col_psum  (reduced),           // [PE_COLS][LANES]
+    .valid_out (reduced_valid_w)
+  );
 
   // ═══════════════════════════════════════════════════════════════
   // Multi-pass Accumulation: add previous PSUM (from GLB output bank)
@@ -134,14 +133,13 @@ module pe_cluster_v4
     end
   end
 
-  assign psum_valid = reduced_valid[0];  // All columns same timing
+  assign psum_valid = reduced_valid_w;
 
   // ═══════════════════════════════════════════════════════════════
   // Comparator Tree: MaxPool 5×5 (PE_MP5 mode bypass)
   // 25 signed INT8 inputs → 1 maximum per lane, 5-stage pipeline.
   // Active ONLY in PE_MP5 mode. PE array output ignored in this mode.
   // ═══════════════════════════════════════════════════════════════
-  // ★ Instance: comparator_tree — port data_in[25][LANES] (not "window")
   comparator_tree #(
     .LANES     (LANES),
     .NUM_INPUTS(25)
@@ -153,5 +151,50 @@ module pe_cluster_v4
     .max_out  (pool_max),
     .valid_out(pool_valid)
   );
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (pe_enable)
+        $display("  [PE] %0t pe_enable  act[0][0][0]=%0d act[0][0][1]=%0d  wgt[0][0][0]=%0d wgt[0][0][1]=%0d  clr=%b",
+                 $time,
+                 act_taps[0][0][0], act_taps[0][0][1],
+                 wgt_data[0][0][0], wgt_data[0][0][1],
+                 pe_clear_acc);
+      if (pe_valid_any)
+        $display("  [PE] %0t pe_valid  psum_r0c0[0]=%0d psum_r1c0[0]=%0d psum_r2c0[0]=%0d",
+                 $time,
+                 pe_psum[0][0][0], pe_psum[1][0][0], pe_psum[2][0][0]);
+      if (reduced_valid_w)
+        $display("  [COLRED] %0t reduced[0][0]=%0d reduced[0][1]=%0d  col_psum[0][0]=%0d",
+                 $time,
+                 reduced[0][0], reduced[0][1], col_psum[0][0]);
+    end
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (pe_enable)
+        rtl_trace_pkg::rtl_trace_line("S7_PEC",
+          $sformatf("en act00=%0d act01=%0d w000=%0d w001=%0d clr=%b",
+                    act_taps[0][0][0], act_taps[0][0][1],
+                    wgt_data[0][0][0], wgt_data[0][0][1], pe_clear_acc));
+      if (pe_valid_any)
+        rtl_trace_pkg::rtl_trace_line("S7_PECV",
+          $sformatf("p00=%0d p10=%0d p20=%0d",
+                    pe_psum[0][0][0], pe_psum[1][0][0], pe_psum[2][0][0]));
+      if (reduced_valid_w)
+        rtl_trace_pkg::rtl_trace_line("S7_RED",
+          $sformatf("r00=%0d r01=%0d c00=%0d",
+                    reduced[0][0], reduced[0][1], col_psum[0][0]));
+      if (pool_valid)
+        rtl_trace_pkg::rtl_trace_line("S7_POOL",
+          $sformatf("mx0=%0d mx1=%0d", pool_max[0], pool_max[1]));
+    end
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

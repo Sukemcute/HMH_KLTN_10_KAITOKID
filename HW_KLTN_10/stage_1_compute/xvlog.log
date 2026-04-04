@@ -1,0 +1,13 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/accel_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/comparator_tree.sv" into library work
+INFO: [VRFC 10-311] analyzing module comparator_tree
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_comparator_tree
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:79]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:123]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:148]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:168]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:195]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:217]
+WARNING: [VRFC 10-3824] variable 't_err' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:251]
+WARNING: [VRFC 10-3824] variable 'count' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv:252]

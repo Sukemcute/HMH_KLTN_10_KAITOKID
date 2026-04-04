@@ -1,0 +1,84 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:07:29 2026
+# Process ID: 22464
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_2_ppu
+# Command line: xsim.exe -log sim_ppu.log -mode tcl -source {xsim.dir/sim_ppu/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_2_ppu/sim_ppu.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_2_ppu\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_ppu/xsim_script.tcl
+# xsim {sim_ppu} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+================================================================
+  tb_ppu — PPU Verification (8 Tests)
+  LANES = 20, Clock = 250 MHz, Pipeline = 5 stages
+================================================================
+
+[TEST 2.1.1] Half-up rounding vs Floor — 100 cases
+  [PASS] Test 2.1.1: All 100 half-up rounding cases correct.
+
+[TEST 2.1.2] INT64 overflow protection
+  [PASS] Test 2.1.2: INT64 overflow protection verified.
+
+[TEST 2.1.3] ReLU activation
+  [PASS] Test 2.1.3: ReLU activation correct for all 7 cases.
+
+[TEST 2.1.4] ZP_out + final clamp
+  [PASS] Test 2.1.4: ZP_out + clamp correct for all 3 cases.
+
+[TEST 2.1.5] Golden Python vector comparison — 20 lanes
+  Expected outputs (golden):
+    lane[ 0]: psum=     12345 → exp= 127
+    lane[ 1]: psum=     -6789 → exp=  -3
+    lane[ 2]: psum=     30000 → exp= 127
+    lane[ 3]: psum=    -15000 → exp=  -3
+    lane[ 4]: psum=       500 → exp= 127
+    lane[ 5]: psum=         0 → exp= 127
+    lane[ 6]: psum=        -1 → exp= 127
+    lane[ 7]: psum=     99999 → exp=  -3
+    lane[ 8]: psum=    -50000 → exp=  -3
+    lane[ 9]: psum=      7777 → exp= 127
+    lane[10]: psum=      2048 → exp= 127
+    lane[11]: psum=     -1024 → exp= 127
+    lane[12]: psum=     65536 → exp=  -3
+    lane[13]: psum=    -32768 → exp=  -3
+    lane[14]: psum=       100 → exp= 127
+    lane[15]: psum=       256 → exp= 127
+    lane[16]: psum=      -128 → exp= 127
+    lane[17]: psum=     44444 → exp= 127
+    lane[18]: psum=    -88888 → exp= 127
+    lane[19]: psum=         1 → exp= 127
+  [PASS] Test 2.1.5: All 20 lanes match golden vector.
+
+[TEST 2.1.6] Per-lane independence
+  [PASS] Test 2.1.6: Per-lane independence verified (3 vectors).
+
+[TEST 2.1.7] ACT_NONE mode
+  [PASS] Test 2.1.7: ACT_NONE mode correct for all 5 cases.
+
+[TEST 2.1.8] Stress 1,000 random vectors
+  ... completed 200 / 1000 vectors (0 errors so far)
+  ... completed 400 / 1000 vectors (0 errors so far)
+  ... completed 600 / 1000 vectors (0 errors so far)
+  ... completed 800 / 1000 vectors (0 errors so far)
+  ... completed 1000 / 1000 vectors (0 errors so far)
+  [PASS] Test 2.1.8: All 1,000 random vectors (20,000 lanes) correct.
+
+================================================================
+  FINAL SUMMARY
+================================================================
+  Tests passed : 8 / 8
+  Tests failed : 0 / 8
+  Total errors : 0
+================================================================
+  *** ALL 8 TESTS PASSED ***
+================================================================
+
+$finish called at time : 31468 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_2_ppu/tb/tb_ppu.sv" Line 783
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:07:31 2026...

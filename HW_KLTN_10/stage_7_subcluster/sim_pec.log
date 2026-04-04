@@ -1,0 +1,50 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 15:20:21 2026
+# Process ID: 26908
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster
+# Command line: xsim.exe -log sim_pec.log -mode tcl -source {xsim.dir/sim_pec/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/sim_pec.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_pec/xsim_script.tcl
+# xsim {sim_pec} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+========================================
+ tb_pe_cluster_v4 — Stage 7 Subcluster
+========================================
+
+===== T7.1.1: 4 independent cout (RS3 mode) =====
+[PASS] T7.1.1-col0 psum=27
+[PASS] T7.1.1-col1 psum=54
+[PASS] T7.1.1-col2 psum=81
+[PASS] T7.1.1-col3 psum=108
+[PASS] T7.1.1-e col0 != col1
+[PASS] T7.1.1-f col1 != col2
+[PASS] T7.1.1-g col2 != col3
+
+===== T7.1.2: DW mode (4 independent channels) =====
+[PASS] T7.1.2-ch0 psum=18
+[PASS] T7.1.2-ch1 psum=36
+[PASS] T7.1.2-ch2 psum=54
+[PASS] T7.1.2-ch3 psum=72
+
+===== T7.1.3: MaxPool bypass (PE_MP5) =====
+[PASS] T7.1.3-a saw pool_valid pulse during pipeline
+[PASS] T7.1.3-b lane0 max=50 (exp 50)
+[PASS] T7.1.3-c lane5 max=100 (exp 100)
+[PASS] T7.1.3-d lane1 max=12 (exp 12)
+[PASS] T7.1.3-e lane10 max=12 (exp 12)
+  (PE psum during MP5 is don't-care — ignored as expected)
+
+========================================
+ SUMMARY: 16 tests, 16 PASS, 0 FAIL
+ >>> ALL TESTS PASSED <<<
+========================================
+$finish called at time : 258 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/tb/tb_pe_cluster_v4.sv" Line 338
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 15:20:23 2026...

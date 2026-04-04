@@ -1,0 +1,14 @@
+{
+  "primitive": "rs3",
+  "pe_mode": "PE_RS3",
+  "cin": 1,
+  "cout": 4,
+  "hin": 5,
+  "win": 24,
+  "hout": 5,
+  "wout": 24,
+  "stride": 1,
+  "padding": 1,
+  "activation": "relu",
+  "seed": 42
+}

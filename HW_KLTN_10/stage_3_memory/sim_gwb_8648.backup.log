@@ -1,0 +1,247 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:08:08 2026
+# Process ID: 8648
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory
+# Command line: xsim.exe -log sim_gwb.log -mode tcl -source {xsim.dir/sim_gwb/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/sim_gwb.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_gwb/xsim_script.tcl
+# xsim {sim_gwb} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+  T3.2.1 port 0 lane 0: exp 20 got x
+  T3.2.1 port 0 lane 1: exp 21 got x
+  T3.2.1 port 0 lane 2: exp 22 got x
+  T3.2.1 port 0 lane 3: exp 23 got x
+  T3.2.1 port 0 lane 4: exp 24 got x
+  T3.2.1 port 0 lane 5: exp 25 got x
+  T3.2.1 port 0 lane 6: exp 26 got x
+  T3.2.1 port 0 lane 7: exp 27 got x
+  T3.2.1 port 0 lane 8: exp 28 got x
+  T3.2.1 port 0 lane 9: exp 29 got x
+  T3.2.1 port 0 lane 10: exp 30 got x
+  T3.2.1 port 0 lane 11: exp 31 got x
+  T3.2.1 port 0 lane 12: exp 32 got x
+  T3.2.1 port 0 lane 13: exp 33 got x
+  T3.2.1 port 0 lane 14: exp 34 got x
+  T3.2.1 port 0 lane 15: exp 35 got x
+  T3.2.1 port 0 lane 16: exp 36 got x
+  T3.2.1 port 0 lane 17: exp 37 got x
+  T3.2.1 port 0 lane 18: exp 38 got x
+  T3.2.1 port 0 lane 19: exp 39 got x
+  T3.2.1 port 1 lane 0: exp 20 got x
+  T3.2.1 port 1 lane 1: exp 21 got x
+  T3.2.1 port 1 lane 2: exp 22 got x
+  T3.2.1 port 1 lane 3: exp 23 got x
+  T3.2.1 port 1 lane 4: exp 24 got x
+  T3.2.1 port 1 lane 5: exp 25 got x
+  T3.2.1 port 1 lane 6: exp 26 got x
+  T3.2.1 port 1 lane 7: exp 27 got x
+  T3.2.1 port 1 lane 8: exp 28 got x
+  T3.2.1 port 1 lane 9: exp 29 got x
+  T3.2.1 port 1 lane 10: exp 30 got x
+  T3.2.1 port 1 lane 11: exp 31 got x
+  T3.2.1 port 1 lane 12: exp 32 got x
+  T3.2.1 port 1 lane 13: exp 33 got x
+  T3.2.1 port 1 lane 14: exp 34 got x
+  T3.2.1 port 1 lane 15: exp 35 got x
+  T3.2.1 port 1 lane 16: exp 36 got x
+  T3.2.1 port 1 lane 17: exp 37 got x
+  T3.2.1 port 1 lane 18: exp 38 got x
+  T3.2.1 port 1 lane 19: exp 39 got x
+  T3.2.1 port 2 lane 0: exp 20 got x
+  T3.2.1 port 2 lane 1: exp 21 got x
+  T3.2.1 port 2 lane 2: exp 22 got x
+  T3.2.1 port 2 lane 3: exp 23 got x
+  T3.2.1 port 2 lane 4: exp 24 got x
+  T3.2.1 port 2 lane 5: exp 25 got x
+  T3.2.1 port 2 lane 6: exp 26 got x
+  T3.2.1 port 2 lane 7: exp 27 got x
+  T3.2.1 port 2 lane 8: exp 28 got x
+  T3.2.1 port 2 lane 9: exp 29 got x
+  T3.2.1 port 2 lane 10: exp 30 got x
+  T3.2.1 port 2 lane 11: exp 31 got x
+  T3.2.1 port 2 lane 12: exp 32 got x
+  T3.2.1 port 2 lane 13: exp 33 got x
+  T3.2.1 port 2 lane 14: exp 34 got x
+  T3.2.1 port 2 lane 15: exp 35 got x
+  T3.2.1 port 2 lane 16: exp 36 got x
+  T3.2.1 port 2 lane 17: exp 37 got x
+  T3.2.1 port 2 lane 18: exp 38 got x
+  T3.2.1 port 2 lane 19: exp 39 got x
+  T3.2.1 port 3 lane 0: exp 20 got x
+  T3.2.1 port 3 lane 1: exp 21 got x
+  T3.2.1 port 3 lane 2: exp 22 got x
+  T3.2.1 port 3 lane 3: exp 23 got x
+  T3.2.1 port 3 lane 4: exp 24 got x
+  T3.2.1 port 3 lane 5: exp 25 got x
+  T3.2.1 port 3 lane 6: exp 26 got x
+  T3.2.1 port 3 lane 7: exp 27 got x
+  T3.2.1 port 3 lane 8: exp 28 got x
+  T3.2.1 port 3 lane 9: exp 29 got x
+  T3.2.1 port 3 lane 10: exp 30 got x
+  T3.2.1 port 3 lane 11: exp 31 got x
+  T3.2.1 port 3 lane 12: exp 32 got x
+  T3.2.1 port 3 lane 13: exp 33 got x
+  T3.2.1 port 3 lane 14: exp 34 got x
+  T3.2.1 port 3 lane 15: exp 35 got x
+  T3.2.1 port 3 lane 16: exp 36 got x
+  T3.2.1 port 3 lane 17: exp 37 got x
+  T3.2.1 port 3 lane 18: exp 38 got x
+  T3.2.1 port 3 lane 19: exp 39 got x
+[FAIL] T3.2.1 Write broadcast -> all ports read same data
+  T3.2.2 port 1 lane 0: exp 40 got 0
+  T3.2.2 port 1 lane 1: exp 41 got 1
+  T3.2.2 port 1 lane 2: exp 42 got 2
+  T3.2.2 port 1 lane 3: exp 43 got 3
+  T3.2.2 port 1 lane 4: exp 44 got 4
+  T3.2.2 port 1 lane 5: exp 45 got 5
+  T3.2.2 port 1 lane 6: exp 46 got 6
+  T3.2.2 port 1 lane 7: exp 47 got 7
+  T3.2.2 port 1 lane 8: exp 48 got 8
+  T3.2.2 port 1 lane 9: exp 49 got 9
+  T3.2.2 port 1 lane 10: exp 50 got 10
+  T3.2.2 port 1 lane 11: exp 51 got 11
+  T3.2.2 port 1 lane 12: exp 52 got 12
+  T3.2.2 port 1 lane 13: exp 53 got 13
+  T3.2.2 port 1 lane 14: exp 54 got 14
+  T3.2.2 port 1 lane 15: exp 55 got 15
+  T3.2.2 port 1 lane 16: exp 56 got 16
+  T3.2.2 port 1 lane 17: exp 57 got 17
+  T3.2.2 port 1 lane 18: exp 58 got 18
+  T3.2.2 port 1 lane 19: exp 59 got 19
+  T3.2.2 port 2 lane 0: exp 80 got 0
+  T3.2.2 port 2 lane 1: exp 81 got 1
+  T3.2.2 port 2 lane 2: exp 82 got 2
+  T3.2.2 port 2 lane 3: exp 83 got 3
+  T3.2.2 port 2 lane 4: exp 84 got 4
+  T3.2.2 port 2 lane 5: exp 85 got 5
+  T3.2.2 port 2 lane 6: exp 86 got 6
+  T3.2.2 port 2 lane 7: exp 87 got 7
+  T3.2.2 port 2 lane 8: exp 88 got 8
+  T3.2.2 port 2 lane 9: exp 89 got 9
+  T3.2.2 port 2 lane 10: exp 90 got 10
+  T3.2.2 port 2 lane 11: exp 91 got 11
+  T3.2.2 port 2 lane 12: exp 92 got 12
+  T3.2.2 port 2 lane 13: exp 93 got 13
+  T3.2.2 port 2 lane 14: exp 94 got 14
+  T3.2.2 port 2 lane 15: exp 95 got 15
+  T3.2.2 port 2 lane 16: exp 96 got 16
+  T3.2.2 port 2 lane 17: exp 97 got 17
+  T3.2.2 port 2 lane 18: exp 98 got 18
+  T3.2.2 port 2 lane 19: exp 99 got 19
+  T3.2.2 port 3 lane 0: exp 120 got 0
+  T3.2.2 port 3 lane 1: exp 121 got 1
+  T3.2.2 port 3 lane 2: exp 122 got 2
+  T3.2.2 port 3 lane 3: exp 123 got 3
+  T3.2.2 port 3 lane 4: exp 124 got 4
+  T3.2.2 port 3 lane 5: exp 125 got 5
+  T3.2.2 port 3 lane 6: exp 126 got 6
+  T3.2.2 port 3 lane 7: exp 127 got 7
+  T3.2.2 port 3 lane 8: exp -128 got 8
+  T3.2.2 port 3 lane 9: exp -127 got 9
+  T3.2.2 port 3 lane 10: exp -126 got 10
+  T3.2.2 port 3 lane 11: exp -125 got 11
+  T3.2.2 port 3 lane 12: exp -124 got 12
+  T3.2.2 port 3 lane 13: exp -123 got 13
+  T3.2.2 port 3 lane 14: exp -122 got 14
+  T3.2.2 port 3 lane 15: exp -121 got 15
+  T3.2.2 port 3 lane 16: exp -120 got 16
+  T3.2.2 port 3 lane 17: exp -119 got 17
+  T3.2.2 port 3 lane 18: exp -118 got 18
+  T3.2.2 port 3 lane 19: exp -117 got 19
+[FAIL] T3.2.2 Different addresses per port
+  T3.2.3 verify-wr port 0 lane 0: exp 120 got 80
+  T3.2.3 verify-wr port 0 lane 1: exp 121 got 81
+  T3.2.3 verify-wr port 0 lane 2: exp 122 got 82
+  T3.2.3 verify-wr port 0 lane 3: exp 123 got 83
+  T3.2.3 verify-wr port 0 lane 4: exp 124 got 84
+  T3.2.3 verify-wr port 0 lane 5: exp 125 got 85
+  T3.2.3 verify-wr port 0 lane 6: exp 126 got 86
+  T3.2.3 verify-wr port 0 lane 7: exp 127 got 87
+  T3.2.3 verify-wr port 0 lane 8: exp -128 got 88
+  T3.2.3 verify-wr port 0 lane 9: exp -127 got 89
+  T3.2.3 verify-wr port 0 lane 10: exp -126 got 90
+  T3.2.3 verify-wr port 0 lane 11: exp -125 got 91
+  T3.2.3 verify-wr port 0 lane 12: exp -124 got 92
+  T3.2.3 verify-wr port 0 lane 13: exp -123 got 93
+  T3.2.3 verify-wr port 0 lane 14: exp -122 got 94
+  T3.2.3 verify-wr port 0 lane 15: exp -121 got 95
+  T3.2.3 verify-wr port 0 lane 16: exp -120 got 96
+  T3.2.3 verify-wr port 0 lane 17: exp -119 got 97
+  T3.2.3 verify-wr port 0 lane 18: exp -118 got 98
+  T3.2.3 verify-wr port 0 lane 19: exp -117 got 99
+  T3.2.3 verify-wr port 1 lane 0: exp 120 got 80
+  T3.2.3 verify-wr port 1 lane 1: exp 121 got 81
+  T3.2.3 verify-wr port 1 lane 2: exp 122 got 82
+  T3.2.3 verify-wr port 1 lane 3: exp 123 got 83
+  T3.2.3 verify-wr port 1 lane 4: exp 124 got 84
+  T3.2.3 verify-wr port 1 lane 5: exp 125 got 85
+  T3.2.3 verify-wr port 1 lane 6: exp 126 got 86
+  T3.2.3 verify-wr port 1 lane 7: exp 127 got 87
+  T3.2.3 verify-wr port 1 lane 8: exp -128 got 88
+  T3.2.3 verify-wr port 1 lane 9: exp -127 got 89
+  T3.2.3 verify-wr port 1 lane 10: exp -126 got 90
+  T3.2.3 verify-wr port 1 lane 11: exp -125 got 91
+  T3.2.3 verify-wr port 1 lane 12: exp -124 got 92
+  T3.2.3 verify-wr port 1 lane 13: exp -123 got 93
+  T3.2.3 verify-wr port 1 lane 14: exp -122 got 94
+  T3.2.3 verify-wr port 1 lane 15: exp -121 got 95
+  T3.2.3 verify-wr port 1 lane 16: exp -120 got 96
+  T3.2.3 verify-wr port 1 lane 17: exp -119 got 97
+  T3.2.3 verify-wr port 1 lane 18: exp -118 got 98
+  T3.2.3 verify-wr port 1 lane 19: exp -117 got 99
+  T3.2.3 verify-wr port 2 lane 0: exp 120 got 80
+  T3.2.3 verify-wr port 2 lane 1: exp 121 got 81
+  T3.2.3 verify-wr port 2 lane 2: exp 122 got 82
+  T3.2.3 verify-wr port 2 lane 3: exp 123 got 83
+  T3.2.3 verify-wr port 2 lane 4: exp 124 got 84
+  T3.2.3 verify-wr port 2 lane 5: exp 125 got 85
+  T3.2.3 verify-wr port 2 lane 6: exp 126 got 86
+  T3.2.3 verify-wr port 2 lane 7: exp 127 got 87
+  T3.2.3 verify-wr port 2 lane 8: exp -128 got 88
+  T3.2.3 verify-wr port 2 lane 9: exp -127 got 89
+  T3.2.3 verify-wr port 2 lane 10: exp -126 got 90
+  T3.2.3 verify-wr port 2 lane 11: exp -125 got 91
+  T3.2.3 verify-wr port 2 lane 12: exp -124 got 92
+  T3.2.3 verify-wr port 2 lane 13: exp -123 got 93
+  T3.2.3 verify-wr port 2 lane 14: exp -122 got 94
+  T3.2.3 verify-wr port 2 lane 15: exp -121 got 95
+  T3.2.3 verify-wr port 2 lane 16: exp -120 got 96
+  T3.2.3 verify-wr port 2 lane 17: exp -119 got 97
+  T3.2.3 verify-wr port 2 lane 18: exp -118 got 98
+  T3.2.3 verify-wr port 2 lane 19: exp -117 got 99
+  T3.2.3 verify-wr port 3 lane 0: exp 120 got 80
+  T3.2.3 verify-wr port 3 lane 1: exp 121 got 81
+  T3.2.3 verify-wr port 3 lane 2: exp 122 got 82
+  T3.2.3 verify-wr port 3 lane 3: exp 123 got 83
+  T3.2.3 verify-wr port 3 lane 4: exp 124 got 84
+  T3.2.3 verify-wr port 3 lane 5: exp 125 got 85
+  T3.2.3 verify-wr port 3 lane 6: exp 126 got 86
+  T3.2.3 verify-wr port 3 lane 7: exp 127 got 87
+  T3.2.3 verify-wr port 3 lane 8: exp -128 got 88
+  T3.2.3 verify-wr port 3 lane 9: exp -127 got 89
+  T3.2.3 verify-wr port 3 lane 10: exp -126 got 90
+  T3.2.3 verify-wr port 3 lane 11: exp -125 got 91
+  T3.2.3 verify-wr port 3 lane 12: exp -124 got 92
+  T3.2.3 verify-wr port 3 lane 13: exp -123 got 93
+  T3.2.3 verify-wr port 3 lane 14: exp -122 got 94
+  T3.2.3 verify-wr port 3 lane 15: exp -121 got 95
+  T3.2.3 verify-wr port 3 lane 16: exp -120 got 96
+  T3.2.3 verify-wr port 3 lane 17: exp -119 got 97
+  T3.2.3 verify-wr port 3 lane 18: exp -118 got 98
+  T3.2.3 verify-wr port 3 lane 19: exp -117 got 99
+[FAIL] T3.2.3 Simultaneous read+write no interference
+
+==============================================================
+  tb_glb_weight_bank — 0/3 tests PASSED
+  >>> 3 TEST(S) FAILED <<<
+==============================================================
+$finish called at time : 142 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_glb_weight_bank.sv" Line 272
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:08:10 2026...

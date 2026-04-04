@@ -10,7 +10,9 @@
 // ============================================================================
 `timescale 1ns / 1ps
 
-module glb_weight_bank #(
+module glb_weight_bank
+  import accel_pkg::*;
+#(
   parameter LANES        = 20,
   parameter DEPTH        = 1024,
   parameter N_READ_PORTS = 4
@@ -27,8 +29,6 @@ module glb_weight_bank #(
   input  int8_t                      wr_data  [LANES],
   input  logic                       wr_en
 );
-
-  import accel_pkg::*;
 
   // --------------------------------------------------------------------------
   //  Duplicated SRAM copies — N_READ_PORTS × LANES subbanks
@@ -62,5 +62,22 @@ module glb_weight_bank #(
       end // gen_lane
     end // gen_copy
   endgenerate
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n && wr_en)
+      $display("  [WTB] %0t WR addr=%0d d[0]=%0d d[1]=%0d",
+               $time, wr_addr, wr_data[0], wr_data[1]);
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && wr_en)
+      rtl_trace_pkg::rtl_trace_line("S3_WTB_WR",
+        $sformatf("addr=%0d d0=%0d d1=%0d", wr_addr, wr_data[0], wr_data[1]));
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

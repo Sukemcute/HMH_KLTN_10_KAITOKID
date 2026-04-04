@@ -1,0 +1,63 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:49:40 2026
+# Process ID: 19948
+# Current directory: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control
+# Command line: xsim.exe -log sim_cseq.log -mode tcl -source {xsim.dir/sim_cseq/xsim_script.tcl}
+# Log file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/sim_cseq.log
+# Journal file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_cseq/xsim_script.tcl
+# xsim {sim_cseq} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+========================================
+ tb_compute_sequencer — Stage 6 Control
+========================================
+
+===== T6.3.1: PE_RS3 iteration count =====
+  PE_RS3: pe_enable cycles = 72 (expected 72)
+  PE_RS3: ppu_trigger count = 8 (expected 8)
+[PASS] T6.3.1-a pe_cycles=72
+[PASS] T6.3.1-b ppu_triggers=8
+[PASS] T6.3.1-c seq_done fired
+
+===== T6.3.2: PE_OS1 iteration count =====
+  PE_OS1: pe_enable cycles = 64 (expected 64)
+[PASS] T6.3.2-a pe_cycles=64
+[PASS] T6.3.2-b ppu_triggers=8
+
+===== T6.3.3: PE_DW3 iteration count =====
+  PE_DW3: pe_enable cycles = 12 (expected 12)
+[PASS] T6.3.3-a pe_cycles=12
+[PASS] T6.3.3-b ppu_triggers=4
+
+===== T6.3.4: ppu_trigger timing =====
+  ppu_trigger #1: ppu_cout_base = 0
+  ppu_trigger #2: ppu_cout_base = 4
+[PASS] T6.3.4-a ppu_count=2
+[PASS] T6.3.4-b base[0]=0
+[PASS] T6.3.4-c base[1]=4
+
+===== T6.3.5: LANES=20 exact division =====
+  W=320: pe_enable=16 (expected 16), ppu=16 (expected 16)
+[PASS] T6.3.5-0 W=320 pe_cycles=16
+  W=160: pe_enable=8 (expected 8), ppu=8 (expected 8)
+[PASS] T6.3.5-1 W=160 pe_cycles=8
+  W=80: pe_enable=4 (expected 4), ppu=4 (expected 4)
+[PASS] T6.3.5-2 W=80 pe_cycles=4
+  W=40: pe_enable=2 (expected 2), ppu=2 (expected 2)
+[PASS] T6.3.5-3 W=40 pe_cycles=2
+  W=20: pe_enable=1 (expected 1), ppu=1 (expected 1)
+[PASS] T6.3.5-4 W=20 pe_cycles=1
+
+========================================
+ SUMMARY: 15 tests, 15 PASS, 0 FAIL
+ >>> ALL TESTS PASSED <<<
+========================================
+$finish called at time : 3162 ns : File "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/tb/tb_compute_sequencer.sv" Line 351
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:49:42 2026...

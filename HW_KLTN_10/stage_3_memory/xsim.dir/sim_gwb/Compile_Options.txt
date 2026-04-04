@@ -1,0 +1,1 @@
+"work.tb_glb_weight_bank" -s "sim_gwb" -timescale "1ns/1ps" 

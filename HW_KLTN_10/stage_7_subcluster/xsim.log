@@ -1,0 +1,54 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 15:18:02 2026
+# Process ID: 20600
+# Current directory: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster
+# Command line: xsim.exe -mode tcl -source {xsim.dir/sim_scd/xsim_script.tcl}
+# Log file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/xsim.log
+# Journal file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_scd/xsim_script.tcl
+# xsim {sim_scd} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+========================================
+ tb_subcluster_datapath — Stage 7
+========================================
+
+===== T7.2.1: Descriptor injection smoke test =====
+  Filled input bank 0, addr 0 with act=2
+  Filled weight banks with wgt=3
+  Set bias/quant tables for identity pass-through
+  Asserting tile_valid ...
+[PASS] T7.2.1-a tile_accept
+[PASS] T7.2.1-b tile_done (implies TS_DONE)
+  Tile completed in 24 cycles
+  FSM state trace:
+    [0] TS_IDLE
+    [1] TS_LOAD_DESC
+    [2] TS_PREFILL_WT
+    [3] TS_PREFILL_IN
+    [4] TS_COMPUTE
+    [5] TS_PE_DRAIN
+    [6] TS_PPU_RUN
+    [7] TS_WRITEBACK
+[PASS] T7.2.1-c saw TS_IDLE
+[PASS] T7.2.1-d saw TS_LOAD_DESC
+[PASS] T7.2.1-e saw TS_COMPUTE
+  Output bank 0, addr 0 read:
+    act_data[0..4] = x x x x x
+    psum_data[0..4] = x x x x x
+[PASS] T7.2.1-g FSM back to IDLE
+  Output bank has non-zero data (datapath wiring connected)
+[PASS] T7.2.1-h smoke test complete (FSM exercised)
+
+========================================
+ SUMMARY: 7 tests, 7 PASS, 0 FAIL
+ >>> ALL TESTS PASSED <<<
+========================================
+$finish called at time : 186 ns : File "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/tb/tb_subcluster_datapath.sv" Line 395
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 15:18:04 2026...

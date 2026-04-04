@@ -1,0 +1,1251 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sat Apr  4 13:49:39 2026
+# Process ID: 15256
+# Current directory: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_8_primitive_verify
+# Command line: xsim.exe -log sim_stage8.log -mode tcl -source {xsim.dir/sim_s8/xsim_script.tcl}
+# Log file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_8_primitive_verify/sim_stage8.log
+# Journal file: e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_8_primitive_verify\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_s8/xsim_script.tcl
+# xsim {sim_s8} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+
+═══════════ TEST RS3 ═══════════
+  [WTB] 86000 WR addr=0 d[0]=-78 d[1]=-78
+  [WTB] 90000 WR addr=1 d[0]=6 d[1]=6
+  [WTB] 94000 WR addr=2 d[0]=-108 d[1]=-108
+  [WTB] 98000 WR addr=3 d[0]=-115 d[1]=-115
+  [WTB] 102000 WR addr=4 d[0]=113 d[1]=113
+  [WTB] 106000 WR addr=5 d[0]=121 d[1]=121
+  [WTB] 110000 WR addr=6 d[0]=-18 d[1]=-18
+  [WTB] 114000 WR addr=7 d[0]=59 d[1]=59
+  [WTB] 118000 WR addr=8 d[0]=70 d[1]=70
+  [WTB] 122000 WR addr=9 d[0]=-48 d[1]=-48
+  [WTB] 126000 WR addr=10 d[0]=35 d[1]=35
+  [WTB] 130000 WR addr=11 d[0]=-79 d[1]=-79
+  [WTB] 138000 WR addr=0 d[0]=-56 d[1]=-56
+  [WTB] 142000 WR addr=1 d[0]=38 d[1]=38
+  [WTB] 146000 WR addr=2 d[0]=-111 d[1]=-111
+  [WTB] 150000 WR addr=3 d[0]=-120 d[1]=-120
+  [WTB] 154000 WR addr=4 d[0]=-39 d[1]=-39
+  [WTB] 158000 WR addr=5 d[0]=-76 d[1]=-76
+  [WTB] 162000 WR addr=6 d[0]=43 d[1]=43
+  [WTB] 166000 WR addr=7 d[0]=124 d[1]=124
+  [WTB] 170000 WR addr=8 d[0]=-121 d[1]=-121
+  [WTB] 174000 WR addr=9 d[0]=-25 d[1]=-25
+  [WTB] 178000 WR addr=10 d[0]=3 d[1]=3
+  [WTB] 182000 WR addr=11 d[0]=-127 d[1]=-127
+  [WTB] 190000 WR addr=0 d[0]=3 d[1]=3
+  [WTB] 194000 WR addr=1 d[0]=-40 d[1]=-40
+  [WTB] 198000 WR addr=2 d[0]=-69 d[1]=-69
+  [WTB] 202000 WR addr=3 d[0]=1 d[1]=1
+  [WTB] 206000 WR addr=4 d[0]=-45 d[1]=-45
+  [WTB] 210000 WR addr=5 d[0]=-37 d[1]=-37
+  [WTB] 214000 WR addr=6 d[0]=46 d[1]=46
+  [WTB] 218000 WR addr=7 d[0]=-94 d[1]=-94
+  [WTB] 222000 WR addr=8 d[0]=77 d[1]=77
+  [WTB] 226000 WR addr=9 d[0]=125 d[1]=125
+  [WTB] 230000 WR addr=10 d[0]=5 d[1]=5
+  [WTB] 234000 WR addr=11 d[0]=-75 d[1]=-75
+  [DESC] pe_mode=0 cin=1 cout=4 hin=3 win=20 kh=3 kw=3 stride=1 pad=1
+  [ACCEPT] accepted, mode_reg=0 ppu_done_latch=0
+  [FSM] 246000 state 0 -> 1  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [CFG] 246000  mode=0 cin=0 cout=0 kh=0 kw=0 hin=0 win=0 hout=0 wout=0 act=0 zp_x=0
+  [FSM] 1 -> 2 at cycle 1
+  [FSM] 250000 state 1 -> 2  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 2 -> 3 at cycle 2
+  [FSM] 254000 state 2 -> 3  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 3 -> 4 at cycle 3
+  [FSM] 258000 state 3 -> 4  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 262000 ss=0->1 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 266000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 270000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [GLB-IN] 270000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 270000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 270000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 270000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 274000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 274000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [SEQ] 278000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 282000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 282000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 282000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 282000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 282000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 286000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 286000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [SEQ] 290000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 294000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 294000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 294000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 294000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 294000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 298000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [PE] 298000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 298000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=1456 psum_r2c0[0]=63
+  [CP-D] cyc=66  pe_psum_valid  mode_reg=0
+  [SEQ] 302000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 302000 reduced[0][0]=1519 reduced[0][1]=-3084  col_psum[0][0]=1519
+  [CP-A] cyc=67  seq_ppu_trigger  cout_base=0
+  [SEQ] 306000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 310000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 310000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=468 psum_r2c0[0]=-777
+  [CP-D] cyc=69  pe_psum_valid  mode_reg=0
+  [SEQ] 314000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 314000 reduced[0][0]=-309 reduced[0][1]=1894  col_psum[0][0]=-309
+  [SEQ] 318000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 322000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 322000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=3354 psum_r2c0[0]=-2226
+  [CP-D] cyc=72  pe_psum_valid  mode_reg=0
+  [SEQ] 326000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 326000 reduced[0][0]=1128 reduced[0][1]=1477  col_psum[0][0]=1128
+  [GLB-IN] 326000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 326000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 326000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 326000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [CP-B] cyc=73  ppu_trigger_delayed  psum[0][0]=1128
+  [SEQ] 330000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 330000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [PPU] 330000 IN  psum[0]=1128 psum[1]=1477  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 330000 IN  psum[0]=4409 psum[1]=-5829  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 330000 IN  psum[0]=-587 psum[1]=142  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 330000 IN  psum[0]=5029 psum[1]=-11779  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 330000  col0[0]=1128 col0[1]=1477  col1[0]=4409  col2[0]=-587  col3[0]=5029
+  [SEQ] 334000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 338000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 338000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 338000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 338000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 338000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 342000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 342000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [SEQ] 346000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=78  ppu_act_valid[0]  act_out[0][0]=1  wr_en0=0
+  [SEQ] 350000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 350000 OUT act[0]=1 act[1]=1
+  [PPU] 350000 OUT act[0]=4 act[1]=0
+  [PPU] 350000 OUT act[0]=0 act[1]=0
+  [PPU] 350000 OUT act[0]=5 act[1]=0
+  [GLB-IN] 350000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 350000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 350000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 350000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [CP-F] cyc=79  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 354000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 354000 ACT_WR  addr=0  d[0]=1 d[1]=1
+  [OBANK] 354000 ACT_WR  addr=0  d[0]=4 d[1]=0
+  [OBANK] 354000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [OBANK] 354000 ACT_WR  addr=0  d[0]=5 d[1]=0
+  [PE] 354000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 354000 pe_valid  psum_r0c0[0]=2028 psum_r1c0[0]=-1176 psum_r2c0[0]=-210
+  [ACT-WR] 354000  act0[0]=1 act0[1]=1  wr_en=1111  addr_hold=0
+  [CP-D] cyc=80  pe_psum_valid  mode_reg=0
+  [SEQ] 358000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 358000 reduced[0][0]=642 reduced[0][1]=656  col_psum[0][0]=642
+  [CP-A] cyc=81  seq_ppu_trigger  cout_base=0
+  [SEQ] 362000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 366000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 366000 pe_valid  psum_r0c0[0]=1872 psum_r1c0[0]=-378 psum_r2c0[0]=2590
+  [CP-D] cyc=83  pe_psum_valid  mode_reg=0
+  [SEQ] 370000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 370000 reduced[0][0]=4084 reduced[0][1]=-6966  col_psum[0][0]=4084
+  [SEQ] 374000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 378000 ss=9->2 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 378000 pe_valid  psum_r0c0[0]=4680 psum_r1c0[0]=-2709 psum_r2c0[0]=7420
+  [CP-D] cyc=86  pe_psum_valid  mode_reg=0
+  [SEQ] 382000 ss=2->3 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 382000 reduced[0][0]=9391 reduced[0][1]=-12732  col_psum[0][0]=9391
+  [GLB-IN] 382000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 382000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 382000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 382000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [CP-B] cyc=87  ppu_trigger_delayed  psum[0][0]=9391
+  [SEQ] 386000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 386000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [PPU] 386000 IN  psum[0]=9391 psum[1]=-12732  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 386000 IN  psum[0]=-2359 psum[1]=13723  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 386000 IN  psum[0]=-3950 psum[1]=5819  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 386000 IN  psum[0]=-4587 psum[1]=13562  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 386000  col0[0]=9391 col0[1]=-12732  col1[0]=-2359  col2[0]=-3950  col3[0]=-4587
+  [SEQ] 390000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 394000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 394000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 394000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 394000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 394000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 398000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 398000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [SEQ] 402000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=92  ppu_act_valid[0]  act_out[0][0]=9  wr_en0=0
+  [SEQ] 406000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 406000 OUT act[0]=9 act[1]=0
+  [PPU] 406000 OUT act[0]=0 act[1]=13
+  [PPU] 406000 OUT act[0]=0 act[1]=6
+  [PPU] 406000 OUT act[0]=0 act[1]=13
+  [GLB-IN] 406000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 406000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 406000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 406000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [CP-F] cyc=93  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 410000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 410000 ACT_WR  addr=1  d[0]=9 d[1]=0
+  [OBANK] 410000 ACT_WR  addr=1  d[0]=0 d[1]=13
+  [OBANK] 410000 ACT_WR  addr=1  d[0]=0 d[1]=6
+  [OBANK] 410000 ACT_WR  addr=1  d[0]=0 d[1]=13
+  [PE] 410000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 410000 pe_valid  psum_r0c0[0]=-1638 psum_r1c0[0]=3920 psum_r2c0[0]=0
+  [ACT-WR] 410000  act0[0]=9 act0[1]=0  wr_en=1111  addr_hold=1
+  [CP-D] cyc=94  pe_psum_valid  mode_reg=0
+  [SEQ] 414000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 414000 reduced[0][0]=2282 reduced[0][1]=-1128  col_psum[0][0]=2282
+  [CP-A] cyc=95  seq_ppu_trigger  cout_base=0
+  [SEQ] 418000 ss=5->6 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 422000 ss=6->7 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 422000 pe_valid  psum_r0c0[0]=-1512 psum_r1c0[0]=1260 psum_r2c0[0]=0
+  [CP-D] cyc=97  pe_psum_valid  mode_reg=0
+  [SEQ] 426000 ss=7->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 426000 reduced[0][0]=-252 reduced[0][1]=3204  col_psum[0][0]=-252
+  [SEQ] 430000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 434000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 434000 pe_valid  psum_r0c0[0]=-3780 psum_r1c0[0]=9030 psum_r2c0[0]=0
+  [CP-D] cyc=100  pe_psum_valid  mode_reg=0
+  [SEQ] 438000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 438000 reduced[0][0]=5250 reduced[0][1]=-2574  col_psum[0][0]=5250
+  [FSM] 4 -> 5 at cycle 49
+  [CP-B] cyc=101  ppu_trigger_delayed  psum[0][0]=5250
+  [FSM] 442000 state 4 -> 5  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 442000 ss=0->1 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 442000 IN  psum[0]=5250 psum[1]=-2574  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 442000 IN  psum[0]=18949 psum[1]=-38654  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 442000 IN  psum[0]=-889 psum[1]=-2640  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 442000 IN  psum[0]=8498 psum[1]=-11782  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 442000  col0[0]=5250 col0[1]=-2574  col1[0]=18949  col2[0]=-889  col3[0]=8498
+  [SEQ] 446000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 450000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [GLB-IN] 450000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 450000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 450000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 450000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 454000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 454000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [SEQ] 458000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=106  ppu_act_valid[0]  act_out[0][0]=5  wr_en0=0
+  [SEQ] 462000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 462000 OUT act[0]=5 act[1]=0
+  [PPU] 462000 OUT act[0]=19 act[1]=0
+  [PPU] 462000 OUT act[0]=0 act[1]=0
+  [PPU] 462000 OUT act[0]=8 act[1]=0
+  [GLB-IN] 462000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 462000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 462000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 462000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [FSM] 5 -> 6 at cycle 55
+  [CP-F] cyc=107  UNEXPECTED act_wr_en[0]=1
+  [FSM] 466000 state 5 -> 6  mode=0 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 466000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 466000 ACT_WR  addr=2  d[0]=5 d[1]=0
+  [OBANK] 466000 ACT_WR  addr=2  d[0]=19 d[1]=0
+  [OBANK] 466000 ACT_WR  addr=2  d[0]=0 d[1]=0
+  [OBANK] 466000 ACT_WR  addr=2  d[0]=8 d[1]=0
+  [PE] 466000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [ACT-WR] 466000  act0[0]=5 act0[1]=0  wr_en=1111  addr_hold=2
+  [FSM] 6 -> 8 at cycle 56
+  [FSM] 470000 state 6 -> 8  mode=0 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 470000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [FSM] 8 -> 9 at cycle 57
+  tile_done after 57 cycles
+  [FSM] 474000 state 8 -> 9  mode=0 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 474000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 474000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=1 padval=0
+  [GLB-WT] 474000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 474000  act[0][0]=0 act[1][0]=-26 act[2][0]=21  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 474000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [FSM] 478000 state 9 -> 0  mode=0 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 478000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [PE] 478000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 478000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=1456 psum_r2c0[0]=63
+  [SEQ] 482000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 482000 reduced[0][0]=1519 reduced[0][1]=-3084  col_psum[0][0]=1519
+  [SEQ] 486000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 490000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 490000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=468 psum_r2c0[0]=-777
+  [SEQ] 494000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 494000 reduced[0][0]=-309 reduced[0][1]=1894  col_psum[0][0]=-309
+  [SEQ] 498000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 502000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 502000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=3354 psum_r2c0[0]=-2226
+  [SEQ] 506000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 506000 reduced[0][0]=1128 reduced[0][1]=1477  col_psum[0][0]=1128
+  [GLB-IN] 506000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 506000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 506000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 506000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 510000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 510000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [PPU] 510000 IN  psum[0]=1128 psum[1]=1477  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 510000 IN  psum[0]=4409 psum[1]=-5829  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 510000 IN  psum[0]=-587 psum[1]=142  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 510000 IN  psum[0]=5029 psum[1]=-11779  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 510000  col0[0]=1128 col0[1]=1477  col1[0]=4409  col2[0]=-587  col3[0]=5029
+  [SEQ] 514000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 518000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 518000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 518000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 518000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 518000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 522000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 522000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [SEQ] 526000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 530000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 530000 OUT act[0]=1 act[1]=1
+  [PPU] 530000 OUT act[0]=4 act[1]=0
+  [PPU] 530000 OUT act[0]=0 act[1]=0
+  [PPU] 530000 OUT act[0]=5 act[1]=0
+  [GLB-IN] 530000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 530000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 530000  act[0][0]=-26 act[1][0]=21 act[2][0]=-70  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 530000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 534000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 534000 ACT_WR  addr=2  d[0]=1 d[1]=1
+  [OBANK] 534000 ACT_WR  addr=0  d[0]=4 d[1]=0
+  [OBANK] 534000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [OBANK] 534000 ACT_WR  addr=0  d[0]=5 d[1]=0
+  [PE] 534000 pe_enable  act[0][0][0]=-26 act[0][0][1]=51  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 534000 pe_valid  psum_r0c0[0]=2028 psum_r1c0[0]=-1176 psum_r2c0[0]=-210
+  [ACT-WR] 534000  act0[0]=1 act0[1]=1  wr_en=1111  addr_hold=0
+  [SEQ] 538000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 538000 reduced[0][0]=642 reduced[0][1]=656  col_psum[0][0]=642
+  [PASS] bank0 — 3 addr verified
+  [SEQ] 542000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 546000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 546000 pe_valid  psum_r0c0[0]=1872 psum_r1c0[0]=-378 psum_r2c0[0]=2590
+  [SEQ] 550000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 550000 reduced[0][0]=4084 reduced[0][1]=-6966  col_psum[0][0]=4084
+  [SEQ] 554000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 558000 ss=9->2 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 558000 pe_valid  psum_r0c0[0]=4680 psum_r1c0[0]=-2709 psum_r2c0[0]=7420
+  [SEQ] 562000 ss=2->3 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 562000 reduced[0][0]=9391 reduced[0][1]=-12732  col_psum[0][0]=9391
+  [GLB-IN] 562000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 562000  bk0c0[0]=-78 bk0c1[0]=-115 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 562000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=-78 wgt[1][0][0]=-56 wgt[2][0][0]=3
+  [ADDR] 562000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 566000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 566000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=-78 wgt[0][0][1]=-78  clr=1
+  [PPU] 566000 IN  psum[0]=9391 psum[1]=-12732  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 566000 IN  psum[0]=-2359 psum[1]=13723  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 566000 IN  psum[0]=-3950 psum[1]=5819  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 566000 IN  psum[0]=-4587 psum[1]=13562  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 566000  col0[0]=9391 col0[1]=-12732  col1[0]=-2359  col2[0]=-3950  col3[0]=-4587
+  [PASS] bank1 — 3 addr verified
+  [SEQ] 570000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 574000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 574000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 574000  bk0c0[0]=6 bk0c1[0]=113 bk1c0[0]=38 bk2c0[0]=-40
+  [ROUTE] 574000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=6 wgt[1][0][0]=38 wgt[2][0][0]=-40
+  [ADDR] 574000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 578000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 578000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=6 wgt[0][0][1]=6  clr=0
+  [SEQ] 582000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 586000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 586000 OUT act[0]=9 act[1]=0
+  [PPU] 586000 OUT act[0]=0 act[1]=13
+  [PPU] 586000 OUT act[0]=0 act[1]=6
+  [PPU] 586000 OUT act[0]=0 act[1]=13
+  [GLB-IN] 586000  bank0d[0]=-26 bank1d[0]=21 bank2d[0]=-70  padded=0 padval=0
+  [GLB-WT] 586000  bk0c0[0]=-108 bk0c1[0]=121 bk1c0[0]=-111 bk2c0[0]=-69
+  [ROUTE] 586000  act[0][0]=21 act[1][0]=-70 act[2][0]=0  wgt[0][0][0]=-108 wgt[1][0][0]=-111 wgt[2][0][0]=-69
+  [ADDR] 586000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 590000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 590000 ACT_WR  addr=1  d[0]=9 d[1]=0
+  [OBANK] 590000 ACT_WR  addr=1  d[0]=0 d[1]=13
+  [OBANK] 590000 ACT_WR  addr=2  d[0]=0 d[1]=6
+  [OBANK] 590000 ACT_WR  addr=1  d[0]=0 d[1]=13
+  [PE] 590000 pe_enable  act[0][0][0]=21 act[0][0][1]=-76  wgt[0][0][0]=-108 wgt[0][0][1]=-108  clr=0
+  [PE] 590000 pe_valid  psum_r0c0[0]=-1638 psum_r1c0[0]=3920 psum_r2c0[0]=0
+  [ACT-WR] 590000  act0[0]=9 act0[1]=0  wr_en=1111  addr_hold=1
+  [SEQ] 594000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 594000 reduced[0][0]=2282 reduced[0][1]=-1128  col_psum[0][0]=2282
+  [PASS] bank2 — 3 addr verified
+  [SEQ] 598000 ss=5->6 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 602000 ss=6->7 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 602000 pe_valid  psum_r0c0[0]=-1512 psum_r1c0[0]=1260 psum_r2c0[0]=0
+  [SEQ] 606000 ss=7->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 606000 reduced[0][0]=-252 reduced[0][1]=3204  col_psum[0][0]=-252
+  [SEQ] 610000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 614000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 614000 pe_valid  psum_r0c0[0]=-3780 psum_r1c0[0]=9030 psum_r2c0[0]=0
+  [SEQ] 618000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 618000 reduced[0][0]=5250 reduced[0][1]=-2574  col_psum[0][0]=5250
+  [PPU] 622000 IN  psum[0]=5250 psum[1]=-2574  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 622000 IN  psum[0]=18949 psum[1]=-38654  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 622000 IN  psum[0]=-889 psum[1]=-2640  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 622000 IN  psum[0]=8498 psum[1]=-11782  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 622000  col0[0]=5250 col0[1]=-2574  col1[0]=18949  col2[0]=-889  col3[0]=8498
+  [PASS] bank3 — 3 addr verified
+═══════════ RS3 DONE ═══════════
+
+
+═══════════ TEST OS1 ═══════════
+  [WTB] 746000 WR addr=0 d[0]=-36 d[1]=-36
+  [WTB] 750000 WR addr=1 d[0]=-126 d[1]=-126
+  [WTB] 754000 WR addr=2 d[0]=19 d[1]=19
+  [WTB] 758000 WR addr=3 d[0]=123 d[1]=123
+  [WTB] 762000 WR addr=4 d[0]=58 d[1]=58
+  [WTB] 766000 WR addr=5 d[0]=35 d[1]=35
+  [WTB] 770000 WR addr=6 d[0]=18 d[1]=18
+  [WTB] 774000 WR addr=7 d[0]=-39 d[1]=-39
+  [WTB] 778000 WR addr=8 d[0]=66 d[1]=66
+  [WTB] 782000 WR addr=9 d[0]=126 d[1]=126
+  [WTB] 786000 WR addr=10 d[0]=18 d[1]=18
+  [WTB] 790000 WR addr=11 d[0]=19 d[1]=19
+  [WTB] 794000 WR addr=12 d[0]=-33 d[1]=-33
+  [WTB] 798000 WR addr=13 d[0]=70 d[1]=70
+  [WTB] 802000 WR addr=14 d[0]=-77 d[1]=-77
+  [WTB] 806000 WR addr=15 d[0]=104 d[1]=104
+  [DESC] pe_mode=1 cin=4 cout=4 hin=3 win=20 kh=1 kw=1 stride=1 pad=0
+  [ACCEPT] accepted, mode_reg=1 ppu_done_latch=0
+  [FSM] 818000 state 0 -> 1  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [CFG] 818000  mode=0 cin=0 cout=0 kh=0 kw=0 hin=0 win=0 hout=0 wout=0 act=0 zp_x=0
+  [FSM] 1 -> 2 at cycle 1
+  [FSM] 822000 state 1 -> 2  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 2 -> 3 at cycle 2
+  [FSM] 826000 state 2 -> 3  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 3 -> 4 at cycle 3
+  [FSM] 830000 state 3 -> 4  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 834000 ss=0->1 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 838000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 842000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [PE] 842000 pe_enable  act[0][0][0]=-23 act[0][0][1]=62  wgt[0][0][0]=-36 wgt[0][0][1]=-36  clr=1
+  [GLB-IN] 842000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 842000  bk0c0[0]=-36 bk0c1[0]=58 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 842000  act[0][0]=-23 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-36 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 842000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=4
+  [SEQ] 846000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 850000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 854000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 858000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 862000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 862000 pe_enable  act[0][0][0]=-125 act[0][0][1]=17  wgt[0][0][0]=-126 wgt[0][0][1]=-126  clr=0
+  [GLB-IN] 862000  bank0d[0]=-125 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 862000  bk0c0[0]=-126 bk0c1[0]=35 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 862000  act[0][0]=-125 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-126 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 862000  agi_row0=1 agi_row1=1 agi_row2=1  agw_bk=0 agw_c0=1 agw_c1=5
+  [SEQ] 866000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 866000 pe_valid  psum_r0c0[0]=828 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=52  pe_psum_valid  mode_reg=1
+  [SEQ] 870000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 870000 reduced[0][0]=828 reduced[0][1]=-2232  col_psum[0][0]=828
+  [SEQ] 874000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 878000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 882000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 882000 pe_enable  act[0][0][0]=-75 act[0][0][1]=89  wgt[0][0][0]=19 wgt[0][0][1]=19  clr=0
+  [GLB-IN] 882000  bank0d[0]=-75 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 882000  bk0c0[0]=19 bk0c1[0]=18 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 882000  act[0][0]=-75 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=19 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 882000  agi_row0=2 agi_row1=2 agi_row2=2  agw_bk=0 agw_c0=2 agw_c1=6
+  [SEQ] 886000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 886000 pe_valid  psum_r0c0[0]=16578 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=57  pe_psum_valid  mode_reg=1
+  [SEQ] 890000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 890000 reduced[0][0]=16578 reduced[0][1]=-4374  col_psum[0][0]=16578
+  [SEQ] 894000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 898000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 902000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 902000 pe_enable  act[0][0][0]=92 act[0][0][1]=-85  wgt[0][0][0]=123 wgt[0][0][1]=123  clr=0
+  [GLB-IN] 902000  bank0d[0]=92 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 902000  bk0c0[0]=123 bk0c1[0]=-39 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 902000  act[0][0]=92 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=123 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 902000  agi_row0=3 agi_row1=3 agi_row2=3  agw_bk=0 agw_c0=3 agw_c1=7
+  [SEQ] 906000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 906000 pe_valid  psum_r0c0[0]=15153 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=62  pe_psum_valid  mode_reg=1
+  [SEQ] 910000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 910000 reduced[0][0]=15153 reduced[0][1]=-2683  col_psum[0][0]=15153
+  [CP-A] cyc=63  seq_ppu_trigger  cout_base=0
+  [SEQ] 914000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 918000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 922000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 926000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 926000 pe_valid  psum_r0c0[0]=26469 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=67  pe_psum_valid  mode_reg=1
+  [SEQ] 930000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 930000 reduced[0][0]=26469 reduced[0][1]=-13138  col_psum[0][0]=26469
+  [SEQ] 934000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [PE] 934000 pe_enable  act[0][0][0]=90 act[0][0][1]=-28  wgt[0][0][0]=-36 wgt[0][0][1]=-36  clr=1
+  [GLB-IN] 934000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 934000  bk0c0[0]=-36 bk0c1[0]=58 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 934000  act[0][0]=90 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-36 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 934000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=4
+  [CP-B] cyc=69  ppu_trigger_delayed  psum[0][0]=26469
+  [SEQ] 938000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 938000 IN  psum[0]=26469 psum[1]=-13138  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 938000 IN  psum[0]=-10647 psum[1]=9108  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 938000 IN  psum[0]=-16870 psum[1]=6221  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 938000 IN  psum[0]=7352 psum[1]=-16549  bias=0 m=1 sh=12 zp=0 act=1
+  [PSUM] 938000  col0[0]=26469 col0[1]=-13138  col1[0]=-10647  col2[0]=-16870  col3[0]=7352
+  [SEQ] 942000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 946000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 950000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 954000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 954000 pe_enable  act[0][0][0]=-94 act[0][0][1]=46  wgt[0][0][0]=-126 wgt[0][0][1]=-126  clr=0
+  [GLB-IN] 954000  bank0d[0]=-23 bank1d[0]=-94 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 954000  bk0c0[0]=-126 bk0c1[0]=35 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 954000  act[0][0]=-94 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-126 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 954000  agi_row0=1 agi_row1=1 agi_row2=1  agw_bk=0 agw_c0=1 agw_c1=5
+  [CP-C] cyc=74  ppu_act_valid[0]  act_out[0][0]=6  wr_en0=0
+  [SEQ] 958000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 958000 pe_valid  psum_r0c0[0]=-3240 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [PPU] 958000 OUT act[0]=6 act[1]=0
+  [PPU] 958000 OUT act[0]=0 act[1]=2
+  [PPU] 958000 OUT act[0]=0 act[1]=2
+  [PPU] 958000 OUT act[0]=2 act[1]=0
+  [CP-D] cyc=75  pe_psum_valid  mode_reg=1
+  [CP-F] cyc=75  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 962000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 962000 ACT_WR  addr=0  d[0]=6 d[1]=0
+  [OBANK] 962000 ACT_WR  addr=0  d[0]=0 d[1]=2
+  [OBANK] 962000 ACT_WR  addr=0  d[0]=0 d[1]=2
+  [OBANK] 962000 ACT_WR  addr=0  d[0]=2 d[1]=0
+  [COLRED] 962000 reduced[0][0]=-3240 reduced[0][1]=1008  col_psum[0][0]=-3240
+  [ACT-WR] 962000  act0[0]=6 act0[1]=0  wr_en=1111  addr_hold=0
+  [SEQ] 966000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 970000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 974000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 974000 pe_enable  act[0][0][0]=64 act[0][0][1]=77  wgt[0][0][0]=19 wgt[0][0][1]=19  clr=0
+  [GLB-IN] 974000  bank0d[0]=-23 bank1d[0]=64 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 974000  bk0c0[0]=19 bk0c1[0]=18 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 974000  act[0][0]=64 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=19 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 974000  agi_row0=2 agi_row1=2 agi_row2=2  agw_bk=0 agw_c0=2 agw_c1=6
+  [SEQ] 978000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 978000 pe_valid  psum_r0c0[0]=8604 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=80  pe_psum_valid  mode_reg=1
+  [SEQ] 982000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 982000 reduced[0][0]=8604 reduced[0][1]=-4788  col_psum[0][0]=8604
+  [SEQ] 986000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 990000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 994000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 994000 pe_enable  act[0][0][0]=98 act[0][0][1]=2  wgt[0][0][0]=123 wgt[0][0][1]=123  clr=0
+  [GLB-IN] 994000  bank0d[0]=-23 bank1d[0]=98 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 994000  bk0c0[0]=123 bk0c1[0]=-39 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 994000  act[0][0]=98 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=123 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 994000  agi_row0=3 agi_row1=3 agi_row2=3  agw_bk=0 agw_c0=3 agw_c1=7
+  [SEQ] 998000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 998000 pe_valid  psum_r0c0[0]=9820 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=85  pe_psum_valid  mode_reg=1
+  [SEQ] 1002000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1002000 reduced[0][0]=9820 reduced[0][1]=-3325  col_psum[0][0]=9820
+  [CP-A] cyc=86  seq_ppu_trigger  cout_base=0
+  [SEQ] 1006000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1010000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1014000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1018000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1018000 pe_valid  psum_r0c0[0]=21874 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=90  pe_psum_valid  mode_reg=1
+  [SEQ] 1022000 ss=9->2 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1022000 reduced[0][0]=21874 reduced[0][1]=-3079  col_psum[0][0]=21874
+  [SEQ] 1026000 ss=2->3 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [PE] 1026000 pe_enable  act[0][0][0]=-26 act[0][0][1]=8  wgt[0][0][0]=-36 wgt[0][0][1]=-36  clr=1
+  [GLB-IN] 1026000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1026000  bk0c0[0]=-36 bk0c1[0]=58 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1026000  act[0][0]=-26 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-36 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1026000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=4
+  [CP-B] cyc=92  ppu_trigger_delayed  psum[0][0]=21874
+  [SEQ] 1030000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 1030000 IN  psum[0]=21874 psum[1]=-3079  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1030000 IN  psum[0]=-740 psum[1]=1294  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1030000 IN  psum[0]=-2890 psum[1]=5372  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1030000 IN  psum[0]=-4286 psum[1]=-1577  bias=0 m=1 sh=12 zp=0 act=1
+  [PSUM] 1030000  col0[0]=21874 col0[1]=-3079  col1[0]=-740  col2[0]=-2890  col3[0]=-4286
+  [SEQ] 1034000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1038000 ss=5->13 h=2 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1042000 ss=13->12 h=2 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1046000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1046000 pe_enable  act[0][0][0]=69 act[0][0][1]=-67  wgt[0][0][0]=-126 wgt[0][0][1]=-126  clr=0
+  [GLB-IN] 1046000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=69  padded=0 padval=0
+  [GLB-WT] 1046000  bk0c0[0]=-126 bk0c1[0]=35 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1046000  act[0][0]=69 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-126 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1046000  agi_row0=1 agi_row1=1 agi_row2=1  agw_bk=0 agw_c0=1 agw_c1=5
+  [CP-C] cyc=97  ppu_act_valid[0]  act_out[0][0]=5  wr_en0=0
+  [SEQ] 1050000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1050000 pe_valid  psum_r0c0[0]=936 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [PPU] 1050000 OUT act[0]=5 act[1]=0
+  [PPU] 1050000 OUT act[0]=0 act[1]=0
+  [PPU] 1050000 OUT act[0]=0 act[1]=1
+  [PPU] 1050000 OUT act[0]=0 act[1]=0
+  [CP-D] cyc=98  pe_psum_valid  mode_reg=1
+  [CP-F] cyc=98  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 1054000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1054000 ACT_WR  addr=1  d[0]=5 d[1]=0
+  [OBANK] 1054000 ACT_WR  addr=1  d[0]=0 d[1]=0
+  [OBANK] 1054000 ACT_WR  addr=1  d[0]=0 d[1]=1
+  [OBANK] 1054000 ACT_WR  addr=1  d[0]=0 d[1]=0
+  [COLRED] 1054000 reduced[0][0]=936 reduced[0][1]=-288  col_psum[0][0]=936
+  [ACT-WR] 1054000  act0[0]=5 act0[1]=0  wr_en=1111  addr_hold=1
+  [SEQ] 1058000 ss=5->13 h=2 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1062000 ss=13->12 h=2 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1066000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1066000 pe_enable  act[0][0][0]=71 act[0][0][1]=36  wgt[0][0][0]=19 wgt[0][0][1]=19  clr=0
+  [GLB-IN] 1066000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=71  padded=0 padval=0
+  [GLB-WT] 1066000  bk0c0[0]=19 bk0c1[0]=18 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1066000  act[0][0]=71 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=19 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1066000  agi_row0=2 agi_row1=2 agi_row2=2  agw_bk=0 agw_c0=2 agw_c1=6
+  [SEQ] 1070000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1070000 pe_valid  psum_r0c0[0]=-7758 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=103  pe_psum_valid  mode_reg=1
+  [SEQ] 1074000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1074000 reduced[0][0]=-7758 reduced[0][1]=8154  col_psum[0][0]=-7758
+  [SEQ] 1078000 ss=5->13 h=2 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1082000 ss=13->12 h=2 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1086000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1086000 pe_enable  act[0][0][0]=26 act[0][0][1]=96  wgt[0][0][0]=123 wgt[0][0][1]=123  clr=0
+  [GLB-IN] 1086000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=26  padded=0 padval=0
+  [GLB-WT] 1086000  bk0c0[0]=123 bk0c1[0]=-39 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1086000  act[0][0]=26 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=123 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1086000  agi_row0=3 agi_row1=3 agi_row2=3  agw_bk=0 agw_c0=3 agw_c1=7
+  [SEQ] 1090000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1090000 pe_valid  psum_r0c0[0]=-6409 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=108  pe_psum_valid  mode_reg=1
+  [SEQ] 1094000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1094000 reduced[0][0]=-6409 reduced[0][1]=8838  col_psum[0][0]=-6409
+  [CP-A] cyc=109  seq_ppu_trigger  cout_base=0
+  [SEQ] 1098000 ss=5->6 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1102000 ss=6->7 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1106000 ss=7->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1110000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1110000 pe_valid  psum_r0c0[0]=-3211 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [CP-D] cyc=113  pe_psum_valid  mode_reg=1
+  [SEQ] 1114000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1114000 reduced[0][0]=-3211 reduced[0][1]=20646  col_psum[0][0]=-3211
+  [SEQ] 1118000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [FSM] 4 -> 5 at cycle 76
+  [CP-B] cyc=115  ppu_trigger_delayed  psum[0][0]=-3211
+  [FSM] 1122000 state 4 -> 5  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 1122000 ss=0->1 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 1122000 IN  psum[0]=-3211 psum[1]=20646  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1122000 IN  psum[0]=1171 psum[1]=-4977  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1122000 IN  psum[0]=8750 psum[1]=-5442  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1122000 IN  psum[0]=2925 psum[1]=2258  bias=0 m=1 sh=12 zp=0 act=1
+  [PSUM] 1122000  col0[0]=-3211 col0[1]=20646  col1[0]=1171  col2[0]=8750  col3[0]=2925
+  [SEQ] 1126000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1130000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [PE] 1130000 pe_enable  act[0][0][0]=-23 act[0][0][1]=62  wgt[0][0][0]=-36 wgt[0][0][1]=-36  clr=1
+  [GLB-IN] 1130000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1130000  bk0c0[0]=-36 bk0c1[0]=58 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1130000  act[0][0]=-23 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-36 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1130000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=4
+  [SEQ] 1134000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1138000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=120  ppu_act_valid[0]  act_out[0][0]=0  wr_en0=0
+  [SEQ] 1142000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 1142000 OUT act[0]=0 act[1]=5
+  [PPU] 1142000 OUT act[0]=0 act[1]=0
+  [PPU] 1142000 OUT act[0]=2 act[1]=0
+  [PPU] 1142000 OUT act[0]=1 act[1]=1
+  [FSM] 5 -> 6 at cycle 82
+  [CP-F] cyc=121  UNEXPECTED act_wr_en[0]=1
+  [FSM] 1146000 state 5 -> 6  mode=1 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 1146000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1146000 ACT_WR  addr=2  d[0]=0 d[1]=5
+  [OBANK] 1146000 ACT_WR  addr=2  d[0]=0 d[1]=0
+  [OBANK] 1146000 ACT_WR  addr=2  d[0]=2 d[1]=0
+  [OBANK] 1146000 ACT_WR  addr=2  d[0]=1 d[1]=1
+  [ACT-WR] 1146000  act0[0]=0 act0[1]=5  wr_en=1111  addr_hold=2
+  [FSM] 6 -> 8 at cycle 83
+  [FSM] 1150000 state 6 -> 8  mode=1 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1150000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1150000 pe_enable  act[0][0][0]=-125 act[0][0][1]=17  wgt[0][0][0]=-126 wgt[0][0][1]=-126  clr=0
+  [GLB-IN] 1150000  bank0d[0]=-125 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1150000  bk0c0[0]=-126 bk0c1[0]=35 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1150000  act[0][0]=-125 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-126 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1150000  agi_row0=1 agi_row1=1 agi_row2=1  agw_bk=0 agw_c0=1 agw_c1=5
+  [FSM] 8 -> 9 at cycle 84
+  tile_done after 84 cycles
+  [FSM] 1154000 state 8 -> 9  mode=1 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1154000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1154000 pe_valid  psum_r0c0[0]=828 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [FSM] 1158000 state 9 -> 0  mode=1 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1158000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1158000 reduced[0][0]=828 reduced[0][1]=-2232  col_psum[0][0]=828
+  [SEQ] 1162000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1166000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1170000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1170000 pe_enable  act[0][0][0]=-75 act[0][0][1]=89  wgt[0][0][0]=19 wgt[0][0][1]=19  clr=0
+  [GLB-IN] 1170000  bank0d[0]=-75 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1170000  bk0c0[0]=19 bk0c1[0]=18 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1170000  act[0][0]=-75 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=19 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1170000  agi_row0=2 agi_row1=2 agi_row2=2  agw_bk=0 agw_c0=2 agw_c1=6
+  [SEQ] 1174000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1174000 pe_valid  psum_r0c0[0]=16578 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [SEQ] 1178000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1178000 reduced[0][0]=16578 reduced[0][1]=-4374  col_psum[0][0]=16578
+  [SEQ] 1182000 ss=5->13 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1186000 ss=13->12 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1190000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1190000 pe_enable  act[0][0][0]=92 act[0][0][1]=-85  wgt[0][0][0]=123 wgt[0][0][1]=123  clr=0
+  [GLB-IN] 1190000  bank0d[0]=92 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1190000  bk0c0[0]=123 bk0c1[0]=-39 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1190000  act[0][0]=92 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=123 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1190000  agi_row0=3 agi_row1=3 agi_row2=3  agw_bk=0 agw_c0=3 agw_c1=7
+  [SEQ] 1194000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1194000 pe_valid  psum_r0c0[0]=15153 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [SEQ] 1198000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1198000 reduced[0][0]=15153 reduced[0][1]=-2683  col_psum[0][0]=15153
+  [SEQ] 1202000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1206000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1210000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1214000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1214000 pe_valid  psum_r0c0[0]=26469 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [SEQ] 1218000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1218000 reduced[0][0]=26469 reduced[0][1]=-13138  col_psum[0][0]=26469
+  [PASS] bank0 — 3 addr verified
+  [SEQ] 1222000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [PE] 1222000 pe_enable  act[0][0][0]=90 act[0][0][1]=-28  wgt[0][0][0]=-36 wgt[0][0][1]=-36  clr=1
+  [GLB-IN] 1222000  bank0d[0]=-23 bank1d[0]=90 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1222000  bk0c0[0]=-36 bk0c1[0]=58 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1222000  act[0][0]=90 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-36 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1222000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=4
+  [SEQ] 1226000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 1226000 IN  psum[0]=26469 psum[1]=-13138  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1226000 IN  psum[0]=-10647 psum[1]=9108  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1226000 IN  psum[0]=-16870 psum[1]=6221  bias=0 m=1 sh=12 zp=0 act=1
+  [PPU] 1226000 IN  psum[0]=7352 psum[1]=-16549  bias=0 m=1 sh=12 zp=0 act=1
+  [PSUM] 1226000  col0[0]=26469 col0[1]=-13138  col1[0]=-10647  col2[0]=-16870  col3[0]=7352
+  [SEQ] 1230000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1234000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1238000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1242000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1242000 pe_enable  act[0][0][0]=-94 act[0][0][1]=46  wgt[0][0][0]=-126 wgt[0][0][1]=-126  clr=0
+  [GLB-IN] 1242000  bank0d[0]=-23 bank1d[0]=-94 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1242000  bk0c0[0]=-126 bk0c1[0]=35 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1242000  act[0][0]=-94 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=-126 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1242000  agi_row0=1 agi_row1=1 agi_row2=1  agw_bk=0 agw_c0=1 agw_c1=5
+  [SEQ] 1246000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1246000 pe_valid  psum_r0c0[0]=-3240 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [PPU] 1246000 OUT act[0]=6 act[1]=0
+  [PPU] 1246000 OUT act[0]=0 act[1]=2
+  [PPU] 1246000 OUT act[0]=0 act[1]=2
+  [PPU] 1246000 OUT act[0]=2 act[1]=0
+  [PASS] bank1 — 3 addr verified
+  [SEQ] 1250000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=1 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1250000 ACT_WR  addr=0  d[0]=6 d[1]=0
+  [OBANK] 1250000 ACT_WR  addr=0  d[0]=0 d[1]=2
+  [OBANK] 1250000 ACT_WR  addr=0  d[0]=0 d[1]=2
+  [OBANK] 1250000 ACT_WR  addr=0  d[0]=2 d[1]=0
+  [COLRED] 1250000 reduced[0][0]=-3240 reduced[0][1]=1008  col_psum[0][0]=-3240
+  [ACT-WR] 1250000  act0[0]=6 act0[1]=0  wr_en=1111  addr_hold=0
+  [SEQ] 1254000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1258000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1262000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1262000 pe_enable  act[0][0][0]=64 act[0][0][1]=77  wgt[0][0][0]=19 wgt[0][0][1]=19  clr=0
+  [GLB-IN] 1262000  bank0d[0]=-23 bank1d[0]=64 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1262000  bk0c0[0]=19 bk0c1[0]=18 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1262000  act[0][0]=64 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=19 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1262000  agi_row0=2 agi_row1=2 agi_row2=2  agw_bk=0 agw_c0=2 agw_c1=6
+  [SEQ] 1266000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1266000 pe_valid  psum_r0c0[0]=8604 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [SEQ] 1270000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=2 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1270000 reduced[0][0]=8604 reduced[0][1]=-4788  col_psum[0][0]=8604
+  [SEQ] 1274000 ss=5->13 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PASS] bank2 — 3 addr verified
+  [SEQ] 1278000 ss=13->12 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1282000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=1 clr=0 ppu_trig=0
+  [PE] 1282000 pe_enable  act[0][0][0]=98 act[0][0][1]=2  wgt[0][0][0]=123 wgt[0][0][1]=123  clr=0
+  [GLB-IN] 1282000  bank0d[0]=-23 bank1d[0]=98 bank2d[0]=-26  padded=0 padval=0
+  [GLB-WT] 1282000  bk0c0[0]=123 bk0c1[0]=-39 bk1c0[0]=-56 bk2c0[0]=3
+  [ROUTE] 1282000  act[0][0]=98 act[1][0]=0 act[2][0]=0  wgt[0][0][0]=123 wgt[1][0][0]=0 wgt[2][0][0]=0
+  [ADDR] 1282000  agi_row0=3 agi_row1=3 agi_row2=3  agw_bk=0 agw_c0=3 agw_c1=7
+  [SEQ] 1286000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1286000 pe_valid  psum_r0c0[0]=9820 psum_r1c0[0]=0 psum_r2c0[0]=0
+  [SEQ] 1290000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=3 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1290000 reduced[0][0]=9820 reduced[0][1]=-3325  col_psum[0][0]=9820
+  [SEQ] 1294000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1298000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1302000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PASS] bank3 — 3 addr verified
+═══════════ OS1 DONE ═══════════
+
+
+═══════════ TEST DW3 ═══════════
+  [WTB] 1426000 WR addr=0 d[0]=-76 d[1]=-76
+  [WTB] 1430000 WR addr=1 d[0]=-69 d[1]=-69
+  [WTB] 1434000 WR addr=2 d[0]=107 d[1]=107
+  [WTB] 1438000 WR addr=3 d[0]=95 d[1]=95
+  [WTB] 1442000 WR addr=4 d[0]=-13 d[1]=-13
+  [WTB] 1446000 WR addr=5 d[0]=-35 d[1]=-35
+  [WTB] 1450000 WR addr=6 d[0]=-116 d[1]=-116
+  [WTB] 1454000 WR addr=7 d[0]=-15 d[1]=-15
+  [WTB] 1458000 WR addr=8 d[0]=-5 d[1]=-5
+  [WTB] 1462000 WR addr=9 d[0]=-110 d[1]=-110
+  [WTB] 1466000 WR addr=10 d[0]=-37 d[1]=-37
+  [WTB] 1470000 WR addr=11 d[0]=-71 d[1]=-71
+  [WTB] 1478000 WR addr=0 d[0]=-21 d[1]=-21
+  [WTB] 1482000 WR addr=1 d[0]=-124 d[1]=-124
+  [WTB] 1486000 WR addr=2 d[0]=-26 d[1]=-26
+  [WTB] 1490000 WR addr=3 d[0]=-82 d[1]=-82
+  [WTB] 1494000 WR addr=4 d[0]=-30 d[1]=-30
+  [WTB] 1498000 WR addr=5 d[0]=-74 d[1]=-74
+  [WTB] 1502000 WR addr=6 d[0]=-23 d[1]=-23
+  [WTB] 1506000 WR addr=7 d[0]=29 d[1]=29
+  [WTB] 1510000 WR addr=8 d[0]=18 d[1]=18
+  [WTB] 1514000 WR addr=9 d[0]=54 d[1]=54
+  [WTB] 1518000 WR addr=10 d[0]=-39 d[1]=-39
+  [WTB] 1522000 WR addr=11 d[0]=100 d[1]=100
+  [WTB] 1530000 WR addr=0 d[0]=67 d[1]=67
+  [WTB] 1534000 WR addr=1 d[0]=-123 d[1]=-123
+  [WTB] 1538000 WR addr=2 d[0]=-20 d[1]=-20
+  [WTB] 1542000 WR addr=3 d[0]=39 d[1]=39
+  [WTB] 1546000 WR addr=4 d[0]=-77 d[1]=-77
+  [WTB] 1550000 WR addr=5 d[0]=15 d[1]=15
+  [WTB] 1554000 WR addr=6 d[0]=16 d[1]=16
+  [WTB] 1558000 WR addr=7 d[0]=-9 d[1]=-9
+  [WTB] 1562000 WR addr=8 d[0]=-66 d[1]=-66
+  [WTB] 1566000 WR addr=9 d[0]=89 d[1]=89
+  [WTB] 1570000 WR addr=10 d[0]=-12 d[1]=-12
+  [WTB] 1574000 WR addr=11 d[0]=-67 d[1]=-67
+  [DESC] pe_mode=2 cin=4 cout=4 hin=3 win=20 kh=3 kw=3 stride=1 pad=1
+  [ACCEPT] accepted, mode_reg=2 ppu_done_latch=0
+  [FSM] 1586000 state 0 -> 1  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [CFG] 1586000  mode=0 cin=0 cout=0 kh=0 kw=0 hin=0 win=0 hout=0 wout=0 act=0 zp_x=0
+  [FSM] 1 -> 2 at cycle 1
+  [FSM] 1590000 state 1 -> 2  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 2 -> 3 at cycle 2
+  [FSM] 1594000 state 2 -> 3  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 3 -> 4 at cycle 3
+  [FSM] 1598000 state 3 -> 4  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 1602000 ss=0->1 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1606000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1610000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [GLB-IN] 1610000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1610000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1610000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1610000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 1614000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1614000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [SEQ] 1618000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1622000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1622000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1622000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1622000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1622000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 1626000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1626000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [SEQ] 1630000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1634000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1634000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1634000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1634000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1634000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 1638000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1638000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1638000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-672 psum_r2c0[0]=-7236
+  [CP-D] cyc=75  pe_psum_valid  mode_reg=2
+  [SEQ] 1642000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1642000 reduced[0][0]=-7908 reduced[0][1]=920  col_psum[0][0]=-7908
+  [CP-A] cyc=76  seq_ppu_trigger  cout_base=0
+  [SEQ] 1646000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1650000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1650000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-4640 psum_r2c0[0]=6048
+  [CP-D] cyc=78  pe_psum_valid  mode_reg=2
+  [SEQ] 1654000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1654000 reduced[0][0]=1408 reduced[0][1]=6871  col_psum[0][0]=1408
+  [SEQ] 1658000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1662000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1662000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-5472 psum_r2c0[0]=8208
+  [CP-D] cyc=81  pe_psum_valid  mode_reg=2
+  [SEQ] 1666000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 1666000 reduced[0][0]=2736 reduced[0][1]=8113  col_psum[0][0]=2736
+  [GLB-IN] 1666000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1666000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1666000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1666000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [CP-B] cyc=82  ppu_trigger_delayed  psum[0][0]=2736
+  [SEQ] 1670000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1670000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [PPU] 1670000 IN  psum[0]=2736 psum[1]=8113  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1670000 IN  psum[0]=-5391 psum[1]=4489  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1670000 IN  psum[0]=-1145 psum[1]=-354  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1670000 IN  psum[0]=-9160 psum[1]=-12910  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1670000  col0[0]=2736 col0[1]=8113  col1[0]=-5391  col2[0]=-1145  col3[0]=-9160
+  [SEQ] 1674000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1678000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1678000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1678000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1678000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1678000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 1682000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1682000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [SEQ] 1686000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=87  ppu_act_valid[0]  act_out[0][0]=3  wr_en0=0
+  [SEQ] 1690000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 1690000 OUT act[0]=3 act[1]=8
+  [PPU] 1690000 OUT act[0]=0 act[1]=4
+  [PPU] 1690000 OUT act[0]=0 act[1]=0
+  [PPU] 1690000 OUT act[0]=0 act[1]=0
+  [GLB-IN] 1690000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1690000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1690000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1690000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [CP-F] cyc=88  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 1694000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1694000 ACT_WR  addr=0  d[0]=3 d[1]=8
+  [OBANK] 1694000 ACT_WR  addr=0  d[0]=0 d[1]=4
+  [OBANK] 1694000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [OBANK] 1694000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [PE] 1694000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1694000 pe_valid  psum_r0c0[0]=-2432 psum_r1c0[0]=2268 psum_r2c0[0]=6298
+  [ACT-WR] 1694000  act0[0]=3 act0[1]=8  wr_en=1111  addr_hold=0
+  [CP-D] cyc=89  pe_psum_valid  mode_reg=2
+  [SEQ] 1698000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1698000 reduced[0][0]=6134 reduced[0][1]=1918  col_psum[0][0]=6134
+  [CP-A] cyc=90  seq_ppu_trigger  cout_base=0
+  [SEQ] 1702000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1706000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1706000 pe_valid  psum_r0c0[0]=-4640 psum_r1c0[0]=15660 psum_r2c0[0]=-5264
+  [CP-D] cyc=92  pe_psum_valid  mode_reg=2
+  [SEQ] 1710000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1710000 reduced[0][0]=5756 reduced[0][1]=8360  col_psum[0][0]=5756
+  [SEQ] 1714000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1718000 ss=9->2 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1718000 pe_valid  psum_r0c0[0]=-1216 psum_r1c0[0]=18468 psum_r2c0[0]=-7144
+  [CP-D] cyc=95  pe_psum_valid  mode_reg=2
+  [SEQ] 1722000 ss=2->3 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 1722000 reduced[0][0]=10108 reduced[0][1]=3857  col_psum[0][0]=10108
+  [GLB-IN] 1722000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1722000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1722000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1722000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [CP-B] cyc=96  ppu_trigger_delayed  psum[0][0]=10108
+  [SEQ] 1726000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1726000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [PPU] 1726000 IN  psum[0]=10108 psum[1]=3857  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1726000 IN  psum[0]=18624 psum[1]=-3512  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1726000 IN  psum[0]=4781 psum[1]=6339  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1726000 IN  psum[0]=32685 psum[1]=33164  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1726000  col0[0]=10108 col0[1]=3857  col1[0]=18624  col2[0]=4781  col3[0]=32685
+  [SEQ] 1730000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1734000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1734000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1734000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1734000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1734000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 1738000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1738000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [SEQ] 1742000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=101  ppu_act_valid[0]  act_out[0][0]=10  wr_en0=0
+  [SEQ] 1746000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 1746000 OUT act[0]=10 act[1]=4
+  [PPU] 1746000 OUT act[0]=18 act[1]=0
+  [PPU] 1746000 OUT act[0]=5 act[1]=6
+  [PPU] 1746000 OUT act[0]=32 act[1]=32
+  [GLB-IN] 1746000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1746000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1746000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1746000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [CP-F] cyc=102  UNEXPECTED act_wr_en[0]=1
+  [SEQ] 1750000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1750000 ACT_WR  addr=1  d[0]=10 d[1]=4
+  [OBANK] 1750000 ACT_WR  addr=1  d[0]=18 d[1]=0
+  [OBANK] 1750000 ACT_WR  addr=1  d[0]=5 d[1]=6
+  [OBANK] 1750000 ACT_WR  addr=1  d[0]=32 d[1]=32
+  [PE] 1750000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1750000 pe_valid  psum_r0c0[0]=8208 psum_r1c0[0]=-1974 psum_r2c0[0]=0
+  [ACT-WR] 1750000  act0[0]=10 act0[1]=4  wr_en=1111  addr_hold=1
+  [CP-D] cyc=103  pe_psum_valid  mode_reg=2
+  [SEQ] 1754000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1754000 reduced[0][0]=6234 reduced[0][1]=601  col_psum[0][0]=6234
+  [CP-A] cyc=104  seq_ppu_trigger  cout_base=0
+  [SEQ] 1758000 ss=5->6 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1762000 ss=6->7 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1762000 pe_valid  psum_r0c0[0]=15660 psum_r1c0[0]=-13630 psum_r2c0[0]=0
+  [CP-D] cyc=106  pe_psum_valid  mode_reg=2
+  [SEQ] 1766000 ss=7->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1766000 reduced[0][0]=2030 reduced[0][1]=3770  col_psum[0][0]=2030
+  [SEQ] 1770000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1774000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1774000 pe_valid  psum_r0c0[0]=4104 psum_r1c0[0]=-16074 psum_r2c0[0]=0
+  [CP-D] cyc=109  pe_psum_valid  mode_reg=2
+  [SEQ] 1778000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1778000 reduced[0][0]=-11970 reduced[0][1]=4313  col_psum[0][0]=-11970
+  [FSM] 4 -> 5 at cycle 49
+  [CP-B] cyc=110  ppu_trigger_delayed  psum[0][0]=-11970
+  [FSM] 1782000 state 4 -> 5  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 1782000 ss=0->1 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PPU] 1782000 IN  psum[0]=-11970 psum[1]=4313  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1782000 IN  psum[0]=10143 psum[1]=-8041  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1782000 IN  psum[0]=-4288 psum[1]=-3336  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1782000 IN  psum[0]=-33072 psum[1]=-16113  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1782000  col0[0]=-11970 col0[1]=4313  col1[0]=10143  col2[0]=-4288  col3[0]=-33072
+  [SEQ] 1786000 ss=1->2 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1790000 ss=2->3 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [GLB-IN] 1790000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1790000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1790000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1790000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 1794000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1794000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [SEQ] 1798000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [CP-C] cyc=115  ppu_act_valid[0]  act_out[0][0]=0  wr_en0=0
+  [SEQ] 1802000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 1802000 OUT act[0]=0 act[1]=4
+  [PPU] 1802000 OUT act[0]=10 act[1]=0
+  [PPU] 1802000 OUT act[0]=0 act[1]=0
+  [PPU] 1802000 OUT act[0]=0 act[1]=0
+  [GLB-IN] 1802000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1802000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1802000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1802000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [FSM] 5 -> 6 at cycle 55
+  [CP-F] cyc=116  UNEXPECTED act_wr_en[0]=1
+  [FSM] 1806000 state 5 -> 6  mode=2 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 1806000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1806000 ACT_WR  addr=2  d[0]=0 d[1]=4
+  [OBANK] 1806000 ACT_WR  addr=2  d[0]=10 d[1]=0
+  [OBANK] 1806000 ACT_WR  addr=2  d[0]=0 d[1]=0
+  [OBANK] 1806000 ACT_WR  addr=2  d[0]=0 d[1]=0
+  [PE] 1806000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [ACT-WR] 1806000  act0[0]=0 act0[1]=4  wr_en=1111  addr_hold=2
+  [FSM] 6 -> 8 at cycle 56
+  [FSM] 1810000 state 6 -> 8  mode=2 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1810000 ss=4->12 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [FSM] 8 -> 9 at cycle 57
+  tile_done after 57 cycles
+  [FSM] 1814000 state 8 -> 9  mode=2 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1814000 ss=12->3 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1814000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=1 padval=0
+  [GLB-WT] 1814000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1814000  act[0][0]=0 act[1][0]=32 act[2][0]=-108  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1814000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [FSM] 1818000 state 9 -> 0  mode=2 k_pass=0 seq_done=0 ppu_done_l=1
+  [SEQ] 1818000 ss=3->4 h=0 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1818000 pe_enable  act[0][0][0]=0 act[0][0][1]=0  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1818000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-672 psum_r2c0[0]=-7236
+  [SEQ] 1822000 ss=4->5 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1822000 reduced[0][0]=-7908 reduced[0][1]=920  col_psum[0][0]=-7908
+  [SEQ] 1826000 ss=5->6 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1830000 ss=6->7 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1830000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-4640 psum_r2c0[0]=6048
+  [SEQ] 1834000 ss=7->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1834000 reduced[0][0]=1408 reduced[0][1]=6871  col_psum[0][0]=1408
+  [SEQ] 1838000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1842000 ss=9->2 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1842000 pe_valid  psum_r0c0[0]=0 psum_r1c0[0]=-5472 psum_r2c0[0]=8208
+  [SEQ] 1846000 ss=2->3 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 1846000 reduced[0][0]=2736 reduced[0][1]=8113  col_psum[0][0]=2736
+  [GLB-IN] 1846000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1846000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1846000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1846000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 1850000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1850000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [PPU] 1850000 IN  psum[0]=2736 psum[1]=8113  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1850000 IN  psum[0]=-5391 psum[1]=4489  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1850000 IN  psum[0]=-1145 psum[1]=-354  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1850000 IN  psum[0]=-9160 psum[1]=-12910  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1850000  col0[0]=2736 col0[1]=8113  col1[0]=-5391  col2[0]=-1145  col3[0]=-9160
+  [SEQ] 1854000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1858000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1858000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1858000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1858000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1858000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 1862000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1862000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [SEQ] 1866000 ss=4->12 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1870000 ss=12->3 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 1870000 OUT act[0]=3 act[1]=8
+  [PPU] 1870000 OUT act[0]=0 act[1]=4
+  [PPU] 1870000 OUT act[0]=0 act[1]=0
+  [PPU] 1870000 OUT act[0]=0 act[1]=0
+  [GLB-IN] 1870000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1870000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1870000  act[0][0]=32 act[1][0]=-108 act[2][0]=94  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1870000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 1874000 ss=3->4 h=1 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1874000 ACT_WR  addr=2  d[0]=3 d[1]=8
+  [OBANK] 1874000 ACT_WR  addr=0  d[0]=0 d[1]=4
+  [OBANK] 1874000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [OBANK] 1874000 ACT_WR  addr=0  d[0]=0 d[1]=0
+  [PE] 1874000 pe_enable  act[0][0][0]=32 act[0][0][1]=-47  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1874000 pe_valid  psum_r0c0[0]=-2432 psum_r1c0[0]=2268 psum_r2c0[0]=6298
+  [ACT-WR] 1874000  act0[0]=3 act0[1]=8  wr_en=1111  addr_hold=0
+  [SEQ] 1878000 ss=4->5 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1878000 reduced[0][0]=6134 reduced[0][1]=1918  col_psum[0][0]=6134
+  [PASS] bank0 — 3 addr verified
+  [SEQ] 1882000 ss=5->6 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1886000 ss=6->7 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1886000 pe_valid  psum_r0c0[0]=-4640 psum_r1c0[0]=15660 psum_r2c0[0]=-5264
+  [SEQ] 1890000 ss=7->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1890000 reduced[0][0]=5756 reduced[0][1]=8360  col_psum[0][0]=5756
+  [SEQ] 1894000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1898000 ss=9->2 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1898000 pe_valid  psum_r0c0[0]=-1216 psum_r1c0[0]=18468 psum_r2c0[0]=-7144
+  [SEQ] 1902000 ss=2->3 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=1 clr=1 ppu_trig=0
+  [COLRED] 1902000 reduced[0][0]=10108 reduced[0][1]=3857  col_psum[0][0]=10108
+  [GLB-IN] 1902000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1902000  bk0c0[0]=-76 bk0c1[0]=95 bk1c0[0]=-21 bk2c0[0]=67
+  [ROUTE] 1902000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=-76 wgt[1][0][0]=-21 wgt[2][0][0]=67
+  [ADDR] 1902000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=0 agw_c1=3
+  [SEQ] 1906000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1906000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=-76 wgt[0][0][1]=-76  clr=1
+  [PPU] 1906000 IN  psum[0]=10108 psum[1]=3857  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1906000 IN  psum[0]=18624 psum[1]=-3512  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1906000 IN  psum[0]=4781 psum[1]=6339  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1906000 IN  psum[0]=32685 psum[1]=33164  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1906000  col0[0]=10108 col0[1]=3857  col1[0]=18624  col2[0]=4781  col3[0]=32685
+  [PASS] bank1 — 3 addr verified
+  [SEQ] 1910000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1914000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=1 clr=0 ppu_trig=0
+  [GLB-IN] 1914000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1914000  bk0c0[0]=-69 bk0c1[0]=-13 bk1c0[0]=-124 bk2c0[0]=-123
+  [ROUTE] 1914000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=-69 wgt[1][0][0]=-124 wgt[2][0][0]=-123
+  [ADDR] 1914000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=1 agw_c1=4
+  [SEQ] 1918000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=1 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1918000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=-69 wgt[0][0][1]=-69  clr=0
+  [SEQ] 1922000 ss=4->12 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1926000 ss=12->3 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=1 clr=0 ppu_trig=0
+  [PPU] 1926000 OUT act[0]=10 act[1]=4
+  [PPU] 1926000 OUT act[0]=18 act[1]=0
+  [PPU] 1926000 OUT act[0]=5 act[1]=6
+  [PPU] 1926000 OUT act[0]=32 act[1]=32
+  [GLB-IN] 1926000  bank0d[0]=32 bank1d[0]=-108 bank2d[0]=94  padded=0 padval=0
+  [GLB-WT] 1926000  bk0c0[0]=107 bk0c1[0]=-35 bk1c0[0]=-26 bk2c0[0]=-20
+  [ROUTE] 1926000  act[0][0]=-108 act[1][0]=94 act[2][0]=0  wgt[0][0][0]=107 wgt[1][0][0]=-26 wgt[2][0][0]=-20
+  [ADDR] 1926000  agi_row0=0 agi_row1=0 agi_row2=0  agw_bk=0 agw_c0=2 agw_c1=5
+  [SEQ] 1930000 ss=3->4 h=2 wblk=0 cout_grp=0 cin=0 kw=2 pe_en=0 clr=0 ppu_trig=0
+  [OBANK] 1930000 ACT_WR  addr=1  d[0]=10 d[1]=4
+  [OBANK] 1930000 ACT_WR  addr=1  d[0]=18 d[1]=0
+  [OBANK] 1930000 ACT_WR  addr=2  d[0]=5 d[1]=6
+  [OBANK] 1930000 ACT_WR  addr=1  d[0]=32 d[1]=32
+  [PE] 1930000 pe_enable  act[0][0][0]=-108 act[0][0][1]=-1  wgt[0][0][0]=107 wgt[0][0][1]=107  clr=0
+  [PE] 1930000 pe_valid  psum_r0c0[0]=8208 psum_r1c0[0]=-1974 psum_r2c0[0]=0
+  [ACT-WR] 1930000  act0[0]=10 act0[1]=4  wr_en=1111  addr_hold=1
+  [SEQ] 1934000 ss=4->5 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1934000 reduced[0][0]=6234 reduced[0][1]=601  col_psum[0][0]=6234
+  [PASS] bank2 — 3 addr verified
+  [SEQ] 1938000 ss=5->6 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=1
+  [SEQ] 1942000 ss=6->7 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1942000 pe_valid  psum_r0c0[0]=15660 psum_r1c0[0]=-13630 psum_r2c0[0]=0
+  [SEQ] 1946000 ss=7->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1946000 reduced[0][0]=2030 reduced[0][1]=3770  col_psum[0][0]=2030
+  [SEQ] 1950000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 1954000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [PE] 1954000 pe_valid  psum_r0c0[0]=4104 psum_r1c0[0]=-16074 psum_r2c0[0]=0
+  [SEQ] 1958000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [COLRED] 1958000 reduced[0][0]=-11970 reduced[0][1]=4313  col_psum[0][0]=-11970
+  [PPU] 1962000 IN  psum[0]=-11970 psum[1]=4313  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1962000 IN  psum[0]=10143 psum[1]=-8041  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1962000 IN  psum[0]=-4288 psum[1]=-3336  bias=0 m=1 sh=10 zp=0 act=1
+  [PPU] 1962000 IN  psum[0]=-33072 psum[1]=-16113  bias=0 m=1 sh=10 zp=0 act=1
+  [PSUM] 1962000  col0[0]=-11970 col0[1]=4313  col1[0]=10143  col2[0]=-4288  col3[0]=-33072
+  [PASS] bank3 — 3 addr verified
+═══════════ DW3 DONE ═══════════
+
+
+═══════════ TEST MP5 ═══════════
+  [DESC] pe_mode=4 cin=4 cout=4 hin=3 win=20 kh=5 kw=5 stride=1 pad=2
+  [ACCEPT] accepted, mode_reg=4 ppu_done_latch=0
+  [FSM] 2090000 state 0 -> 1  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [CFG] 2090000  mode=0 cin=0 cout=0 kh=0 kw=0 hin=0 win=0 hout=0 wout=0 act=0 zp_x=0
+  [FSM] 1 -> 2 at cycle 1
+  [FSM] 2094000 state 1 -> 2  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 2 -> 3 at cycle 2
+  [FSM] 2098000 state 2 -> 3  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 3 -> 4 at cycle 3
+  [FSM] 2102000 state 3 -> 4  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 2106000 ss=0->1 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2110000 ss=1->10 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [CP-E] cyc=40  pe_pool_valid  wr_en0=1
+  [OBANK] 2162000 ACT_WR  addr=0  d[0]=116 d[1]=116
+  [MP5] 2162000 pool_max[0]=116 pool_max[1]=116  ch=0 bank=0
+  [CP-E] cyc=56  pe_pool_valid  wr_en0=0
+  [OBANK] 2226000 ACT_WR  addr=0  d[0]=112 d[1]=112
+  [MP5] 2226000 pool_max[0]=112 pool_max[1]=112  ch=1 bank=1
+  [CP-E] cyc=72  pe_pool_valid  wr_en0=0
+  [OBANK] 2290000 ACT_WR  addr=0  d[0]=112 d[1]=112
+  [MP5] 2290000 pool_max[0]=112 pool_max[1]=112  ch=2 bank=2
+  [CP-E] cyc=88  pe_pool_valid  wr_en0=0
+  [OBANK] 2354000 ACT_WR  addr=0  d[0]=112 d[1]=112
+  [MP5] 2354000 pool_max[0]=112 pool_max[1]=112  ch=3 bank=3
+  [SEQ] 2362000 ss=10->8 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2366000 ss=8->9 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2370000 ss=9->10 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [CP-E] cyc=105  pe_pool_valid  wr_en0=1
+  [OBANK] 2422000 ACT_WR  addr=1  d[0]=116 d[1]=116
+  [MP5] 2422000 pool_max[0]=116 pool_max[1]=116  ch=0 bank=0
+  [CP-E] cyc=121  pe_pool_valid  wr_en0=0
+  [OBANK] 2486000 ACT_WR  addr=1  d[0]=112 d[1]=112
+  [MP5] 2486000 pool_max[0]=112 pool_max[1]=112  ch=1 bank=1
+  [CP-E] cyc=137  pe_pool_valid  wr_en0=0
+  [OBANK] 2550000 ACT_WR  addr=1  d[0]=112 d[1]=112
+  [MP5] 2550000 pool_max[0]=112 pool_max[1]=112  ch=2 bank=2
+  [CP-E] cyc=153  pe_pool_valid  wr_en0=0
+  [OBANK] 2614000 ACT_WR  addr=1  d[0]=112 d[1]=112
+  [MP5] 2614000 pool_max[0]=112 pool_max[1]=112  ch=3 bank=3
+  [SEQ] 2622000 ss=10->8 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2626000 ss=8->9 h=1 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2630000 ss=9->10 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [CP-E] cyc=170  pe_pool_valid  wr_en0=1
+  [OBANK] 2682000 ACT_WR  addr=2  d[0]=116 d[1]=116
+  [MP5] 2682000 pool_max[0]=116 pool_max[1]=116  ch=0 bank=0
+  [CP-E] cyc=186  pe_pool_valid  wr_en0=0
+  [OBANK] 2746000 ACT_WR  addr=2  d[0]=112 d[1]=112
+  [MP5] 2746000 pool_max[0]=112 pool_max[1]=112  ch=1 bank=1
+  [CP-E] cyc=202  pe_pool_valid  wr_en0=0
+  [OBANK] 2810000 ACT_WR  addr=2  d[0]=112 d[1]=112
+  [MP5] 2810000 pool_max[0]=112 pool_max[1]=112  ch=2 bank=2
+  [CP-E] cyc=218  pe_pool_valid  wr_en0=0
+  [OBANK] 2874000 ACT_WR  addr=2  d[0]=112 d[1]=112
+  [MP5] 2874000 pool_max[0]=112 pool_max[1]=112  ch=3 bank=3
+  [SEQ] 2882000 ss=10->8 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2886000 ss=8->9 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2890000 ss=9->11 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2894000 ss=11->0 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [FSM] 4 -> 5 at cycle 202
+  [FSM] 2898000 state 4 -> 5  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [SEQ] 2898000 ss=0->1 h=2 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [SEQ] 2902000 ss=1->10 h=0 wblk=0 cout_grp=0 cin=0 kw=0 pe_en=0 clr=0 ppu_trig=0
+  [FSM] 5 -> 8 at cycle 208
+  [FSM] 2922000 state 5 -> 8  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 8 -> 9 at cycle 209
+  tile_done after 209 cycles
+  [FSM] 2926000 state 8 -> 9  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [FSM] 2930000 state 9 -> 0  mode=4 k_pass=0 seq_done=0 ppu_done_l=0
+  [OBANK] 2954000 ACT_WR  addr=0  d[0]=116 d[1]=116
+  [MP5] 2954000 pool_max[0]=116 pool_max[1]=116  ch=0 bank=0
+  [PASS] bank0 — 3 addr verified
+    MISMATCH bank1 a=0 l=0  got=112(0x70) exp=110(0x6e)
+    MISMATCH bank1 a=0 l=1  got=112(0x70) exp=110(0x6e)
+    MISMATCH bank1 a=0 l=2  got=112(0x70) exp=110(0x6e)
+    MISMATCH bank1 a=0 l=3  got=112(0x70) exp=110(0x6e)
+    MISMATCH bank1 a=0 l=7  got=114(0x72) exp=113(0x71)
+  [OBANK] 3018000 ACT_WR  addr=0  d[0]=112 d[1]=112
+  [MP5] 3018000 pool_max[0]=112 pool_max[1]=112  ch=1 bank=1
+  [FAIL] bank1 — 33 mismatches / 60 bytes
+    MISMATCH bank2 a=0 l=0  got=112(0x70) exp=118(0x76)
+    MISMATCH bank2 a=0 l=1  got=112(0x70) exp=118(0x76)
+    MISMATCH bank2 a=0 l=2  got=112(0x70) exp=118(0x76)
+    MISMATCH bank2 a=0 l=3  got=112(0x70) exp=102(0x66)
+    MISMATCH bank2 a=0 l=5  got=104(0x68) exp=102(0x66)
+  [FAIL] bank2 — 45 mismatches / 60 bytes
+    MISMATCH bank3 a=0 l=0  got=112(0x70) exp=95(0x5f)
+    MISMATCH bank3 a=0 l=1  got=112(0x70) exp=95(0x5f)
+    MISMATCH bank3 a=0 l=2  got=112(0x70) exp=95(0x5f)
+    MISMATCH bank3 a=0 l=3  got=112(0x70) exp=88(0x58)
+    MISMATCH bank3 a=0 l=4  got=90(0x5a) exp=88(0x58)
+  [FAIL] bank3 — 57 mismatches / 60 bytes
+═══════════ MP5 DONE ═══════════
+
+
+==========================================
+  TOTAL:  13 PASS  /  3 FAIL
+==========================================
+SOME TESTS FAILED
+$finish called at time : 3075 ns : File "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_8_primitive_verify/tb/tb_stage8_cosim.sv" Line 513
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Apr  4 13:49:41 2026...

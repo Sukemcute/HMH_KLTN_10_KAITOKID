@@ -27,7 +27,7 @@ module column_reduce
   import accel_pkg::*;
 #(
   parameter int LANES   = accel_pkg::LANES,    // 20
-  parameter int PE_ROWS = accel_pkg::PE_ROWS,  // 3
+  parameter int N_ROWS  = accel_pkg::PE_ROWS,  // 3 (parameterizable for reuse)
   parameter int PE_COLS = accel_pkg::PE_COLS    // 4
 )(
   input  logic              clk,
@@ -36,10 +36,10 @@ module column_reduce
   // — Enable —
   input  logic              valid_in,
 
-  // — Input: partial sums from 3 PE rows × 4 columns × 20 lanes —
-  input  logic signed [31:0] row_psum [PE_ROWS][PE_COLS][LANES],
+  // — Input: partial sums from N_ROWS PE rows × PE_COLS columns × LANES lanes —
+  input  logic signed [31:0] row_psum [N_ROWS][PE_COLS][LANES],
 
-  // — Output: reduced sums per column × 20 lanes —
+  // — Output: reduced sums per column × LANES lanes —
   output logic signed [31:0] col_psum [PE_COLS][LANES],
   output logic               valid_out
 );
@@ -55,10 +55,9 @@ module column_reduce
   always_comb begin
     for (int c = 0; c < PE_COLS; c++) begin
       for (int l = 0; l < LANES; l++) begin
-        // 2-level adder tree: (row0 + row1) + row2
-        sum_comb[c][l] = row_psum[0][c][l]
-                       + row_psum[1][c][l]
-                       + row_psum[2][c][l];
+        sum_comb[c][l] = row_psum[0][c][l];
+        for (int rr = 1; rr < N_ROWS; rr++)
+          sum_comb[c][l] = sum_comb[c][l] + row_psum[rr][c][l];
       end
     end
   end
@@ -83,5 +82,16 @@ module column_reduce
       end
     end
   end
+
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && valid_in)
+      rtl_trace_pkg::rtl_trace_line("S1_COLRED",
+        $sformatf("c0l0=%0d c0l1=%0d c1l0=%0d c3l0=%0d",
+                  sum_comb[0][0], sum_comb[0][1], sum_comb[1][0], sum_comb[3][0]));
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

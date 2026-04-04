@@ -1,0 +1,12 @@
+{
+  "primitive": "upsample",
+  "pe_mode": "PE_PASS",
+  "swizzle": "SWZ_UPSAMPLE2X",
+  "cin": 4,
+  "cout": 4,
+  "hin": 2,
+  "win": 20,
+  "hout": 4,
+  "wout": 40,
+  "seed": 42
+}

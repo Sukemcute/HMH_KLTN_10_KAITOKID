@@ -1,0 +1,15 @@
+{
+  "primitive": "dw7",
+  "pe_mode": "PE_DW7",
+  "cin": 4,
+  "cout": 4,
+  "hin": 8,
+  "win": 20,
+  "hout": 8,
+  "wout": 20,
+  "stride": 1,
+  "padding": 3,
+  "activation": "none",
+  "num_k_pass": 3,
+  "seed": 42
+}

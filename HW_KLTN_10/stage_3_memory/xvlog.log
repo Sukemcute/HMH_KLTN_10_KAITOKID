@@ -1,0 +1,12 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/accel_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/desc_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/csr_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/rtl/metadata_ram.sv" into library work
+INFO: [VRFC 10-311] analyzing module metadata_ram
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_metadata_ram
+WARNING: [VRFC 10-3824] variable 'ok' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv:180]
+WARNING: [VRFC 10-3824] variable 'ok' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv:214]
+WARNING: [VRFC 10-3824] variable 'ok' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv:287]
+WARNING: [VRFC 10-3824] variable 'ok' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv:333]
+WARNING: [VRFC 10-3824] variable 'ok' must explicitly be declared as automatic or static [E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_metadata_ram.sv:387]

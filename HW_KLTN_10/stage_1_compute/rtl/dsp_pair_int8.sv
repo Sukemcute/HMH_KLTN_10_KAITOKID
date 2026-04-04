@@ -35,7 +35,9 @@
 // ============================================================================
 `timescale 1ns / 1ps
 
-module dsp_pair_int8 (
+module dsp_pair_int8 #(
+  parameter bit TRACE_EN = 1'b0  // simulation: log first pair in PE only
+)(
   input  logic              clk,
   input  logic              rst_n,
 
@@ -210,5 +212,16 @@ module dsp_pair_int8 (
     end
     // else: en_s4=0 → hold current value (no change)
   end
+
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && TRACE_EN && en)
+      rtl_trace_pkg::rtl_trace_line("S1_DSP",
+        $sformatf("xa=%0d xb=%0d w=%0d en=1 clr=%b | acc_a=%0d acc_b=%0d",
+                  x_a, x_b, w, clear, psum_a, psum_b));
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

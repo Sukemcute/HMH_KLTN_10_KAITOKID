@@ -1,0 +1,4 @@
+Running: xsim.dir/sim_stage8/xsimk.exe -runall -simmode gui -testplusarg USE_GOLDEN_VECTORS -wdb sim_stage8.wdb -simrunnum 0 -socket 61720
+Design successfully loaded
+Design Loading Memory Usage: 12828 KB (Peak: 12828 KB)
+Design Loading CPU Usage: 0 ms

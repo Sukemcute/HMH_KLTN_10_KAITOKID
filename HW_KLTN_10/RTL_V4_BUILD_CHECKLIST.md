@@ -1207,84 +1207,555 @@ TOTAL: ~24 instances
 ---
 ---
 
-# STAGE 8: PRIMITIVE VERIFICATION — 7 PE_MODES
-**Mục tiêu**: CÙNG 1 subcluster chạy đúng MỌI primitive qua descriptor config.
-**★ Gate quan trọng: chứng minh descriptor-driven execution hoạt động.**
+# STAGE 8: PRIMITIVE VERIFICATION — 9 PE_MODES (P0–P8 + P4/P7)
+
+**Mục tiêu**: CÙNG 1 subcluster chạy đúng MỌI primitive (P0–P8) qua descriptor config.
+Mỗi test chứng minh phần cứng cho output bit-exact với Python golden model.
+
+> **★ Gate quan trọng**: Descriptor-driven execution proven trước khi lên Stage 9.
+> **Deferred**: P9 (gemm_attn), P10 (int8_matmul), P11 (softmax_approx) → Stage 11.8 (QPSA block level).
 
 ---
 
-## ☐ 8.1 Test PE_RS3 (P0: Conv 3×3) — L0 Golden Vectors
+### Golden Vector Methodology — Áp dụng cho TẤT CẢ tests 8.1–8.9
 
-```
-Config:  pe_mode=PE_RS3, Cin=3, Cout=16, stride=2, kh=3, kw=3, act=RELU
-Input:   X_int8[3, 8, 64] (8 rows × 64 cols × 3 channels, tile from L0)
-Weight:  W_int8[16, 3, 3, 3] + bias[16] + m_int[16] + shift[16]
-Output:  Y_int8[16, 4, 32] (stride=2 halves spatial)
+Mỗi test tuân theo quy trình sau để extract và so sánh golden vectors:
 
-Verify:
-  ☐ Pre-fill GLB weight banks via DMA interface
-  ☐ Pre-fill GLB input banks (page B) via DMA interface
-  ☐ Page swap → tile_fsm start
-  ☐ tile_fsm: PREFILL_WT → PREFILL_IN → COMPUTE → PE_DRAIN → PPU_RUN → DONE
-  ☐ Read GLB output banks (ACT namespace)
-  ☐ Compare vs golden Python L0 output tile
+```python
+# ── generate_stage8_vectors.py  (chạy trên host Python) ──────────────────────
+# Bước 1: Load lượng tử hoá model và extract params cho từng layer/tile
+#   from PHASE1.python_golden.primitives.primitive_conv import rs_dense_3x3
+#   from PHASE1.python_golden.quant.quant_affine import make_requant_params
+#   params = model_quant_params["layer_N"]   # scale_x, zp_x, scale_w, scale_y, zp_y
+#   m_int, shift = make_requant_params(params["scale_x"], params["scale_w"], params["scale_y"])
 
-Pass: ≥99.99% bit-exact (verified = 99.99% in SW)
-```
+# Bước 2: Lấy input INT8 tile từ SW golden run (sau -128 mapping)
+#   X_int8 = golden_activations["layer_N_input"].astype(np.int8)  # range [-128, 127]
+#   W_int8 = quantized_weights["layer_N"].astype(np.int8)
 
-## ☐ 8.2 Test PE_OS1 (P1: Conv 1×1) — QC2f cv1 Vectors
+# Bước 3: Chạy SW golden primitive → capture output
+#   Y_golden = rs_dense_3x3(X_int8, W_int8, bias_int32, zp_x, m_int, shift, zp_y, act)
 
-```
-Config:  pe_mode=PE_OS1, Cin=32, Cout=64, stride=1, kh=1, kw=1, act=RELU
-Pass: ≥99% bit-exact
-```
+# Bước 4: Pack ra .hex files cho SystemVerilog testbench
+#   np.savetxt("tb_input.hex",  X_int8.flatten(), fmt="%02x")
+#   np.savetxt("tb_weight.hex", W_int8.flatten(), fmt="%02x")
+#   np.savetxt("tb_golden.hex", Y_golden.flatten(), fmt="%02x")
 
-## ☐ 8.3 Test PE_DW3 (P2: DW Conv 3×3) — SCDown cv2 Vectors
-
-```
-Config:  pe_mode=PE_DW3, C=128, stride=2, kh=3, kw=3, act=RELU
-★ 4 columns = 4 KHÁC channels (not cout)
-★ Per-channel bias/m_int/shift
-Pass: ≥99.9% bit-exact
+# Bước 5: SV testbench load hex → DMA → run → read output → diff với tb_golden.hex
+#   pass_count = sum(hw_out[i] == golden[i] for i in range(len(golden)))
+#   match_pct  = 100.0 * pass_count / len(golden)
 ```
 
-## ☐ 8.4 Test PE_MP5 (P3: MaxPool 5×5) — SPPF Vectors
+**Quy tắc so sánh chung**:
+- INT8 output: so sánh byte-by-byte, tính `match_%`.
+- INT32 PSUM intermediate: so sánh 32-bit word-by-word (cho DW7 pass1/2).
+- Scale/ZP metadata: kiểm tra register readback khớp với Python config.
+
+---
+
+## ☐ 8.1 Test PE_RS3 (P0: `rs_dense_3x3`) — Layer L0 Golden Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_conv.py :: rs_dense_3x3()`
+**Mục đích**: Verify toàn bộ pipeline RS dataflow: padding zp_x → MAC INT8×INT8 → ZP-correction → PPU half-up rounding → RELU clip.
 
 ```
-Config:  pe_mode=PE_MP5, C=128, K=5, stride=1, pad=2, NO PPU
-★ PE cluster BYPASSED. comparator_tree active.
-★ Output scale/zp = input scale/zp (unchanged).
-Pass: ≥99.9% bit-exact
+Config descriptor:
+  pe_mode   = PE_RS3
+  Cin=3, Cout=16, H_tile=8, W_tile=64
+  stride=2, kh=3, kw=3
+  zp_x=<L0 zp_x>  (pad value, NOT zero)
+  act_mode  = RELU
+  m_int[16], shift[16]  (per-channel, từ make_requant_params)
+  bias_int32[16]
+
+Input GLB layout:
+  GLB weight bank:  W_int8[16, 3, 3, 3]  (Cout × Cin × kH × kW)
+  GLB input bank B: X_int8[3, 8, 64]     (Cin × H × W, INT8 signed, padded với zp_x trên border)
+
+Testbench steps:
+  ☐ DMA load W_int8 → GLB weight banks (4 banks × 4 Cout each)
+  ☐ DMA load X_int8 → GLB input bank (page B)
+  ☐ Write descriptor registers: pe_mode, dims, zp_x, m_int/shift, act_mode
+  ☐ Trigger page_swap → tile_fsm START
+  ☐ FSM sequence: PREFILL_WT → PREFILL_IN → COMPUTE → PE_DRAIN → PPU_RUN → DONE
+  ☐ DMA read GLB output bank (ACT namespace) → hw_output[16, 4, 32]
+  ☐ diff hw_output vs Y_golden từ Python rs_dense_3x3()
+
+Critical verifications:
+  ☐ ZP correction: kiểm tra hardware trừ đúng  Σ_k(w_k) × zp_x  cho mỗi output channel
+  ☐ Half-up rounding: acc*m_int với INT64 intermediate, +2^(shift-1) trước >> shift
+  ☐ RELU clip: output ≥ zp_y (INT8 version of 0), max = 127
+  ☐ Stride=2: output spatial = (8-1)/2+1=4 rows, (64-1)/2+1=32 cols
+
+Golden vectors:  generate_stage8_vectors.py → layer="L0", tile=(0,0)
+Pass criteria:   ≥ 99.99% bit-exact  (SW verified: 99.99%)
 ```
 
-## ☐ 8.5 Test PE_PASS + UPSAMPLE (P6) — L11 Vectors
+---
+
+## ☐ 8.2 Test PE_OS1 (P1: `os_1x1`) — QC2f cv1 Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_conv.py :: os_1x1()`
+**Mục đích**: Verify Output-Stationary 1×1 conv: no padding, weight broadcast over all spatial positions, per-channel PPU.
 
 ```
-Config:  pe_mode=PE_PASS, swizzle=SWZ_UPSAMPLE2X
-★ PE + PPU BYPASSED. swizzle_engine only.
-★ 20×20 input → 40×40 output (address remap)
-Pass: 100% bit-exact (verified = 100.00%)
+Config descriptor:
+  pe_mode   = PE_OS1
+  Cin=32, Cout=64, H_tile=20, W_tile=20
+  stride=1, kh=1, kw=1
+  zp_x=<QC2f cv1 zp_x>
+  act_mode  = RELU
+  m_int[64], shift[64]
+
+Input GLB layout:
+  GLB weight bank:  W_int8[64, 32, 1, 1]  (flattened to W[64, 32])
+  GLB input bank B: X_int8[32, 20, 20]
+
+Testbench steps:
+  ☐ DMA load W_int8, X_int8 → GLB banks
+  ☐ Write descriptor (OS1 mode): no padding required
+  ☐ tile_fsm START → PREFILL_WT → PREFILL_IN → COMPUTE → PPU_RUN → DONE
+  ☐ DMA read output → hw_output[64, 20, 20]
+  ☐ diff vs Python os_1x1() golden
+
+Critical verifications:
+  ☐ Weight broadcast: cùng W[cout, :] nhân với tất cả spatial (H×W) positions
+  ☐ No spatial padding (kh=kw=1, no border)
+  ☐ ZP correction cho 1×1: Σ_k(w_k[cout]) × zp_x (tổng theo Cin axis)
+  ☐ Per-channel m_int/shift[64] áp đúng channel index
+  ☐ Output accumulator: INT32 → PPU → INT8, không overflow
+
+Golden vectors:  generate_stage8_vectors.py → layer="QC2f_L1_cv1", tile=(0,0)
+Pass criteria:   ≥ 99.99% bit-exact  (SW verified: 99.99%)
 ```
 
-## ☐ 8.6 Test PE_PASS + CONCAT (P5) — L12 Vectors
+---
+
+## ☐ 8.3 Test PE_DW3 (P2: `dw_3x3`) — SCDown cv2 Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_dw.py :: dw_3x3()`
+**Mục đích**: Verify Depthwise Conv: mỗi column PE xử lý MỘT channel riêng biệt, không có cross-channel mixing.
 
 ```
-Config:  pe_mode=PE_PASS, swizzle=SWZ_CONCAT
-★ Domain alignment: requant_to_common if scales differ.
-★ Barrier wait (skip connection F6 ready).
-Pass: 100% bit-exact (verified = 100.00%)
+Config descriptor:
+  pe_mode   = PE_DW3
+  C=128, H_tile=40, W_tile=40
+  stride=2, kh=3, kw=3
+  zp_x=<SCDown cv2 zp_x>
+  act_mode  = RELU
+  m_int[128], shift[128]  (per-channel — MỖI channel có params riêng)
+
+Input GLB layout:
+  GLB weight bank:  W_int8[128, 1, 3, 3]  (C × 1 × kH × kW, per-channel)
+  GLB input bank B: X_int8[128, 40, 40]
+
+★ ĐIỂM KHÁC BIỆT vs Dense Conv:
+  4 PE columns = 4 CHANNELS khác nhau (không phải 4 output channels của cùng 1 filter)
+  Mỗi column PE có weight kernel riêng của channel đó
+
+Testbench steps:
+  ☐ DMA load W_int8[c] vào đúng bank của column c (c=0..3 per tile, rotate over 128 channels)
+  ☐ DMA load X_int8[c, :, :] → GLB input cho từng channel tile
+  ☐ descriptor: dw_mode=1, per_channel_params pointer
+  ☐ tile_fsm START → COMPUTE (single channel per column) → PPU_RUN[c] → DONE
+  ☐ DMA read output → hw_output[128, 20, 20]
+  ☐ diff vs Python dw_3x3() golden
+
+Critical verifications:
+  ☐ Channel isolation: hw_output[c] không bị ảnh hưởng bởi weight/input channel khác
+  ☐ Per-channel PPU: m_int[c], shift[c], bias[c] load đúng cho column c
+  ☐ Padding: border pixels filled với zp_x[c] của channel c
+  ☐ stride=2: output spatial = 20×20
+
+Golden vectors:  generate_stage8_vectors.py → layer="SCDown_L4_cv2", tile=first_4_channels
+Pass criteria:   ≥ 99.9% bit-exact  (SW verified: 99.9%)
 ```
 
-## ☐ 8.7 Test PE_DW7 Multipass (P8: DW 7×7) — L22 Vectors
+---
+
+## ☐ 8.4 Test PE_MP5 (P3: `maxpool_5x5`) — SPPF Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_pool.py :: maxpool_5x5()`
+**Mục đích**: Verify MaxPool pathway: PE cluster BYPASSED hoàn toàn, comparator_tree active, scale/zp pass-through unchanged.
 
 ```
-Config:  pe_mode=PE_DW7, C=256, K=7, stride=1, pad=3, num_k_pass=3
-★ 3 passes: Pass1→PSUM, Pass2→PSUM, Pass3→PPU→INT8
-★ PSUM namespace in glb_output_bank holds intermediate results.
-Pass: ≥99.9% bit-exact (verified = 99.96%)
+Config descriptor:
+  pe_mode   = PE_MP5
+  C=128, H_tile=20, W_tile=20
+  K=5, stride=1, pad=2
+  NO PPU activation (output = input domain, unchanged scale/zp)
+
+★ ĐIỂM ĐẶC BIỆT — Quantization Invariant:
+  MaxPool không thay đổi quantization domain.
+  Output scale_y = input scale_x, zp_y = zp_x (pass-through).
+  comparator_tree so sánh INT8 SIGNED values trực tiếp (≡ compare float values khi same scale).
+
+★ Padding policy:
+  Border pixels pad với INT8_MIN = -128 (≡ float -∞ sau dequantize)
+  KHÁC với conv padding (dùng zp_x)
+
+Input GLB layout:
+  GLB input bank B: X_int8[128, 20, 20]
+  (GLB weight bank: không dùng)
+
+Testbench steps:
+  ☐ DMA load X_int8 → GLB input bank B
+  ☐ Descriptor: pe_mode=PE_MP5, K=5, pad=2, pad_value=-128 (not zp_x!)
+  ☐ tile_fsm START → COMPUTE (comparator_tree only) → DONE (PPU_RUN skipped)
+  ☐ Verify: PE datapath clock-gated/disabled trong MP5 mode
+  ☐ DMA read output → hw_output[128, 20, 20]
+  ☐ diff vs Python maxpool_5x5() golden
+
+Critical verifications:
+  ☐ pad_value = INT8_MIN (-128), KHÔNG phải zp_x
+  ☐ comparator_tree: signed INT8 comparison (−128 < −127 < ... < 127)
+  ☐ Scale/ZP registers: output metadata readback = input metadata (unchanged)
+  ☐ PE cluster power-gate hoặc clock-gate khi pe_mode=PE_MP5
+
+Golden vectors:  generate_stage8_vectors.py → layer="SPPF_L9_pool1", tile=(0,0)
+Pass criteria:   ≥ 99.9% bit-exact  (SW verified: 99.9%)
 ```
 
-**STAGE 8 SIGN-OFF**: Cùng 1 HW xử lý đúng 7 pe_modes. Descriptor-driven execution proven.
+---
+
+## ☐ 8.5 Test PE_PASS + SWZ_UP2X (P6: `upsample_nearest`) — L11 Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_tensor.py :: upsample_nearest()`
+**Mục đích**: Verify upsample 2× nearest-neighbor: PE + PPU BYPASSED, chỉ swizzle_engine remap addresses.
+
+```
+Config descriptor:
+  pe_mode   = PE_PASS
+  swizzle   = SWZ_UPSAMPLE2X
+  C=128, H_in=20, W_in=20
+  H_out=40, W_out=40  (scale_factor=2)
+  zp_y = zp_x, scale_y = scale_x  (domain unchanged)
+
+★ ĐIỂM ĐẶC BIỆT — Address Remap Only:
+  swizzle_engine nhân mỗi (row, col) của output bằng pixel từ input (row//2, col//2).
+  Không có arithmetic. Không có rounding.
+  Output = 100% copy giá trị input tại vị trí nearest.
+
+Input GLB layout:
+  GLB input bank B: X_int8[128, 20, 20]
+
+Testbench steps:
+  ☐ DMA load X_int8 → GLB input bank B
+  ☐ Descriptor: pe_mode=PE_PASS, swizzle=SWZ_UPSAMPLE2X, scale_factor=2
+  ☐ tile_fsm START → SWIZZLE_RUN → DONE  (COMPUTE và PPU_RUN skipped)
+  ☐ Verify: PE datapath và PPU clock-gated trong PASS mode
+  ☐ DMA read output → hw_output[128, 40, 40]
+  ☐ diff vs Python upsample_nearest() golden
+
+Critical verifications:
+  ☐ Pixel duplication: hw_output[c, 2r, 2c] == hw_output[c, 2r+1, 2c] == hw_output[c, 2r, 2c+1] == X[c, r, c]
+  ☐ Không có interpolation (pure nearest, not bilinear)
+  ☐ Output metadata registers: scale_y = scale_x, zp_y = zp_x (pass-through readback)
+
+Golden vectors:  generate_stage8_vectors.py → layer="L11_upsample", tile=full
+Pass criteria:   100% bit-exact  (SW verified: 100.00%)
+```
+
+---
+
+## ☐ 8.6 Test PE_PASS + SWZ_CONCAT (P5: `concat`) — L12 Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_tensor.py :: concat()` →
+`PHASE1/python_golden/quant/quant_domain_align.py :: align_and_concat()`
+**Mục đích**: Verify concat với domain alignment khi 2 tensor có scale/zp khác nhau, và barrier synchronization cho skip connection.
+
+```
+Config descriptor:
+  pe_mode   = PE_PASS
+  swizzle   = SWZ_CONCAT
+  Tensor A: X_a_int8[128, 40, 40], scale_a, zp_a  (từ L11 upsample output)
+  Tensor B: X_b_int8[128, 40, 40], scale_b, zp_b  (từ skip connection F6)
+  Output:   Y_int8[256, 40, 40],   scale_y, zp_y   (common domain)
+
+★ ĐIỂM ĐẶC BIỆT — Domain Alignment:
+  Nếu scale_a ≠ scale_b hoặc zp_a ≠ zp_b:
+    requant_a → common: Y_a = clip(round((X_a - zp_a)*m_a_int >> shift_a) + zp_y)
+    requant_b → common: Y_b = clip(round((X_b - zp_b)*m_b_int >> shift_b) + zp_y)
+  Nếu scale_a == scale_b và zp_a == zp_b: copy trực tiếp (no requant).
+
+★ Barrier Synchronization:
+  Tensor B đến từ skip connection → hardware phải ĐỢI barrier_b_ready trước khi concat.
+
+Input GLB layout:
+  GLB bank 0–3:   X_a_int8 (tensor A, from previous stage)
+  GLB bank 4–7:   X_b_int8 (tensor B, skip connection, loaded via DMA khi barrier ready)
+
+Testbench steps:
+  ☐ DMA load X_a → GLB banks 0-3
+  ☐ Simulate skip connection: DMA load X_b → GLB banks 4-7, THEN assert barrier_b_ready
+  ☐ Descriptor: swizzle=SWZ_CONCAT, m_a_int/shift_a, m_b_int/shift_b, zp_y
+  ☐ tile_fsm: WAIT_BARRIER → SWIZZLE_CONCAT_RUN → DONE
+  ☐ Verify: FSM đứng ở WAIT_BARRIER cho đến khi barrier_b_ready=1
+  ☐ DMA read output → hw_output[256, 40, 40]
+  ☐ diff vs Python align_and_concat() golden
+
+Critical verifications:
+  ☐ Barrier: FSM không proceed khi barrier_b_ready=0
+  ☐ Domain align: requant path active khi scale_a ≠ scale_b
+  ☐ No-requant fast path: active khi scale_a == scale_b (copy only)
+  ☐ Channel interleave: output[0:128] = requant(A), output[128:256] = requant(B)
+
+Golden vectors:  generate_stage8_vectors.py → layer="L12_concat", tensors=["L11_out", "F6_skip"]
+Pass criteria:   100% bit-exact  (SW verified: 100.00%)
+```
+
+---
+
+## ☐ 8.7 Test PE_DW7 Multipass (P8: `dw_7x7_multipass`) — L22 QC2fCIB Vectors
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_dw.py :: dw_7x7_multipass()`
+**Mục đích**: Verify 3-pass DW 7×7 với PSUM namespace accumulation giữa các pass.
+
+```
+Config descriptor (3 passes, 1 descriptor per pass):
+  Pass 1: pe_mode=PE_DW7, C=256, kh=7, kw=7, k_pass=0..2  → output=PSUM (INT32)
+  Pass 2: pe_mode=PE_DW7, C=256, kh=7, kw=7, k_pass=3..5  → acc_mode=ADD_PSUM
+  Pass 3: pe_mode=PE_DW7, C=256, kh=7, kw=7, k_pass=6     → PPU_RUN → INT8 output
+
+★ Split strategy (config.py DW7x7_SPLIT):
+  Kernel rows split: [0:3] = rows 0,1,2; [3:6] = rows 3,4,5; [6:7] = row 6
+  Each pass loads partial kernel rows → accumulates into PSUM namespace
+
+★ PSUM namespace:
+  GLB_output_bank PSUM region: holds INT32 accumulated partial sums between passes
+  Pass1: write fresh PSUM; Pass2: read+add PSUM; Pass3: read+add PSUM → PPU → INT8
+
+★ Line buffer constraint:
+  DW 7×7 requires 7-row line buffer → exceeds single-pass HW limit → MUST use 3 passes
+
+Input GLB layout:
+  GLB weight bank:   W_int8[256, 1, 7, 7]  (per-channel 7×7 kernels)
+  GLB input bank B:  X_int8[256, H, W]     (padded với zp_x, pad=3)
+  GLB psum region:   INT32[256, H_out, W_out]  (accumulator between passes)
+
+Testbench steps:
+  ☐ DMA load W_int8 (all 3 row-groups), X_int8 → GLB
+  ☐ Pass 1 descriptor: k_rows=0..2, acc_init=ZERO_PSUM
+  ☐ tile_fsm: COMPUTE → PE_DRAIN → WRITE_PSUM (NO PPU)
+  ☐ Pass 2 descriptor: k_rows=3..5, acc_init=READ_PSUM
+  ☐ tile_fsm: COMPUTE → PE_DRAIN → WRITE_PSUM (NO PPU)
+  ☐ Pass 3 descriptor: k_rows=6..6, acc_init=READ_PSUM, final=true
+  ☐ tile_fsm: COMPUTE → PE_DRAIN → PPU_RUN → WRITE_ACT
+  ☐ DMA read output → hw_output[256, H_out, W_out]
+  ☐ diff vs Python dw_7x7_multipass() golden
+
+Critical verifications:
+  ☐ PSUM persistence: INT32 value sau Pass1 == (Pass2 reads exactly that value) 
+  ☐ Final pass: PPU applies m_int[c]/shift[c] đúng channel c trên INT32 PSUM
+  ☐ Pass1 PSUM ≠ 0 khi k_rows=0..2 đã compute (kiểm tra non-trivial accumulation)
+  ☐ 3 descriptors sequential: Pass3 không bắt đầu trước khi Pass2 DONE
+
+Golden vectors:  generate_stage8_vectors.py → layer="L22_QC2fCIB_dw7", tile=(0,0)
+Pass criteria:   ≥ 99.9% bit-exact  (SW verified: 99.96%)
+```
+
+---
+
+## ☐ 8.8 ★NEW: DMA Copy (P4: `move`) — Skip Connection Buffer
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_tensor.py :: move()`
+**Mục đích**: Verify DMA copy tensor từ GLB region này sang region khác (hoặc DRAM→GLB) với metadata pass-through và barrier signal.
+
+```
+★ P4 MOVE không phải pe_mode — đây là DMA controller operation:
+  move() = copy INT8 tensor + copy quantization metadata (scale, zp)
+  Dùng cho: lưu skip connection tensors trước khi chúng bị overwrite bởi layer tiếp theo
+
+Config (DMA descriptor):
+  src_addr:  GLB region A (e.g., output of L3)
+  dst_addr:  GLB skip buffer (reserved region for skip connections)
+  length:    C × H × W bytes
+  metadata:  {scale, zp} copied alongside tensor data
+
+Use cases trong model:
+  F6  (L3→L12 skip): move output L3 → skip buffer, hold until L12 concat
+  F12 (L7→L15 skip): move output L7 → skip buffer, hold until L15 concat
+  F13 (L14→L21 skip): move output L14 → skip buffer
+
+Testbench steps:
+  ☐ DMA load source tensor X_int8[C, H, W] → GLB region A với scale_x, zp_x
+  ☐ Issue DMA MOVE descriptor: src=region_A, dst=skip_buffer, length=C*H*W
+  ☐ DMA controller executes copy (no PE/PPU involvement)
+  ☐ Assert barrier_ready signal cho skip buffer sau khi copy hoàn thành
+  ☐ Read GLB skip_buffer → hw_copy[C, H, W]
+  ☐ Verify: hw_copy byte-by-byte == X_int8 (no modification)
+  ☐ Verify: metadata registers for skip_buffer == {scale_x, zp_x} (pass-through)
+  ☐ Verify: barrier_ready signal asserted sau DONE, deasserted khi skip buffer consumed
+
+Critical verifications:
+  ☐ Data integrity: zero modification to tensor values during copy
+  ☐ Metadata pass-through: scale, zp registers copied correctly to destination slot
+  ☐ Barrier protocol: barrier_ready=1 chỉ sau khi copy DONE
+  ☐ Overlap safety: copy không corrupt data trong GLB regions đang active
+
+Golden vectors:  generate_stage8_vectors.py → layer="L3_output", use_case="F6_skip"
+Pass criteria:   100% bit-exact (copy is lossless — any mismatch = FAIL)
+```
+
+---
+
+## ☐ 8.9 ★NEW: PE_PASS Domain-Align (P7: `ewise_add`) — QC2fCIB Shortcut
+
+**Primitive Python**: `PHASE1/python_golden/primitives/primitive_tensor.py :: ewise_add()` →
+`PHASE1/python_golden/quant/quant_domain_align.py :: align_and_add()`
+**Mục đích**: Verify element-wise add với domain alignment, critical cho QC2fCIB và QPSA shortcut connections (xuất hiện nhiều nhất trong các layer cuối model).
+
+```
+Config descriptor:
+  pe_mode   = PE_PASS
+  swizzle   = SWZ_EWISE_ADD
+  Tensor A: X_a_int8[C, H, W], scale_a, zp_a  (main path output)
+  Tensor B: X_b_int8[C, H, W], scale_b, zp_b  (shortcut/residual)
+  Output:   Y_int8[C, H, W],   scale_y, zp_y   (common output domain)
+
+★ ĐIỂM KHÁC BIỆT vs CONCAT:
+  Add là element-wise (không concat channels)
+  Cả 2 tensor phải được align về common domain TRƯỚC khi cộng
+  Sau cộng: sum có thể overflow INT8 → clip [−128, 127]
+
+★ Domain Alignment + Add pipeline:
+  Bước 1: requant A → common: A' = clip(round((A − zp_a)*m_a >> shift_a) + zp_common)
+  Bước 2: requant B → common: B' = clip(round((B − zp_b)*m_b >> shift_b) + zp_common)
+  Bước 3: add INT8: sum = A' + B'  (promote to INT16 để add, clip về INT8)
+  Bước 4: requant sum → output domain: Y = clip(round((sum - 2*zp_common)*m_out >> shift_out) + zp_y)
+
+★ Use cases trong model:
+  QC2fCIB shortcut (L17): bottleneck_main_out + shortcut_in → residual output
+  QPSA att_out + x_main (L13): attention residual add
+
+Input GLB layout:
+  GLB bank 0–3: X_a_int8[C, H, W]  (from tile_fsm output of main path)
+  GLB bank 4–7: X_b_int8[C, H, W]  (from skip buffer via DMA move — P4)
+
+Testbench steps:
+  ☐ DMA load X_a → GLB banks 0-3
+  ☐ DMA load X_b (from skip buffer, after barrier_b_ready) → GLB banks 4-7
+  ☐ Descriptor: swizzle=SWZ_EWISE_ADD, m_a/shift_a, m_b/shift_b, m_out/shift_out, zp_common, zp_y
+  ☐ tile_fsm: WAIT_BARRIER → SWIZZLE_ADD_RUN → DONE
+  ☐ DMA read output → hw_output[C, H, W]
+  ☐ diff vs Python align_and_add() golden
+
+Critical verifications:
+  ☐ Requant A and B independently to common domain (separate m/shift params)
+  ☐ INT16 intermediate sum: A'[i] + B'[i] không overflow INT8 trước khi clip
+  ☐ Final requant to output domain (3rd requant stage)
+  ☐ Barrier dependency: FSM waits for X_b (skip) trước khi start
+  ☐ Đây là CÙNG swizzle_engine với SWZ_CONCAT → test mode switching
+  ☐ Kiểm tra C=H=W: output shape == input shape (add, không concat)
+
+Golden vectors:  generate_stage8_vectors.py → layer="L17_QC2fCIB_shortcut"
+Pass criteria:   ≥ 99.9% bit-exact  (SW verified: align_and_add() ~100% match)
+```
+
+---
+
+## ☐ 8.10 Cross-Mode Descriptor Swap Test — Descriptor-Driven Execution Proof
+
+**Mục đích**: Chứng minh rằng CÙNG 1 subcluster hardware, khi nhận 2 descriptors khác nhau, cho ra 2 outputs ĐÚNG khác nhau tương ứng với 2 primitives khác nhau.
+
+```
+Test sequence (chạy trên cùng 1 subcluster, sequential):
+
+  Round 1:
+    ☐ Load X_small[16, 8, 8] vào GLB
+    ☐ Issue descriptor A: pe_mode=PE_RS3, Cin=16, Cout=16, stride=1, kh=3, kw=3
+    ☐ Run → capture output_A[16, 8, 8]
+    ☐ Compare output_A vs Python rs_dense_3x3() golden
+
+  Round 2 (cùng input, khác descriptor):
+    ☐ Load X_small[16, 8, 8] vào GLB (SAME input)
+    ☐ Issue descriptor B: pe_mode=PE_OS1, Cin=16, Cout=16, stride=1, kh=1, kw=1
+    ☐ Run → capture output_B[16, 8, 8]
+    ☐ Compare output_B vs Python os_1x1() golden
+    ☐ Verify: output_A ≠ output_B (different ops produce different results on same input)
+
+  Round 3 (switch to pool):
+    ☐ Load X_small[16, 8, 8] vào GLB
+    ☐ Issue descriptor C: pe_mode=PE_MP5, C=16, K=5, stride=1, pad=2
+    ☐ Run → capture output_C[16, 8, 8]
+    ☐ Compare output_C vs Python maxpool_5x5() golden
+
+Key assertions:
+  ☐ No register leakage: descriptor B không thừa hưởng state từ descriptor A
+  ☐ pe_mode enum decoded correctly: RS3 vs OS1 vs MP5 → 3 completely different datapaths
+  ☐ All 3 outputs bit-exact với SW golden
+
+Pass criteria: TẤT CẢ 3 rounds bit-exact, no cross-contamination between modes
+```
+
+---
+
+## STAGE 8 SIGN-OFF — Coverage Map P0–P14 đầy đủ
+
+```
+═══════════════════════════════════════════════════════════════════════════════
+NHÓM A: Verify tại Stage 8 (descriptor-driven tests trên subcluster)
+═══════════════════════════════════════════════════════════════════════════════
+☐ 8.1  PE_RS3   P0  rs_dense_3x3      ≥99.99% match  [ZP-correction + half-up]
+☐ 8.2  PE_OS1   P1  os_1x1            ≥99.99% match  [broadcast weight verify]
+☐ 8.3  PE_DW3   P2  dw_3x3            ≥99.9%  match  [per-channel params verify]
+☐ 8.4  PE_MP5   P3  maxpool_5x5       ≥99.9%  match  [PE bypass, INT8_MIN pad]
+☐ 8.5  PE_PASS  P6  upsample_2x       100%    match  [address remap only]
+☐ 8.6  PE_PASS  P5  concat            100%    match  [domain align + barrier]
+☐ 8.7  PE_DW7   P8  dw_7x7_multipass  ≥99.9%  match  [PSUM 3-pass verified]
+☐ 8.8  DMA      P4  move              100%    match  [lossless copy + metadata]
+☐ 8.9  PE_PASS  P7  ewise_add         ≥99.9%  match  [3-stage requant + clip]
+☐ 8.10 Cross-mode descriptor swap     ALL     exact  [no register leakage]
+
+═══════════════════════════════════════════════════════════════════════════════
+NHÓM B: Verify tại Stage 2 — PPU Foundation (prerequisite cho Stage 8)
+═══════════════════════════════════════════════════════════════════════════════
+★ P12  post_process_int32_to_int8   → Stage 2 Tests 2.1.1–2.1.8 (ppu.sv)
+       Pipeline: bias_add → INT64_mul → half-up_round/shift → clamp+zp_out
+       Stage 8 exercises P12 implicitly: mỗi test 8.1/8.2/8.3/8.7 → PPU_RUN
+       Standalone verified TRƯỚC Stage 8 (Stage 2 SIGN-OFF là prerequisite)
+
+★ P14  apply_relu                   → Stage 2 Test 2.1.3 + 2.1.7 (ppu.sv)
+       ACT_RELU: max(0, shifted) trong Stage 4 PPU pipeline
+       Test 2.1.3: shifted = [-100,-1,0,1,50,127,200] → [0,0,0,1,50,127,200]
+       Test 2.1.7: ACT_NONE (identity) để verify independence
+
+═══════════════════════════════════════════════════════════════════════════════
+NHÓM C: Primitive KHÔNG SỬ DỤNG trong model qYOLOv10n
+═══════════════════════════════════════════════════════════════════════════════
+N/A P13  apply_silu_lut              → KHÔNG DÙNG (RULE 4: model chỉ dùng ReLU)
+         Tất cả 23 layers L0–L22: act_mode = ACT_RELU hoặc ACT_NONE.
+         ACT_SILU không xuất hiện trong bất kỳ layer descriptor nào.
+         RTL file silu_lut.sv tồn tại (optional future use) nhưng không test bắt buộc.
+         Xác nhận: FPS_RESOURCE_INFERENCE_ANALYSIS §3.2: "P13 NOT USED (ReLU)"
+
+═══════════════════════════════════════════════════════════════════════════════
+NHÓM D: Deferred → Stage 11.8 (QPSA block — Layer L10 only)
+═══════════════════════════════════════════════════════════════════════════════
+⏸  P9   gemm_attn_basic             → Stage 11.8 (QPSA = L10 integration test)
+⏸  P10  _int8_matmul                → Stage 11.8 (PE_GEMM mode, matrix engine)
+⏸  P11  _softmax_int8_approx        → Stage 11.8 (float-approx softmax in QPSA)
+
+═══════════════════════════════════════════════════════════════════════════════
+BẢNG TÓM TẮT — TẤT CẢ 15 Primitives P0–P14
+═══════════════════════════════════════════════════════════════════════════════
+  P0  ✔ Stage 8.1    P1  ✔ Stage 8.2    P2  ✔ Stage 8.3    P3  ✔ Stage 8.4
+  P4  ✔ Stage 8.8    P5  ✔ Stage 8.6    P6  ✔ Stage 8.5    P7  ✔ Stage 8.9
+  P8  ✔ Stage 8.7    P9  ⏸ Stage 11.8   P10 ⏸ Stage 11.8   P11 ⏸ Stage 11.8
+  P12 ✔ Stage 2      P13 N/A (unused)   P14 ✔ Stage 2
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Coverage: 12/15 verified (P12+P14 ở Stage 2, P0-P8 ở Stage 8)
+            2/15 deferred  (P9,P10,P11 → Stage 11.8, QPSA only)
+            1/15 not used  (P13 SiLU — model dùng ReLU)
+            → 100% primitives được account for
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+★ GATE: Stage 9 chỉ được bắt đầu khi:
+  (1) Stage 2 SIGN-OFF PASS (PPU/P12/P14 bit-exact)
+  (2) Stage 8 tests 8.1–8.10 TẤT CẢ PASS
+★ Kết luận: 100% primitives P0–P14 đều được account for trong RTL checklist.
+  Descriptor-driven execution proven. 1 HW unit xử lý đúng tất cả pe_modes.
+```
 
 ---
 ---

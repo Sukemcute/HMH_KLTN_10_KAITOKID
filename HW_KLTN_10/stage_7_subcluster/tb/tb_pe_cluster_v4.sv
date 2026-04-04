@@ -35,7 +35,7 @@ module tb_pe_cluster_v4;
   logic          pe_enable;
   logic          pe_clear_acc;
 
-  int8_t         act_taps    [R][L];
+  int8_t         act_taps    [R][C][L];
   int8_t         wgt_data    [R][C][L];
 
   int32_t        col_psum    [C][L];
@@ -98,8 +98,9 @@ module tb_pe_cluster_v4;
     psum_accum_en <= 1'b0;
     pool_enable   <= 1'b0;
     for (int r = 0; r < R; r++)
-      for (int l = 0; l < L; l++)
-        act_taps[r][l] <= 8'sd0;
+      for (int c = 0; c < C; c++)
+        for (int l = 0; l < L; l++)
+          act_taps[r][c][l] <= 8'sd0;
     for (int r = 0; r < R; r++)
       for (int c = 0; c < C; c++)
         for (int l = 0; l < L; l++)
@@ -130,7 +131,7 @@ module tb_pe_cluster_v4;
   //
   //   Actually, in the cluster: act_taps[row] is the SAME for all cols.
   //   wgt_data[row][col] is DIFFERENT per col.
-  //   PE[r][c] accumulates over 9 enable cycles: sum of (act_taps[r][l] * wgt_data[r][c][l])
+  //   PE[r][c] accumulates: sum of (act_taps[r][c][l] * wgt_data[r][c][l])
   //   With act=1, wgt_c for all r and l: PE[r][c][l] = 9 * 1 * wgt_c = 9*wgt_c
   //   column_reduce sums 3 rows: col_psum[c][l] = 3 * 9 * wgt_c = 27 * wgt_c
   //
@@ -139,6 +140,7 @@ module tb_pe_cluster_v4;
   task automatic test_T7_1_1();
     int8_t wgt_per_col [C] = '{8'sd1, 8'sd2, 8'sd3, 8'sd4};
     int exp_psum [C]       = '{27, 54, 81, 108};
+    logic all_match;
 
     $display("\n===== T7.1.1: 4 independent cout (RS3 mode) =====");
     do_reset();
@@ -154,8 +156,9 @@ module tb_pe_cluster_v4;
     // Feed 9 cycles: act=1 everywhere, wgt different per column
     for (int cyc = 0; cyc < 9; cyc++) begin
       for (int r = 0; r < R; r++)
-        for (int l = 0; l < L; l++)
-          act_taps[r][l] <= 8'sd1;
+        for (int c = 0; c < C; c++)
+          for (int l = 0; l < L; l++)
+            act_taps[r][c][l] <= 8'sd1;
 
       for (int r = 0; r < R; r++)
         for (int c = 0; c < C; c++)
@@ -172,10 +175,10 @@ module tb_pe_cluster_v4;
 
     // Check col_psum
     for (int c = 0; c < C; c++) begin
-      logic all_match = 1;
+      all_match = 1'b1;
       for (int l = 0; l < L; l++) begin
         if (col_psum[c][l] !== exp_psum[c]) begin
-          all_match = 0;
+          all_match = 1'b0;
           $display("  MISMATCH: col_psum[%0d][%0d] = %0d, expected %0d",
                    c, l, col_psum[c][l], exp_psum[c]);
           break;
@@ -211,6 +214,7 @@ module tb_pe_cluster_v4;
   // ================================================================
   task automatic test_T7_1_2();
     int exp_psum [C] = '{18, 36, 54, 72};
+    logic all_match;
 
     $display("\n===== T7.1.2: DW mode (4 independent channels) =====");
     do_reset();
@@ -226,8 +230,9 @@ module tb_pe_cluster_v4;
     // Feed 3 cycles (kw=3)
     for (int cyc = 0; cyc < 3; cyc++) begin
       for (int r = 0; r < R; r++)
-        for (int l = 0; l < L; l++)
-          act_taps[r][l] <= int8_t'(r + 1);
+        for (int c = 0; c < C; c++)
+          for (int l = 0; l < L; l++)
+            act_taps[r][c][l] <= int8_t'(r + 1);
 
       for (int r = 0; r < R; r++)
         for (int c = 0; c < C; c++)
@@ -243,10 +248,10 @@ module tb_pe_cluster_v4;
     repeat (DSP_PIPE_DEPTH + 5) @(posedge clk);
 
     for (int c = 0; c < C; c++) begin
-      logic all_match = 1;
+      all_match = 1'b1;
       for (int l = 0; l < L; l++) begin
         if (col_psum[c][l] !== exp_psum[c]) begin
-          all_match = 0;
+          all_match = 1'b0;
           $display("  MISMATCH: col_psum[%0d][%0d] = %0d, expected %0d",
                    c, l, col_psum[c][l], exp_psum[c]);
           break;
@@ -267,59 +272,50 @@ module tb_pe_cluster_v4;
   //   For lane 0: override window[0] to +50 => max = +50.
   // ================================================================
   task automatic test_T7_1_3();
+    integer wait_cnt;
+
     $display("\n===== T7.1.3: MaxPool bypass (PE_MP5) =====");
     do_reset();
 
     pe_mode <= PE_MP5;
 
-    // Set up pool window
+    // Blocking '=' (same as tb_comparator_tree): NB drive can miss the same
+    // posedge as valid_in, so comparator samples X/zero window data.
     for (int i = 0; i < 25; i++)
       for (int l = 0; l < L; l++)
-        pool_window[i][l] <= int8_t'(i - 12);  // range [-12, +12]
+        pool_window[i][l] = int8_t'(i - 12);
 
-    // Override lane 0 window[0] with +50 to test per-lane independence
-    pool_window[0][0] <= 8'sd50;
-    // Override lane 5 window[10] with +100
-    pool_window[10][5] <= 8'sd100;
+    pool_window[0][0]   = 8'sd50;
+    pool_window[10][5]  = 8'sd100;
 
+    // Pulse pool_enable; watch pool_valid during the pipeline (valid_out is a 1-cycle pulse).
     @(posedge clk);
-
-    // Pulse pool_enable
     pool_enable <= 1'b1;
     @(posedge clk);
     pool_enable <= 1'b0;
-
-    // Wait for 5-stage comparator tree + margin
-    repeat (8) @(posedge clk);
-
-    // Wait for pool_valid
-    int wait_cnt = 0;
-    while (!pool_valid && wait_cnt < 20) begin
+    wait_cnt = 0;
+    repeat (12) begin
       @(posedge clk);
-      wait_cnt++;
+      if (pool_valid)
+        wait_cnt++;
     end
+    check("T7.1.3-a saw pool_valid pulse during pipeline", wait_cnt >= 1);
 
-    check("T7.1.3-a pool_valid asserted", pool_valid === 1'b1);
+    // Lane 0: max should be 50 (from window[0]) — max_out registers hold after pulse
+    check($sformatf("T7.1.3-b lane0 max=%0d (exp 50)", pool_max[0]),
+          pool_max[0] === 8'sd50);
 
-    if (pool_valid) begin
-      // Lane 0: max should be 50 (from window[0])
-      check($sformatf("T7.1.3-b lane0 max=%0d (exp 50)", pool_max[0]),
-            pool_max[0] === 8'sd50);
+    // Lane 5: max should be 100 (from window[10])
+    check($sformatf("T7.1.3-c lane5 max=%0d (exp 100)", pool_max[5]),
+          pool_max[5] === 8'sd100);
 
-      // Lane 5: max should be 100 (from window[10])
-      check($sformatf("T7.1.3-c lane5 max=%0d (exp 100)", pool_max[5]),
-            pool_max[5] === 8'sd100);
+    // Generic lanes: max should be +12 (window[24])
+    check($sformatf("T7.1.3-d lane1 max=%0d (exp 12)", pool_max[1]),
+          pool_max[1] === 8'sd12);
+    check($sformatf("T7.1.3-e lane10 max=%0d (exp 12)", pool_max[10]),
+          pool_max[10] === 8'sd12);
 
-      // Generic lanes (1,2,3,...): max should be +12 (window[24])
-      check($sformatf("T7.1.3-d lane1 max=%0d (exp 12)", pool_max[1]),
-            pool_max[1] === 8'sd12);
-      check($sformatf("T7.1.3-e lane10 max=%0d (exp 12)", pool_max[10]),
-            pool_max[10] === 8'sd12);
-
-      // Verify PE psum is independent (should not be affected by pool mode)
-      // Just log what we see — no hard requirement on psum during MP5
-      $display("  (PE psum during MP5 is don't-care — ignored as expected)");
-    end
+    $display("  (PE psum during MP5 is don't-care — ignored as expected)");
   endtask
 
   // ────────────────────────────────────────────────────────────
@@ -329,6 +325,10 @@ module tb_pe_cluster_v4;
     $display("========================================");
     $display(" tb_pe_cluster_v4 — Stage 7 Subcluster");
     $display("========================================");
+
+`ifdef RTL_TRACE
+    rtl_trace_pkg::rtl_trace_open("rtl_cycle_trace_s7_pe_cluster.log");
+`endif
 
     test_T7_1_1();
     test_T7_1_2();
@@ -342,6 +342,9 @@ module tb_pe_cluster_v4;
     else
       $display(" >>> SOME TESTS FAILED <<<");
     $display("========================================");
+`ifdef RTL_TRACE
+    rtl_trace_pkg::rtl_trace_close();
+`endif
     $finish;
   end
 
@@ -349,6 +352,9 @@ module tb_pe_cluster_v4;
   initial begin
     #100000;
     $display("[TIMEOUT] Simulation exceeded 100 us");
+`ifdef RTL_TRACE
+    rtl_trace_pkg::rtl_trace_close();
+`endif
     $finish;
   end
 

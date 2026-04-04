@@ -43,11 +43,16 @@ module tb_swizzle_engine;
   localparam int SRC_MEM_DEPTH = 4096;
   int8_t src_mem [SRC_MEM_DEPTH][LANES];
 
-  // Registered read (1-cycle latency as expected by FSM)
-  always_ff @(posedge clk) begin
-    if (src_rd_en && src_rd_addr < SRC_MEM_DEPTH) begin
-      for (int l = 0; l < LANES; l++)
-        src_rd_data[l] <= src_mem[src_rd_addr][l];
+  // Combinational read — models SRAM array output before the DUT's
+  // internal rd_data_lat register (which provides the 1-cycle pipeline).
+  // Using always_comb avoids the NBA-to-NBA simulation artifact where
+  // two back-to-back always_ff blocks create 2 cycles of delay instead of 1.
+  always_comb begin
+    for (int l = 0; l < LANES; l++) begin
+      if (src_rd_addr < SRC_MEM_DEPTH)
+        src_rd_data[l] = src_mem[src_rd_addr][l];
+      else
+        src_rd_data[l] = 8'sd0;
     end
   end
 
@@ -70,24 +75,56 @@ module tb_swizzle_engine;
   // ──────────────────────────────────────────────────────────────
   //  DUT instantiation
   // ──────────────────────────────────────────────────────────────
+  // Signals for source B (ewise_add) — tie off for basic tests
+  logic          src_b_rd_en;
+  logic [11:0]   src_b_rd_addr;
+  int8_t         src_b_rd_data [LANES];
+
+  // Source B memory model (for ewise_add tests)
+  int8_t src_b_mem [SRC_MEM_DEPTH][LANES];
+
+  always_comb begin
+    for (int l = 0; l < LANES; l++) begin
+      if (src_b_rd_addr < SRC_MEM_DEPTH)
+        src_b_rd_data[l] = src_b_mem[src_b_rd_addr][l];
+      else
+        src_b_rd_data[l] = 8'sd0;
+    end
+  end
+
   swizzle_engine #(.LANES(LANES)) u_dut (
-    .clk         (clk),
-    .rst_n       (rst_n),
-    .start       (start),
-    .cfg_mode    (cfg_mode),
-    .cfg_src_h   (cfg_src_h),
-    .cfg_src_w   (cfg_src_w),
-    .cfg_src_c   (cfg_src_c),
-    .cfg_dst_h   (cfg_dst_h),
-    .cfg_dst_w   (cfg_dst_w),
-    .src_rd_en   (src_rd_en),
-    .src_rd_addr (src_rd_addr),
-    .src_rd_data (src_rd_data),
-    .dst_wr_en   (dst_wr_en),
-    .dst_wr_addr (dst_wr_addr),
-    .dst_wr_data (dst_wr_data),
-    .dst_wr_mask (dst_wr_mask),
-    .done        (done)
+    .clk              (clk),
+    .rst_n            (rst_n),
+    .start            (start),
+    .cfg_mode         (cfg_mode),
+    .cfg_src_h        (cfg_src_h),
+    .cfg_src_w        (cfg_src_w),
+    .cfg_src_c        (cfg_src_c),
+    .cfg_dst_h        (cfg_dst_h),
+    .cfg_dst_w        (cfg_dst_w),
+    // Domain alignment — defaults for non-ewise tests
+    .cfg_align_m_a    (32'd1),
+    .cfg_align_sh_a   (8'd0),
+    .cfg_align_zp_a   (8'sd0),
+    .cfg_align_m_b    (32'd1),
+    .cfg_align_sh_b   (8'd0),
+    .cfg_align_zp_b   (8'sd0),
+    .cfg_align_zp_out (8'sd0),
+    .cfg_align_bypass (1'b1),
+    // Source A
+    .src_rd_en        (src_rd_en),
+    .src_rd_addr      (src_rd_addr),
+    .src_rd_data      (src_rd_data),
+    // Source B
+    .src_b_rd_en      (src_b_rd_en),
+    .src_b_rd_addr    (src_b_rd_addr),
+    .src_b_rd_data    (src_b_rd_data),
+    // Destination
+    .dst_wr_en        (dst_wr_en),
+    .dst_wr_addr      (dst_wr_addr),
+    .dst_wr_data      (dst_wr_data),
+    .dst_wr_mask      (dst_wr_mask),
+    .done             (done)
   );
 
   // ──────────────────────────────────────────────────────────────
@@ -129,8 +166,6 @@ module tb_swizzle_engine;
       if (cnt >= timeout_cycles)
         $display("[WARN] Timeout waiting for done after %0d cycles", timeout_cycles);
     end
-    @(posedge clk);
-    #1;
   endtask
 
   // Helper: clear memories
@@ -158,25 +193,22 @@ module tb_swizzle_engine;
     cfg_mode = SWZ_NORMAL;
     cfg_src_h = '0; cfg_src_w = '0; cfg_src_c = '0;
     cfg_dst_h = '0; cfg_dst_w = '0;
-    for (int l = 0; l < LANES; l++)
-      src_rd_data[l] = 8'sd0;
     clear_memories();
     repeat (4) @(posedge clk);
     rst_n = 1'b1;
     @(posedge clk);
 
     // ════════════════════════════════════════════════════════════
-    //  T5.3.1: SWZ_UPSAMPLE2X — 5h x 20w (1 wblk) → 10h x 40w (2 wblk)
+    //  T5.3.1: SWZ_UPSAMPLE2X — 5h x 20w → 10h x 20w (height dup)
     //   src: 5 rows, 1 channel, 1 wblk (20 pixels wide)
-    //   dst: 10 rows, 2 wblk (40 pixels wide)
-    //   Each source pixel duplicated in both width and height.
+    //   dst: 10 rows, 1 wblk (height doubled by block duplication)
     //
     //   src_wblk_total = ceil(20/20) = 1
-    //   dst_wblk_total = ceil(40/20) = 2
-    //   Source addresses: c*1 + w = 0..0 (single wblk per row)
-    //   Dest addresses for each src row h:
-    //     UP_WRITE_0: c * dst_wblk_total + w*2     = c*2 + w*2
-    //     UP_WRITE_1: c * dst_wblk_total + w*2 + 1 = c*2 + w*2 + 1
+    //   dst_wblk_total = ceil(20/20) = 1
+    //   For each src (h, c, w):
+    //     UP_WRITE_0: row 2h,   same wblk → addr = (2h)*C*1 + c*1 + w
+    //     UP_WRITE_1: row 2h+1, same wblk → addr = (2h+1)*C*1 + c*1 + w
+    //   Total writes = src_h * src_c * src_wblk_total * 2 = 5*1*1*2 = 10
     // ════════════════════════════════════════════════════════════
     $display("\n--- T5.3.1: SWZ_UPSAMPLE2X ---");
     clear_memories();
@@ -185,31 +217,10 @@ module tb_swizzle_engine;
     cfg_src_w = 10'd20;
     cfg_src_c = 10'd1;
     cfg_dst_h = 10'd10;
-    cfg_dst_w = 10'd40;
+    cfg_dst_w = 10'd20;
 
-    // Fill source memory: address 0 stores row h=0, addr pattern = h*1+0 for wblk=0
-    // For h rows, c channels, wblk blocks:
-    //   The FSM iterates w → c → h
-    //   src_addr = c * src_wblk_total + w
-    //   With 1 channel, 1 wblk: addr for each row = just the row index
-    //   But the FSM reads the same address for all rows of same (c,w),
-    //   advancing h in the outer loop.
-    //
-    //   Actually, looking at the FSM: counters are w→c→h
-    //   For h=0, c=0, w=0: src_addr = 0*1 + 0 = 0
-    //   For h=1, c=0, w=0: src_addr = 0*1 + 0 = 0 (SAME address!)
-    //
-    //   The FSM re-reads the same address for different h values.
-    //   This means the source memory is addressed by (c, wblk) only,
-    //   and height is encoded by external iteration (address generation
-    //   would need h contribution, but the FSM as written doesn't include h
-    //   in the src address). This is the expected behavior for a line-buffer
-    //   based system where h advances row-by-row externally.
-    //
-    //   For verification, we just check that:
-    //   - Each source read generates 2 destination writes (upsample2x in width)
-    //   - The destination addresses are correctly computed
-    //   - Total writes = src_h * src_c * src_wblk_total * 2
+    // Fill source: addr = src_h_off + c*1 + w.
+    // src_h_off = h * C * src_wblk = h * 1 * 1 = h.  So addr(h)=h.
     for (int a = 0; a < 10; a++)
       for (int l = 0; l < LANES; l++)
         src_mem[a][l] = 8'(a * 10 + l + 1);
@@ -219,17 +230,13 @@ module tb_swizzle_engine;
     check("T5.3.1_done", done == 1'b1,
           "Upsample should complete");
 
-    // Expected writes: src_h * src_c * src_wblk_total * 2 = 5 * 1 * 1 * 2 = 10
     check("T5.3.1_wr_count", dst_wr_count == 10,
           $sformatf("Expected 10 writes, got %0d", dst_wr_count));
 
-    // Verify write pairs: for each h iteration, UP_WRITE_0 addr = c*2+w*2,
-    //   UP_WRITE_1 addr = c*2+w*2+1
-    // With c=0, w=0: addresses are 0 and 1 for every h
-    // The source data at addr 0 should be duplicated to dst addr 0 and 1
+    // For h=0: UP_WRITE_0 → dst addr 0, UP_WRITE_1 → dst addr 1
+    // Both should contain src_mem[0] data (src addr for h=0 is 0).
     begin
       automatic logic data_ok = 1'b1;
-      // dst_mem[0] and dst_mem[1] should both contain src_mem[0] data
       for (int l = 0; l < LANES; l++) begin
         if (dst_mem[0][l] != src_mem[0][l]) data_ok = 1'b0;
         if (dst_mem[1][l] != src_mem[0][l]) data_ok = 1'b0;

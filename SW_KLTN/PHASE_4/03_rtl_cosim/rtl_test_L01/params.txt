@@ -1,9 +1,0 @@
-cout=32
-hout=160
-wout=160
-zp_out=66
-num_positions=4
-pos0=0,0
-pos1=0,80
-pos2=80,80
-pos3=159,159

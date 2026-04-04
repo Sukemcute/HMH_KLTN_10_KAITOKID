@@ -1,0 +1,1 @@
+"work.tb_addr_gen_weight" -s "sim_agw" -timescale "1ns/1ps" 

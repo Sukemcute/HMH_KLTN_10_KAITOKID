@@ -14,7 +14,7 @@ module tb_comparator_tree;
   localparam real CLK_PERIOD = 4.0;
   localparam int  L = LANES;         // 20
   localparam int  N = 25;            // 5×5 inputs
-  localparam int  PIPE = 5;          // 5-stage pipeline (not from DSP_PIPE_DEPTH)
+  localparam int  PIPE = 5;          // 5 registered compute stages; valid_out = valid_sr[5] → 6-cycle latency
 
   logic              clk   = 1'b0;
   logic              rst_n = 1'b0;
@@ -266,10 +266,9 @@ module tb_comparator_tree;
         count++;
       end
 
-      // Expected: valid_out appears after exactly 6 cycles
-      // (valid_sr is 6-bit, valid_out = valid_sr[5])
-      if (count != 5) begin
-        $display("  ERR: valid_out after %0d cycles, expected 5", count);
+      // valid_sr[5] → 6 rising edges after valid_in deasserts (5 data stages + 1 tap)
+      if (count != 6) begin
+        $display("  ERR: valid_out after %0d cycles, expected 6", count);
         t_err++;
       end
 

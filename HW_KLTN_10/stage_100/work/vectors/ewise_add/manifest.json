@@ -1,0 +1,12 @@
+{
+  "primitive": "ewise_add",
+  "pe_mode": "PE_PASS",
+  "swizzle": "SWZ_EWISE_ADD",
+  "cin": 4,
+  "cout": 4,
+  "hin": 1,
+  "win": 20,
+  "hout": 1,
+  "wout": 20,
+  "seed": 42
+}

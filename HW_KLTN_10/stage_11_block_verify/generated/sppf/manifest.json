@@ -1,0 +1,18 @@
+{
+  "block": "sppf",
+  "steps": [
+    "os1_relu",
+    "mp5",
+    "mp5",
+    "mp5",
+    "concat",
+    "os1_relu"
+  ],
+  "cin": 4,
+  "cout": 4,
+  "hin": 4,
+  "win": 20,
+  "hout": 4,
+  "wout": 20,
+  "seed": 42
+}

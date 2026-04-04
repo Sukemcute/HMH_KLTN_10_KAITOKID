@@ -90,4 +90,15 @@ module window_gen
   // ── Valid: enough rows shifted in for current kernel width ──
   assign taps_valid = (fill_count >= cfg_k) & shift_in_valid;
 
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && (shift_in_valid || flush))
+      rtl_trace_pkg::rtl_trace_line("S5_WIN",
+        $sformatf("k=%0d shift_v=%b flush=%b fill=%0d tv=%0d in0=%0d t00=%0d",
+                  cfg_k, shift_in_valid, flush, fill_count, taps_valid, shift_in[0], taps[0][0]));
+  end
+`endif
+  // synthesis translate_on
+
 endmodule

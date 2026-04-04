@@ -117,4 +117,17 @@ module shadow_reg_file
     end
   end
 
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && latch_en)
+      rtl_trace_pkg::rtl_trace_line("S6_SHDW",
+        $sformatf("mode=%0d cin=%0d cout=%0d hin=%0d win=%0d hout=%0d wout=%0d kh=%0d kw=%0d",
+                  layer_desc_in.pe_mode, layer_desc_in.cin, layer_desc_in.cout,
+                  layer_desc_in.hin, layer_desc_in.win, layer_desc_in.hout, layer_desc_in.wout,
+                  layer_desc_in.kh, layer_desc_in.kw));
+  end
+`endif
+  // synthesis translate_on
+
 endmodule

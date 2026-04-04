@@ -170,6 +170,11 @@ module tb_shadow_reg_file;
   //          verify outputs DON'T change until next latch.
   // ================================================================
   task automatic test_T6_2_2();
+    pe_mode_e    snap_mode;
+    logic [9:0]  snap_cin;
+    logic [9:0]  snap_cout;
+    logic [3:0]  snap_kw;
+    logic [15:0] snap_tid;
     $display("\n===== T6.2.2: Stability after latch =====");
     do_reset();
 
@@ -190,11 +195,11 @@ module tb_shadow_reg_file;
     @(posedge clk);
 
     // Snapshot outputs after latch
-    pe_mode_e    snap_mode   = o_pe_mode;
-    logic [9:0]  snap_cin    = o_cin;
-    logic [9:0]  snap_cout   = o_cout;
-    logic [3:0]  snap_kw     = o_kw;
-    logic [15:0] snap_tid    = o_tile_id;
+    snap_mode = o_pe_mode;
+    snap_cin  = o_cin;
+    snap_cout = o_cout;
+    snap_kw   = o_kw;
+    snap_tid  = o_tile_id;
 
     check("T6.2.2-a initial pe_mode=PE_RS3", snap_mode === PE_RS3);
     check("T6.2.2-b initial cin=16",         snap_cin === 10'd16);

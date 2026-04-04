@@ -1,0 +1,32 @@
+{
+  "pe_mode": "PE_RS3",
+  "cin": 1,
+  "cout": 4,
+  "hin": 3,
+  "win": 20,
+  "hout": 3,
+  "wout": 20,
+  "kh": 3,
+  "kw": 3,
+  "stride": 1,
+  "padding": 1,
+  "activation": "relu",
+  "zp_x": 0,
+  "seed": 42,
+  "in_bank_addrs": [
+    1,
+    1,
+    1
+  ],
+  "wt_bank_addrs": [
+    12,
+    12,
+    12
+  ],
+  "out_bank_addrs": [
+    3,
+    3,
+    3,
+    3
+  ]
+}

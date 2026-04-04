@@ -1,0 +1,1 @@
+"work.tb_stage8_subcluster_primitives" -s "sim_stage8" -timescale "1ns/1ps" 

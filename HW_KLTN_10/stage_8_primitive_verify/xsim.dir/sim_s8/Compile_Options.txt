@@ -1,0 +1,1 @@
+"work.tb_stage8_cosim" -s "sim_s8" -timescale "1ns/1ps" -log "xelab_s8.log" 

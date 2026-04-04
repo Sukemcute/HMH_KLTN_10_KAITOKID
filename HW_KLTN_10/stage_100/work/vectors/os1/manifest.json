@@ -1,0 +1,14 @@
+{
+  "primitive": "os1",
+  "pe_mode": "PE_OS1",
+  "cin": 4,
+  "cout": 4,
+  "hin": 2,
+  "win": 20,
+  "hout": 2,
+  "wout": 20,
+  "stride": 1,
+  "padding": 0,
+  "activation": "relu",
+  "seed": 42
+}

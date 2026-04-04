@@ -1,0 +1,1 @@
+"work.tb_router_cluster_v2" -s "sim_rcv2" -timescale "1ns/1ps" 

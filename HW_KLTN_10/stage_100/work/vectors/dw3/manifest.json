@@ -1,0 +1,14 @@
+{
+  "primitive": "dw3",
+  "pe_mode": "PE_DW3",
+  "cin": 4,
+  "cout": 4,
+  "hin": 4,
+  "win": 20,
+  "hout": 4,
+  "wout": 20,
+  "stride": 1,
+  "padding": 1,
+  "activation": "none",
+  "seed": 42
+}

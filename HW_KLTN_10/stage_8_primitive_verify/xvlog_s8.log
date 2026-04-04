@@ -1,0 +1,46 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/accel_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/desc_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/csr_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/rtl_trace_pkg.sv" into library work
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/dsp_pair_int8.sv" into library work
+INFO: [VRFC 10-311] analyzing module dsp_pair_int8
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/pe_unit.sv" into library work
+INFO: [VRFC 10-311] analyzing module pe_unit
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/column_reduce.sv" into library work
+INFO: [VRFC 10-311] analyzing module column_reduce
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/comparator_tree.sv" into library work
+INFO: [VRFC 10-311] analyzing module comparator_tree
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_2_ppu/rtl/ppu.sv" into library work
+INFO: [VRFC 10-311] analyzing module ppu
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/rtl/glb_input_bank_db.sv" into library work
+INFO: [VRFC 10-311] analyzing module glb_input_bank_db
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/rtl/glb_weight_bank.sv" into library work
+INFO: [VRFC 10-311] analyzing module glb_weight_bank
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/rtl/glb_output_bank.sv" into library work
+INFO: [VRFC 10-311] analyzing module glb_output_bank
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/rtl/metadata_ram.sv" into library work
+INFO: [VRFC 10-311] analyzing module metadata_ram
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_4_addr_gen/rtl/addr_gen_input.sv" into library work
+INFO: [VRFC 10-311] analyzing module addr_gen_input
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_4_addr_gen/rtl/addr_gen_weight.sv" into library work
+INFO: [VRFC 10-311] analyzing module addr_gen_weight
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_4_addr_gen/rtl/addr_gen_output.sv" into library work
+INFO: [VRFC 10-311] analyzing module addr_gen_output
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_5_data_movement/rtl/router_cluster_v2.sv" into library work
+INFO: [VRFC 10-311] analyzing module router_cluster_v2
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_5_data_movement/rtl/window_gen.sv" into library work
+INFO: [VRFC 10-311] analyzing module window_gen
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_5_data_movement/rtl/swizzle_engine.sv" into library work
+INFO: [VRFC 10-311] analyzing module swizzle_engine
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/rtl/tile_fsm.sv" into library work
+INFO: [VRFC 10-311] analyzing module tile_fsm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/rtl/shadow_reg_file.sv" into library work
+INFO: [VRFC 10-311] analyzing module shadow_reg_file
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/rtl/compute_sequencer.sv" into library work
+INFO: [VRFC 10-311] analyzing module compute_sequencer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/rtl/pe_cluster_v4.sv" into library work
+INFO: [VRFC 10-311] analyzing module pe_cluster_v4
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/rtl/subcluster_datapath.sv" into library work
+INFO: [VRFC 10-311] analyzing module subcluster_datapath
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_8_primitive_verify/tb/tb_stage8_cosim.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_stage8_cosim

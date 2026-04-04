@@ -64,7 +64,7 @@ module ppu
   assign act_valid = valid_pipe[4];
 
   // ════════════════════════════════════════════════════════════════
-  // Pipeline parameter latch (hold params stable through pipeline)
+  // Pipeline parameter latch — each stage captures params alongside data
   // ════════════════════════════════════════════════════════════════
   int32_t    bias_s1;
   uint32_t   m_int_s2;
@@ -72,19 +72,30 @@ module ppu
   act_mode_e act_s3, act_s4;
   int8_t     zp_s4, zp_s5;
 
-  always_ff @(posedge clk) begin
-    // Latch on psum_valid (stage 0 → 1)
-    if (psum_valid) begin
-      bias_s1  <= bias_val;
-      m_int_s2 <= m_int;
-      shift_s2 <= shift_val;
-      act_s3   <= activation;
-      zp_s4    <= zp_out;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      bias_s1  <= 32'sd0;
+      m_int_s2 <= 32'd0;
+      shift_s2 <= 8'd0;
+      shift_s3 <= 8'd0;
+      act_s3   <= ACT_NONE;
+      act_s4   <= ACT_NONE;
+      zp_s4    <= 8'sd0;
+      zp_s5    <= 8'sd0;
+    end else begin
+      // Stage 0→1: latch params when new psum arrives
+      if (psum_valid) begin
+        bias_s1  <= bias_val;
+        m_int_s2 <= m_int;
+        shift_s2 <= shift_val;
+        act_s3   <= activation;
+        zp_s4    <= zp_out;
+      end
+      // Stage 1→2, 2→3, 3→4: forward only when data is flowing
+      if (valid_pipe[0]) shift_s3 <= shift_s2;
+      if (valid_pipe[1]) act_s4   <= act_s3;
+      if (valid_pipe[2]) zp_s5    <= zp_s4;
     end
-    // Forward through pipeline
-    shift_s3 <= shift_s2;
-    act_s4   <= act_s3;
-    zp_s5    <= zp_s4;
   end
 
   // ════════════════════════════════════════════════════════════════
@@ -206,5 +217,33 @@ module ppu
       end
     end
   end
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (psum_valid)
+        $display("  [PPU] %0t IN  psum[0]=%0d psum[1]=%0d  bias=%0d m=%0d sh=%0d zp=%0d act=%0d",
+                 $time, psum_in[0], psum_in[1], bias_val, m_int, shift_val, zp_out, activation);
+      if (act_valid)
+        $display("  [PPU] %0t OUT act[0]=%0d act[1]=%0d",
+                 $time, act_out[0], act_out[1]);
+    end
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (psum_valid)
+        rtl_trace_pkg::rtl_trace_line("S2_PPU_IN",
+          $sformatf("p0=%0d p1=%0d bias=%0d m=%0d sh=%0d zp=%0d act=%0d",
+                    psum_in[0], psum_in[1], bias_val, m_int, shift_val, zp_out, activation));
+      if (act_valid)
+        rtl_trace_pkg::rtl_trace_line("S2_PPU_OUT",
+          $sformatf("a0=%0d a1=%0d", act_out[0], act_out[1]));
+    end
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

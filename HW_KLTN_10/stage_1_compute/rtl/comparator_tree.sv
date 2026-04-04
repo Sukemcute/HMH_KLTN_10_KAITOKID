@@ -167,4 +167,17 @@ module comparator_tree
     end
   end
 
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && valid_in)
+      rtl_trace_pkg::rtl_trace_line("S1_CMPIN",
+        $sformatf("d0_0=%0d d0_1=%0d", data_in[0][0], data_in[0][1]));
+    if (rst_n && valid_out)
+      rtl_trace_pkg::rtl_trace_line("S1_CMPOUT",
+        $sformatf("max0=%0d max1=%0d", max_out[0], max_out[1]));
+  end
+`endif
+  // synthesis translate_on
+
 endmodule

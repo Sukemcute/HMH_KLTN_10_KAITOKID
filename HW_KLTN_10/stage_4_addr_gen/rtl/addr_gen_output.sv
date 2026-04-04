@@ -60,4 +60,16 @@ module addr_gen_output
     end
   end
 
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n)
+      rtl_trace_pkg::rtl_trace_line("S4_AGO",
+        $sformatf("h=%0d wb=%0d cg=%0d o0=%0d o1=%0d o2=%0d o3=%0d",
+                  iter_h_out, iter_wblk, iter_cout_group,
+                  out_addr[0], out_addr[1], out_addr[2], out_addr[3]));
+  end
+`endif
+  // synthesis translate_on
+
 endmodule

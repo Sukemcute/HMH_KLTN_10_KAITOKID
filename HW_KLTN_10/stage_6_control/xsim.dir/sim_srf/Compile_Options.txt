@@ -1,0 +1,1 @@
+"work.tb_shadow_reg_file" -s "sim_srf" -timescale "1ns/1ps" 

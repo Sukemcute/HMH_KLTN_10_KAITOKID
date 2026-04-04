@@ -1,0 +1,36 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe work.tb_stage8_cosim -s sim_s8 -timescale 1ns/1ps -log xelab_s8.log 
+Multi-threading is on. Using 10 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 12 differs from formal bit length 11 for port 'wr_addr' [e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/rtl/subcluster_datapath.sv:401]
+WARNING: [VRFC 10-3645] port 'psum_valid' remains unconnected for this instance [e:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_7_subcluster/rtl/pe_cluster_v4.sv:77]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.desc_pkg
+Compiling package work.accel_pkg
+Compiling module work.tile_fsm
+Compiling module work.shadow_reg_file
+Compiling module work.compute_sequencer
+Compiling module work.addr_gen_input(LANES=20)
+Compiling module work.addr_gen_weight(LANES=20,PE_COLS...
+Compiling module work.addr_gen_output(LANES=20,PE_COLS...
+Compiling module work.glb_input_bank_db_default
+Compiling module work.glb_weight_bank_default
+Compiling module work.glb_output_bank_default
+Compiling module work.metadata_ram_default
+Compiling module work.router_cluster_v2(LANES=20,PE_RO...
+Compiling module work.window_gen(LANES=20)
+Compiling module work.dsp_pair_int8
+Compiling module work.pe_unit(LANES=20)
+Compiling module work.column_reduce(LANES=20,N_ROWS=3,...
+Compiling module work.comparator_tree(LANES=20)
+Compiling module work.pe_cluster_v4(LANES=20,PE_ROWS=3...
+Compiling module work.ppu(LANES=20)
+Compiling module work.swizzle_engine(LANES=20)
+Compiling module work.subcluster_datapath(LANES=20,PE_...
+Compiling module work.tb_stage8_cosim
+Built simulation snapshot sim_s8

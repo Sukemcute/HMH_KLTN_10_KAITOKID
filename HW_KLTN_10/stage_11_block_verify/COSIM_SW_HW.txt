@@ -1,0 +1,59 @@
+================================================================================
+Cosim: cung input -> primitive Python (SW_KLTN) vs subcluster (HW_KLTN_10)
+================================================================================
+
+Tai lieu nguyen thuy (primitive / mapping)
+------------------------------------------
+  FUNCTION/SW_KLTN/documentation/4_Primitives_Implementation/
+    00_overview.md, 01_conv_primitives.md, 02_dw_primitives.md, ...
+  Ma golden Python: FUNCTION/SW_KLTN/python_golden_originial/primitives/
+    primitive_conv.py  (rs_dense_3x3, os_1x1)
+    primitive_dw.py, primitive_pool.py, primitive_tensor.py, ...
+
+Checklist xuat vector + so sanh HW: HW_KLTN_10/RTL_V4_BUILD_CHECKLIST.md
+  Muc STAGE 8 "Golden Vector Methodology"
+
+Buoc chay nhanh (Stage 11.1 RS3 + ident quant)
+-----------------------------------------------
+  1) Python (tu thu muc bat ky co Python + numpy):
+       python FUNCTION/SW_KLTN/tools/hw_sw_cosim_stage11_rs3.py
+
+     File tao ra:
+       stage_11_block_verify/generated/golden_stage11_rs3_lane0_c0.memh
+       stage_11_block_verify/generated/golden_stage11_rs3_report.txt
+
+  2) Copy file .memh vao CUNG thu muc chay xsim (Vivado xsim --testplusarg kho truyen path co '='):
+       copy stage_11_block_verify\generated\golden_stage11_rs3_lane0_c0.memh  <sim_cwd>\
+
+     Hoac mot lenh (co --xsim-cwd):
+       python .../hw_sw_cosim_stage11_rs3.py --xsim-cwd E:\...\HW_KLTN_10\sim_s11_v2
+
+  3) Mo phong (tu sim_cwd):
+       xsim sim_stage11 -R --testplusarg USE_SW_GOLDEN
+
+     Tuy chon: +SW_GOLDEN_MEMH=... qua $value$plusargs neu ban truyen duoc plusarg day du.
+
+  4) Khong dung USE_SW_GOLDEN: test 11.1 chi kiem tra out_val >= 0 (nhu cu).
+
+Luu y quan trong (tile / line-buffer vs full-frame conv)
+---------------------------------------------------------
+  rs_dense_3x3() trong Python lam conv tren toan feature map da pad (np.pad),
+  trong khi RTL doc 3 bank hang song song (sram_addr_row[0..2]) theo tile.
+
+  Vi vay byte Y[0,0,0,0] tu SW co the KHAC gia tri doc tu output bank sau mo phong,
+  du input so hoc "2" / weight "1" giong nhau ve mat y tuong. Day la han che cua
+  cosim "cung ten tensor" chu chua dong bo layout.
+
+  Huong xu ly:
+    - Dung Stage 8 tb_stage8_subcluster_primitives + vector hex theo checklist
+      (pack dung layout GLB).
+    - Hoac mo rong hw_sw_cosim_stage11_rs3.py de tinh golden theo dung cong thuc
+      addr_gen_input / router (can port them tu RTL sang Python).
+
+Mo rong sang primitive khac
+---------------------------
+  Them script tuong tu import:
+    primitive_dw.py, primitive_pool.py, primitive_tensor.py ...
+  va map voi pe_mode / descriptor tuong ung trong stage_8 hoac stage_11.
+
+================================================================================

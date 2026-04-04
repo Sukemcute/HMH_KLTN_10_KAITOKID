@@ -1,0 +1,1 @@
+"work.tb_glb_output_bank" -s "sim_gob" -timescale "1ns/1ps" 

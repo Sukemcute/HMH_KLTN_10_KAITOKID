@@ -1,0 +1,14 @@
+{
+  "block": "scdown",
+  "steps": [
+    "os1_relu",
+    "dw3_s2_relu"
+  ],
+  "cin": 4,
+  "cout": 8,
+  "hin": 4,
+  "win": 20,
+  "hout": 2,
+  "wout": 10,
+  "seed": 42
+}

@@ -72,9 +72,21 @@ module subcluster_datapath
   output tile_state_e   fsm_state,
   output logic          tile_done,
 
-  // ★ Stage 8 checkpoints: observe FSM + MP5 channel index
+  // ★ Stage 8 checkpoints
   output logic [3:0]    dbg_k_pass,
-  output logic [9:0]    dbg_iter_mp5_ch
+  output logic [9:0]    dbg_iter_mp5_ch,
+  output logic          dbg_seq_ppu_trigger,
+  output logic          dbg_ppu_trigger_delayed,
+  output logic          dbg_ppu_act_valid_0,
+  output logic          dbg_pe_psum_valid,
+  output logic          dbg_glb_act_wr_en_0,
+  output logic          dbg_pe_pool_valid,
+  output logic          dbg_seq_pe_enable,
+  output logic [3:0]    dbg_fsm_mode_reg,
+  output logic          dbg_ppu_done_latch,
+  output logic [9:0]    dbg_seq_ppu_cout_base,
+  output int32_t        dbg_pe_col_psum_0_0,
+  output int8_t         dbg_ppu_act_out_0_0
 );
 
   // ══════════════════════════════════════════════════════════════
@@ -115,6 +127,7 @@ module subcluster_datapath
   logic [9:0]    iter_h, iter_wblk, iter_cin, iter_cout_group;
   logic [3:0]    iter_kw, iter_kh_row;
   logic          seq_pe_enable, seq_pe_clear, seq_pe_acc_valid;
+  logic          seq_window_flush_w;
   logic          seq_ppu_trigger;
   logic [9:0]    seq_ppu_cout_base;
   logic          seq_pool_enable;
@@ -126,8 +139,13 @@ module subcluster_datapath
   // ── addr_gen_input outputs ──
   logic [1:0]    agi_bank_id;
   logic [11:0]   agi_sram_addr;
+  logic [11:0]   agi_sram_addr_row [3];
   logic          agi_is_padding;
   int8_t         agi_pad_value;
+  logic [1:0]    agi_bank_id_row [3];
+  logic          agi_is_padding_row [3];
+  logic [11:0]   agi_bank_rd_addr [3];
+  logic [11:0]   agi_bank_rd_addr_col [3][PE_COLS];
 
   // ── addr_gen_weight outputs ──
   logic [15:0]   agw_addr [PE_COLS];
@@ -138,13 +156,13 @@ module subcluster_datapath
   logic [11:0]   ago_addr [PE_COLS];
 
   // ── GLB data buses ──
-  int8_t         in_bank_data  [3][LANES];     // 3 input banks read data
+  int8_t         in_bank_data  [3][PE_COLS][LANES]; // ★ 4 read ports / bank
   int8_t         wt_bank_data  [3][PE_COLS][LANES]; // 3 weight banks × 4 read ports
   int32_t        out_psum_rd   [PE_COLS][LANES]; // 4 output banks PSUM read
   int8_t         out_act_rd    [PE_COLS][LANES]; // 4 output banks ACT read
 
   // ── Router outputs ──
-  int8_t         routed_act    [PE_ROWS][LANES];
+  int8_t         routed_act    [PE_ROWS][PE_COLS][LANES];
   int8_t         routed_wgt    [PE_ROWS][PE_COLS][LANES];
   int32_t        routed_psum_out [PE_COLS][LANES];
   logic          routed_psum_wr_en [PE_COLS];
@@ -167,21 +185,22 @@ module subcluster_datapath
   int8_t         ppu_act_out [PE_COLS][LANES];
   logic          ppu_act_valid [PE_COLS];
 
-  assign dbg_k_pass      = k_pass_w;
-  assign dbg_iter_mp5_ch = iter_mp5_ch_w;
+  assign dbg_k_pass              = k_pass_w;
+  assign dbg_iter_mp5_ch         = iter_mp5_ch_w;
 
   assign win_k_mux = (cfg_pe_mode == PE_MP5) ? 4'd5 : cfg_kw;
 
-  // ★ Structural pack: 25 INT8 / lane from 5 row taps × 5 horizontal indices (zp pad at wblk edge)
+  // ★ Structural pack: 25 INT8 / lane from 5 row taps × 5 horizontal indices
+  // Golden: kh=0 top of window; window_gen sr[0]=newest row → map taps[4-kh].
   always_comb begin
     for (int kh = 0; kh < 5; kh++)
       for (int kw = 0; kw < 5; kw++)
         for (int ln = 0; ln < LANES; ln++) begin
           automatic int idx = ln + kw - 2;
           if (idx >= 0 && idx < LANES)
-            pool_packed[5 * kh + kw][ln] = win_taps[kh][idx];
+            pool_packed[5 * kh + kw][ln] = win_taps[4 - kh][idx];
           else
-            pool_packed[5 * kh + kw][ln] = cfg_zp_x;
+            pool_packed[5 * kh + kw][ln] = -8'sd128;
         end
   end
 
@@ -211,7 +230,9 @@ module subcluster_datapath
     .page_swap       (page_swap_w),
     .state           (fsm_state),
     .tile_done       (tile_done),
-    .cur_k_pass_idx  (k_pass_w)
+    .cur_k_pass_idx  (k_pass_w),
+    .dbg_mode_reg    (dbg_fsm_mode_reg),
+    .dbg_ppu_done_latch(dbg_ppu_done_latch)
   );
 
   // ══════════════════════════════════════════════════════════════
@@ -280,7 +301,8 @@ module subcluster_datapath
     .agi_iter_cin_mux    (agi_iter_cin_mux_w),
     .agi_iter_kh_mux     (agi_iter_kh_mux_w),
     .ago_iter_cout_grp_mux(ago_iter_cout_grp_mux_w),
-    .dbg_iter_mp5_ch     (iter_mp5_ch_w)
+    .dbg_iter_mp5_ch     (iter_mp5_ch_w),
+    .seq_window_flush    (seq_window_flush_w)
   );
 
   // ══════════════════════════════════════════════════════════════
@@ -291,20 +313,27 @@ module subcluster_datapath
   addr_gen_input #(.LANES(LANES)) u_agi (
     .clk          (clk),
     .rst_n        (rst_n),
+    .cfg_pe_mode  (cfg_pe_mode),
     .cfg_hin      (cfg_hin),
     .cfg_win      (cfg_win),
     .cfg_cin      (cfg_cin),
     .cfg_stride   (cfg_stride),
     .cfg_padding  (cfg_padding),
-    .cfg_zp_x     (cfg_zp_x),       // ★ RULE 5: padding = zp_x
+    .cfg_zp_x     (cfg_zp_x),
     .iter_h_out   (iter_h),
     .iter_wblk    (iter_wblk),
     .iter_cin     (agi_iter_cin_mux_w),
+    .iter_cout_group(iter_cout_group),
     .iter_kh_row  (agi_iter_kh_mux_w),
     .bank_id      (agi_bank_id),
     .sram_addr    (agi_sram_addr),
+    .sram_addr_row(agi_sram_addr_row),
     .is_padding   (agi_is_padding),
-    .pad_value    (agi_pad_value)
+    .pad_value    (agi_pad_value),
+    .bank_id_row    (agi_bank_id_row),
+    .is_padding_row (agi_is_padding_row),
+    .bank_rd_addr   (agi_bank_rd_addr),
+    .bank_rd_addr_col(agi_bank_rd_addr_col)
   );
 
   // ── 4b. Weight address generator (★ 4 per-column addresses) ──
@@ -339,17 +368,36 @@ module subcluster_datapath
   // ══════════════════════════════════════════════════════════════
   // 5. GLB INPUT BANKS ×3 (double-buffered)
   // ══════════════════════════════════════════════════════════════
+  logic use_parallel_fetch;
+  assign use_parallel_fetch = (cfg_pe_mode == PE_RS3) || (cfg_pe_mode == PE_DW3)
+                              || (cfg_pe_mode == PE_DW7);
+
   genvar bi;
   generate
     for (bi = 0; bi < 3; bi++) begin : gen_in_bank
-      glb_input_bank_db #(.LANES(LANES)) u_in_bank (
+      logic [$clog2(GLB_INPUT_DEPTH)-1:0] in_rd_addr_mux [PE_COLS];
+
+      always_comb begin
+        for (int cc = 0; cc < PE_COLS; cc++) begin
+          if (use_parallel_fetch)
+            in_rd_addr_mux[cc] = agi_bank_rd_addr_col[bi][cc][$clog2(GLB_INPUT_DEPTH)-1:0];
+          else if (agi_bank_id == bi[1:0])
+            in_rd_addr_mux[cc] = agi_sram_addr[$clog2(GLB_INPUT_DEPTH)-1:0];
+          else
+            in_rd_addr_mux[cc] = '0;
+        end
+      end
+
+      glb_input_bank_db #(
+        .LANES        (LANES),
+        .DEPTH        (GLB_INPUT_DEPTH),
+        .N_READ_PORTS (PE_COLS)
+      ) u_in_bank (
         .clk         (clk),
         .rst_n       (rst_n),
         .page_swap   (page_swap_w),
-        // Compute read: selected by addr_gen_input bank_id
-        .rd_addr     ((agi_bank_id == bi[1:0]) ? agi_sram_addr : 12'd0),
+        .rd_addr     (in_rd_addr_mux),
         .rd_data     (in_bank_data[bi]),
-        // DMA write: from external port
         .wr_addr     (ext_wr_addr),
         .wr_data     (ext_wr_data),
         .wr_en       (ext_wr_en && (ext_wr_target == 2'd0) && (ext_wr_bank_id == bi[1:0])),
@@ -357,6 +405,66 @@ module subcluster_datapath
       );
     end
   endgenerate
+
+  // ★ Delay pe_enable/pe_clear 1 cycle for RS3/DW3/DW7 (use_parallel_fetch).
+  //   glb_input_bank_db rd_data updates 1 cycle after rd_addr; when read ports
+  //   1..3 change address but port0 does not, ports 1..3 still hold previous
+  //   data at the same posedge pe_enable samples — MAC sees wrong activations
+  //   for columns >0. Enabling MAC on the following cycle aligns all ports.
+  logic seq_pe_enable_d1;
+  logic seq_pe_clear_d1;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      seq_pe_enable_d1 <= 1'b0;
+      seq_pe_clear_d1  <= 1'b0;
+    end else begin
+      seq_pe_enable_d1 <= seq_pe_enable;
+      seq_pe_clear_d1  <= seq_pe_clear;
+    end
+  end
+
+  logic seq_pe_enable_mac;
+  logic seq_pe_clear_mac;
+  assign seq_pe_enable_mac = use_parallel_fetch ? seq_pe_enable_d1 : seq_pe_enable;
+  assign seq_pe_clear_mac  = use_parallel_fetch ? seq_pe_clear_d1  : seq_pe_clear;
+
+  logic mp5_shift_en_d1;
+  logic win_shift_in_valid;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+      mp5_shift_en_d1 <= 1'b0;
+    else
+      mp5_shift_en_d1 <= mp5_shift_en_w;
+  end
+  assign win_shift_in_valid = (cfg_pe_mode == PE_MP5) ? mp5_shift_en_d1
+                             : (seq_pe_enable_mac | mp5_shift_en_w);
+
+  // ★ Crossbar + padding: per (row r, col c) activation for router
+  int8_t routed_in_data [3][PE_COLS][LANES];
+  always_comb begin
+    for (int r = 0; r < PE_ROWS; r++) begin
+      for (int c = 0; c < PE_COLS; c++) begin
+        for (int ln = 0; ln < LANES; ln++) begin
+          if (use_parallel_fetch && agi_is_padding_row[r])
+            routed_in_data[r][c][ln] = agi_pad_value;
+          else if (use_parallel_fetch)
+            routed_in_data[r][c][ln] = in_bank_data[agi_bank_id_row[r]][c][ln];
+          else if (cfg_pe_mode == PE_OS1 || cfg_pe_mode == PE_GEMM) begin
+            routed_in_data[r][c][ln] = agi_is_padding ? agi_pad_value
+                                  : in_bank_data[agi_bank_id][c][ln];
+          end else if (cfg_pe_mode == PE_MP5) begin
+            // Single-bank stream: use read port 0 only (matches router PE_MP5 path). All
+            // rd_addr[*] are equal when active, but duplicate rd_reg per port can diverge
+            // in sim if addresses ever differ by a delta — port 0 is the canonical stream.
+            routed_in_data[r][c][ln] = agi_is_padding ? -8'sd128
+                                  : in_bank_data[agi_bank_id][0][ln];
+          end else begin
+            routed_in_data[r][c][ln] = in_bank_data[r][c][ln];
+          end
+        end
+      end
+    end
+  end
 
   // ══════════════════════════════════════════════════════════════
   // 6. GLB WEIGHT BANKS ×3 (4 read ports each)
@@ -369,7 +477,8 @@ module subcluster_datapath
 
       always_comb begin
         for (int c = 0; c < PE_COLS; c++)
-          wt_rd_addr_col[c] = (agw_bank_id == bw[1:0]) ? agw_addr[c][$clog2(GLB_WEIGHT_DEPTH)-1:0] : '0;
+          wt_rd_addr_col[c] = (use_parallel_fetch || (agw_bank_id == bw[1:0]))
+                             ? agw_addr[c][$clog2(GLB_WEIGHT_DEPTH)-1:0] : '0;
       end
 
       glb_weight_bank #(.LANES(LANES)) u_wt_bank (
@@ -388,40 +497,90 @@ module subcluster_datapath
   // ══════════════════════════════════════════════════════════════
   // 7. GLB OUTPUT BANKS ×4 (dual namespace PSUM/ACT)
   // ══════════════════════════════════════════════════════════════
+
+  // Forward-declared: PPU ACT address delay pipeline (driven in section 12)
+  // ★ Must match trigger→act_valid latency exactly:
+  //   seq_ppu_trigger → [DSP_PIPE_DEPTH] → ppu_trigger_delayed → [PPU valid_pipe]
+  //   → act_valid  = 5 + 4 = 9 cycles (see ppu.sv: valid_pipe[4] is 4 regs after psum_valid).
+  // Shift depth from sr[0] to sr[tail] is (ACT_ADDR_DELAY-1); need tail delay = 9 → ACT_ADDR_DELAY=10.
+  localparam int ACT_ADDR_DELAY = DSP_PIPE_DEPTH + PPU_PIPE_DEPTH;
+  logic [$clog2(GLB_OUTPUT_DEPTH)-1:0] ppu_act_addr_sr [PE_COLS][ACT_ADDR_DELAY];
+  logic [$clog2(GLB_OUTPUT_DEPTH)-1:0] ppu_act_addr_delayed;
+  assign ppu_act_addr_delayed = ppu_act_addr_sr[0][ACT_ADDR_DELAY-1];
+
+  // ★ Registered PPU→ACT path: capture addr/data when act_valid, assert wr_en next cycle.
+  // Avoids combinational mux (ppu_act_valid ? delayed : ago) racing glb_output_bank always_ff.
+  logic  ppu_act_wr_en_d [PE_COLS];
+  logic [$clog2(GLB_OUTPUT_DEPTH)-1:0] ppu_act_wr_addr_hold [PE_COLS];
+  int8_t ppu_act_wr_data_hold [PE_COLS][LANES];
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      for (int b = 0; b < PE_COLS; b++) begin
+        ppu_act_wr_en_d[b] <= 1'b0;
+        ppu_act_wr_addr_hold[b] <= '0;
+        for (int l = 0; l < LANES; l++)
+          ppu_act_wr_data_hold[b][l] <= 8'sd0;
+      end
+    end else begin
+      for (int b = 0; b < PE_COLS; b++) begin
+        ppu_act_wr_en_d[b] <= ppu_act_valid[b];
+        if (ppu_act_valid[b]) begin
+          ppu_act_wr_addr_hold[b] <= ppu_act_addr_delayed;
+          for (int l = 0; l < LANES; l++)
+            ppu_act_wr_data_hold[b][l] <= ppu_act_out[b][l];
+        end
+      end
+    end
+  end
+
   int8_t glb_act_wr_data [PE_COLS][LANES];
   logic  glb_act_wr_en   [PE_COLS];
 
   always_comb begin
     for (int b = 0; b < PE_COLS; b++) begin
-      glb_act_wr_en[b] = ppu_act_valid[b]
-        || ((cfg_pe_mode == PE_MP5) && pe_pool_valid && (iter_mp5_ch_w[1:0] == b[1:0]));
+      glb_act_wr_en[b] = ppu_act_wr_en_d[b]
+        || ((cfg_pe_mode == PE_MP5) && pe_pool_valid && (iter_mp5_ch_w[1:0] == b[1:0]))
+        || (ext_wr_en && (ext_wr_target == 2'd2) && (ext_wr_bank_id == b[1:0]));
       for (int l = 0; l < LANES; l++)
-        glb_act_wr_data[b][l] = ((cfg_pe_mode == PE_MP5) && pe_pool_valid
-                                && (iter_mp5_ch_w[1:0] == b[1:0]))
-                                ? pe_pool_max[l] : ppu_act_out[b][l];
+        glb_act_wr_data[b][l] =
+          (ext_wr_en && (ext_wr_target == 2'd2) && (ext_wr_bank_id == b[1:0]))
+            ? ext_wr_data[l]
+            : (((cfg_pe_mode == PE_MP5) && pe_pool_valid
+                && (iter_mp5_ch_w[1:0] == b[1:0]))
+               ? pe_pool_max[l] : ppu_act_wr_data_hold[b][l]);
     end
   end
 
   genvar bo;
   generate
     for (bo = 0; bo < PE_COLS; bo++) begin : gen_out_bank
+      logic [$clog2(GLB_OUTPUT_DEPTH)-1:0] out_act_addr_mux;
+      always_comb begin
+        if (ext_wr_en && (ext_wr_target == 2'd2) && (ext_wr_bank_id == bo[1:0]))
+          out_act_addr_mux = ext_wr_addr[$clog2(GLB_OUTPUT_DEPTH)-1:0];
+        else if (ext_rd_en && (ext_rd_bank_id == bo[1:0]))
+          out_act_addr_mux = ext_rd_addr[$clog2(GLB_OUTPUT_DEPTH)-1:0];
+        else if (ppu_act_wr_en_d[bo])
+          out_act_addr_mux = ppu_act_wr_addr_hold[bo];
+        else
+          out_act_addr_mux = ago_addr[bo][$clog2(GLB_OUTPUT_DEPTH)-1:0];
+      end
+
       glb_output_bank #(.LANES(LANES)) u_out_bank (
         .clk         (clk),
         .rst_n       (rst_n),
-        // PSUM read/write (multipass accumulation)
         .psum_addr   (ago_addr[bo][$clog2(GLB_OUTPUT_DEPTH)-1:0]),
         .psum_wr_data(pe_col_psum[bo]),
-        .psum_wr_en  (pe_psum_valid && (cfg_pe_mode != PE_MP5)
+        .psum_wr_en  (pe_psum_valid && (cfg_pe_mode == PE_DW7)
                       && (ago_bank_id[bo] == bo[1:0])),
         .psum_rd_data(out_psum_rd[bo]),
         .psum_rd_en  (1'b1),
-        // ACT: PPU or PE_MP5 comparator path (no PPU in MP5)
-        .act_addr    (ago_addr[bo][$clog2(GLB_OUTPUT_DEPTH)-1:0]),
+        .act_addr    (out_act_addr_mux),
         .act_wr_data (glb_act_wr_data[bo]),
         .act_wr_en   (glb_act_wr_en[bo]),
         .act_rd_data (out_act_rd[bo]),
         .act_rd_en   (ext_rd_en && (ext_rd_bank_id == bo[1:0])),
-        // DMA drain
         .drain_addr  (ext_rd_addr[$clog2(GLB_OUTPUT_DEPTH)-1:0]),
         .drain_data  ()
       );
@@ -438,7 +597,7 @@ module subcluster_datapath
   metadata_ram u_meta (
     .clk         (clk),
     .rst_n       (rst_n),
-    .clear_all   (!rst_n),
+    .clear_all   (1'b0),
     .set_valid   (1'b0),
     .set_slot_id (4'd0),
     .set_meta    (32'd0),
@@ -446,8 +605,8 @@ module subcluster_datapath
     .query_valid (),
     .query_meta  (),
     .advance_ring(1'b0),
-    .ring_head   (),
-    .ring_tail   (),
+    .head_ptr    (),
+    .tail_ptr    (),
     .ring_full   (),
     .ring_empty  ()
   );
@@ -460,8 +619,8 @@ module subcluster_datapath
     .rst_n         (rst_n),
     .cfg_pe_mode   (cfg_pe_mode),
     .rin_bank_sel  (agi_bank_id),
-    // RIN: input banks → PE activation (multicast)
-    .glb_in_data   (in_bank_data),
+    // RIN: input banks → PE activation (with crossbar + padding for parallel kh)
+    .glb_in_data   (routed_in_data),
     .pe_act        (routed_act),
     // RWT: weight banks → PE weight (★ per-column)
     .glb_wgt_data  (wt_bank_data),
@@ -472,7 +631,7 @@ module subcluster_datapath
     .glb_out_psum  (routed_psum_out),
     .glb_out_wr_en (routed_psum_wr_en),
     // Bypass
-    .bypass_in     (in_bank_data[0]),
+    .bypass_in     (in_bank_data[0][0]),
     .bypass_out    (bypass_out_w),
     .bypass_en     (cfg_pe_mode == PE_PASS)
   );
@@ -485,11 +644,11 @@ module subcluster_datapath
     .clk             (clk),
     .rst_n           (rst_n),
     .cfg_k           (win_k_mux),
-    .shift_in_valid  (seq_pe_enable | mp5_shift_en_w),
-    .shift_in        (routed_act[0]),   // Row 0 activation feeds window
+    .shift_in_valid  (win_shift_in_valid),
+    .shift_in        (routed_act[0][0]),
     .taps            (win_taps),
     .taps_valid      (win_taps_valid),
-    .flush           (seq_pe_clear | mp5_win_flush_w)
+    .flush           (seq_window_flush_w | mp5_win_flush_w)
   );
 
   // ══════════════════════════════════════════════════════════════
@@ -499,9 +658,8 @@ module subcluster_datapath
     .clk           (clk),
     .rst_n         (rst_n),
     .pe_mode       (cfg_pe_mode),
-    .pe_enable     (seq_pe_enable),
-    .pe_clear_acc  (seq_pe_clear),
-    // Activation: from router (SAME for all columns)
+    .pe_enable     (seq_pe_enable_mac),
+    .pe_clear_acc  (seq_pe_clear_mac),
     .act_taps      (routed_act),
     // Weight: from router (★ DIFFERENT per column)
     .wgt_data      (routed_wgt),
@@ -520,20 +678,52 @@ module subcluster_datapath
 
   // ══════════════════════════════════════════════════════════════
   // 12. PPU ×4 (★ 4 parallel PPUs, 1 per PE column)
+  //
+  // PPU trigger is DELAYED from seq_ppu_trigger by DSP_PIPE_DEPTH cycles.
+  // Reason: seq_ppu_trigger fires at SEQ_ACC_DONE, but the PE pipeline
+  // (DSP_PIPE_DEPTH=5 stages) has not fully drained yet. The accumulator
+  // needs 5+ more cycles to incorporate all in-flight products.
+  // Without this delay, the PPU reads an incomplete PSUM (often zero).
   // ══════════════════════════════════════════════════════════════
+  logic [DSP_PIPE_DEPTH:0] ppu_trigger_delay_sr;
+  logic [9:0] ppu_cout_base_sr [DSP_PIPE_DEPTH+1];
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      ppu_trigger_delay_sr <= '0;
+      for (int i = 0; i <= DSP_PIPE_DEPTH; i++)
+        ppu_cout_base_sr[i] <= 10'd0;
+      for (int c = 0; c < PE_COLS; c++)
+        for (int i = 0; i < ACT_ADDR_DELAY; i++)
+          ppu_act_addr_sr[c][i] <= '0;
+    end else begin
+      ppu_trigger_delay_sr <= {ppu_trigger_delay_sr[DSP_PIPE_DEPTH-1:0], seq_ppu_trigger};
+      ppu_cout_base_sr[0] <= seq_ppu_cout_base;
+      for (int i = 1; i <= DSP_PIPE_DEPTH; i++)
+        ppu_cout_base_sr[i] <= ppu_cout_base_sr[i-1];
+      for (int c = 0; c < PE_COLS; c++) begin
+        ppu_act_addr_sr[c][0] <= ago_addr[c][$clog2(GLB_OUTPUT_DEPTH)-1:0];
+        for (int i = 1; i < ACT_ADDR_DELAY; i++)
+          ppu_act_addr_sr[c][i] <= ppu_act_addr_sr[c][i-1];
+      end
+    end
+  end
+  logic ppu_trigger_delayed;
+  assign ppu_trigger_delayed = ppu_trigger_delay_sr[DSP_PIPE_DEPTH];
+  logic [9:0] ppu_cout_base_delayed;
+  assign ppu_cout_base_delayed = ppu_cout_base_sr[DSP_PIPE_DEPTH];
+
   genvar pp;
   generate
     for (pp = 0; pp < PE_COLS; pp++) begin : gen_ppu
-      // Select bias/quant params for this column's cout
-      // cout_index = ppu_cout_base + pp (column offset)
       logic [9:0] this_cout;
-      assign this_cout = seq_ppu_cout_base + pp[9:0];
+      assign this_cout = ppu_cout_base_delayed + pp[9:0];
 
       ppu #(.LANES(LANES)) u_ppu (
         .clk         (clk),
         .rst_n       (rst_n),
-        .psum_in     (pe_col_psum[pp]),           // This column's PSUM
-        .psum_valid  (seq_ppu_trigger),
+        .psum_in     (pe_col_psum[pp]),
+        .psum_valid  (ppu_trigger_delayed),
         .bias_val    (bias_table[this_cout]),      // ★ Per-cout bias [RULE 6]
         .m_int       (m_int_table[this_cout]),     // ★ Per-cout M_int
         .shift_val   (shift_table[this_cout]),     // ★ Per-cout shift
@@ -546,29 +736,170 @@ module subcluster_datapath
   endgenerate
 
   // PPU done: any column signals valid (all same timing)
-  assign ppu_done_w = ppu_act_valid[0];
+  // Align FSM "PPU done" with ACT SRAM write pulse (1 cyc after act_valid)
+  assign ppu_done_w = ppu_act_wr_en_d[0];
 
   // ══════════════════════════════════════════════════════════════
   // 13. SWIZZLE ENGINE
   // ══════════════════════════════════════════════════════════════
+  // ── Domain alignment parameters (loaded by DMA alongside quant params) ──
+  uint32_t      align_m_a_reg,  align_m_b_reg;
+  logic [7:0]   align_sh_a_reg, align_sh_b_reg;
+  int8_t        align_zp_a_reg, align_zp_b_reg, align_zp_out_reg;
+  logic         align_bypass_reg;
+
+  // Source B read signals (from skip buffer via output bank 1 or dedicated port)
+  logic         swz_b_rd_en;
+  logic [11:0]  swz_b_rd_addr;
+
   swizzle_engine #(.LANES(LANES)) u_swizzle (
-    .clk           (clk),
-    .rst_n         (rst_n),
-    .start         (swizzle_start_w),
-    .cfg_mode      (cfg_swizzle),
-    .cfg_src_h     (cfg_hout),
-    .cfg_src_w     (cfg_wout),
-    .cfg_src_c     (cfg_cout),
-    .cfg_dst_h     (cfg_hin),
-    .cfg_dst_w     (cfg_win),
-    .src_rd_en     (),
-    .src_rd_addr   (),
-    .src_rd_data   (out_act_rd[0]),
-    .dst_wr_en     (),
-    .dst_wr_addr   (),
-    .dst_wr_data   (),
-    .dst_wr_mask   (),
-    .done          (swizzle_done_w)
+    .clk              (clk),
+    .rst_n            (rst_n),
+    .start            (swizzle_start_w),
+    .cfg_mode         (cfg_swizzle),
+    .cfg_src_h        (cfg_hout),
+    .cfg_src_w        (cfg_wout),
+    .cfg_src_c        (cfg_cout),
+    .cfg_dst_h        (cfg_hin),
+    .cfg_dst_w        (cfg_win),
+    // Domain alignment params
+    .cfg_align_m_a    (align_m_a_reg),
+    .cfg_align_sh_a   (align_sh_a_reg),
+    .cfg_align_zp_a   (align_zp_a_reg),
+    .cfg_align_m_b    (align_m_b_reg),
+    .cfg_align_sh_b   (align_sh_b_reg),
+    .cfg_align_zp_b   (align_zp_b_reg),
+    .cfg_align_zp_out (align_zp_out_reg),
+    .cfg_align_bypass (align_bypass_reg),
+    // Source A (from output bank 0 ACT namespace)
+    .src_rd_en        (),
+    .src_rd_addr      (),
+    .src_rd_data      (out_act_rd[0]),
+    // Source B (from output bank 1 ACT namespace — skip buffer)
+    .src_b_rd_en      (swz_b_rd_en),
+    .src_b_rd_addr    (swz_b_rd_addr),
+    .src_b_rd_data    (out_act_rd[1]),
+    // Destination
+    .dst_wr_en        (),
+    .dst_wr_addr      (),
+    .dst_wr_data      (),
+    .dst_wr_mask      (),
+    .done             (swizzle_done_w)
   );
+
+  // ══════════════════════════════════════════════════════════════
+  // DEBUG ASSIGNS (placed at end so all signals are in scope)
+  // ══════════════════════════════════════════════════════════════
+  assign dbg_seq_ppu_trigger     = seq_ppu_trigger;
+  assign dbg_ppu_trigger_delayed = ppu_trigger_delayed;
+  assign dbg_ppu_act_valid_0     = ppu_act_valid[0];
+  assign dbg_pe_psum_valid       = pe_psum_valid;
+  assign dbg_glb_act_wr_en_0     = glb_act_wr_en[0];
+  assign dbg_pe_pool_valid       = pe_pool_valid;
+  assign dbg_seq_pe_enable       = seq_pe_enable;
+  assign dbg_seq_ppu_cout_base   = seq_ppu_cout_base;
+  assign dbg_pe_col_psum_0_0     = pe_col_psum[0][0];
+  assign dbg_ppu_act_out_0_0     = ppu_act_out[0][0];
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n) begin
+      // ── CP-GLB: Input/Weight bank data at the router input ──
+      if (seq_pe_enable) begin
+        $display("  [GLB-IN] %0t  bank0d[0]=%0d bank1d[0]=%0d bank2d[0]=%0d  padded=%b padval=%0d",
+                 $time,
+                 in_bank_data[0][0][0], in_bank_data[1][0][0], in_bank_data[2][0][0],
+                 agi_is_padding, agi_pad_value);
+        $display("  [GLB-WT] %0t  bk0c0[0]=%0d bk0c1[0]=%0d bk1c0[0]=%0d bk2c0[0]=%0d",
+                 $time,
+                 wt_bank_data[0][0][0], wt_bank_data[0][1][0],
+                 wt_bank_data[1][0][0], wt_bank_data[2][0][0]);
+        $display("  [ROUTE] %0t  act[0][0]=%0d act[1][0]=%0d act[2][0]=%0d  wgt[0][0][0]=%0d wgt[1][0][0]=%0d wgt[2][0][0]=%0d",
+                 $time,
+                 routed_act[0][0][0], routed_act[1][0][0], routed_act[2][0][0],
+                 routed_wgt[0][0][0], routed_wgt[1][0][0], routed_wgt[2][0][0]);
+        $display("  [ADDR] %0t  agi_row0=%0d agi_row1=%0d agi_row2=%0d  agw_bk=%0d agw_c0=%0d agw_c1=%0d",
+                 $time,
+                 agi_sram_addr_row[0], agi_sram_addr_row[1], agi_sram_addr_row[2],
+                 agw_bank_id, agw_addr[0], agw_addr[1]);
+      end
+
+      // ── CP-PSUM: PSUM output just before PPU reads ──
+      if (ppu_trigger_delayed)
+        $display("  [PSUM] %0t  col0[0]=%0d col0[1]=%0d  col1[0]=%0d  col2[0]=%0d  col3[0]=%0d",
+                 $time,
+                 pe_col_psum[0][0], pe_col_psum[0][1],
+                 pe_col_psum[1][0], pe_col_psum[2][0], pe_col_psum[3][0]);
+
+      // ── CP-ACT: registered ACT write (same cycle as glb wr_en to SRAM) ──
+      if (ppu_act_wr_en_d[0])
+        $display("  [ACT-WR] %0t  act0[0]=%0d act0[1]=%0d  wr_en=%b%b%b%b  addr_hold=%0d",
+                 $time,
+                 ppu_act_wr_data_hold[0][0], ppu_act_wr_data_hold[0][1],
+                 glb_act_wr_en[0], glb_act_wr_en[1], glb_act_wr_en[2], glb_act_wr_en[3],
+                 ppu_act_wr_addr_hold[0]);
+
+      // ── CP-MP5: MaxPool path ──
+      if (pe_pool_valid)
+        $display("  [MP5] %0t pool_max[0]=%0d pool_max[1]=%0d  ch=%0d bank=%0d",
+                 $time,
+                 pe_pool_max[0], pe_pool_max[1],
+                 iter_mp5_ch_w, iter_mp5_ch_w[1:0]);
+
+      // ── CP-CFG: Config readback on shadow latch ──
+      if (shadow_latch)
+        $display("  [CFG] %0t  mode=%0d cin=%0d cout=%0d kh=%0d kw=%0d hin=%0d win=%0d hout=%0d wout=%0d act=%0d zp_x=%0d",
+                 $time,
+                 cfg_pe_mode, cfg_cin, cfg_cout, cfg_kh, cfg_kw,
+                 cfg_hin, cfg_win, cfg_hout, cfg_wout, cfg_activation, cfg_zp_x);
+    end
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (seq_pe_enable) begin
+        rtl_trace_pkg::rtl_trace_line("S7_GLBI",
+          $sformatf("r0=%0d r1=%0d r2=%0d pad0=%b pad1=%b pad2=%b pz=%0d",
+                    routed_in_data[0][0][0], routed_in_data[1][0][0], routed_in_data[2][0][0],
+                    agi_is_padding_row[0], agi_is_padding_row[1], agi_is_padding_row[2],
+                    agi_pad_value));
+        rtl_trace_pkg::rtl_trace_line("S7_GLBW",
+          $sformatf("w00=%0d w01=%0d w10=%0d w20=%0d",
+                    wt_bank_data[0][0][0], wt_bank_data[0][1][0],
+                    wt_bank_data[1][0][0], wt_bank_data[2][0][0]));
+        rtl_trace_pkg::rtl_trace_line("S7_RT",
+          $sformatf("a00=%0d a10=%0d a20=%0d g00=%0d g10=%0d g20=%0d",
+                    routed_act[0][0][0], routed_act[1][0][0], routed_act[2][0][0],
+                    routed_wgt[0][0][0], routed_wgt[1][0][0], routed_wgt[2][0][0]));
+        rtl_trace_pkg::rtl_trace_line("S7_ADR",
+          $sformatf("r0=%0d r1=%0d r2=%0d wbk=%0d wa0=%0d wa1=%0d",
+                    agi_sram_addr_row[0], agi_sram_addr_row[1], agi_sram_addr_row[2],
+                    agw_bank_id, agw_addr[0], agw_addr[1]));
+      end
+      if (ppu_trigger_delayed)
+        rtl_trace_pkg::rtl_trace_line("S7_PSUM",
+          $sformatf("c00=%0d c01=%0d c10=%0d c20=%0d c30=%0d",
+                    pe_col_psum[0][0], pe_col_psum[0][1],
+                    pe_col_psum[1][0], pe_col_psum[2][0], pe_col_psum[3][0]));
+      if (ppu_act_wr_en_d[0])
+        rtl_trace_pkg::rtl_trace_line("S7_ACT",
+          $sformatf("a0=%0d a1=%0d we=%b%b%b%b adr=%0d",
+                    ppu_act_wr_data_hold[0][0], ppu_act_wr_data_hold[0][1],
+                    glb_act_wr_en[0], glb_act_wr_en[1], glb_act_wr_en[2], glb_act_wr_en[3],
+                    ppu_act_wr_addr_hold[0]));
+      if (pe_pool_valid)
+        rtl_trace_pkg::rtl_trace_line("S7_MP5",
+          $sformatf("mx0=%0d mx1=%0d ch=%0d", pe_pool_max[0], pe_pool_max[1], iter_mp5_ch_w));
+      if (shadow_latch)
+        rtl_trace_pkg::rtl_trace_line("S7_CFG",
+          $sformatf("mode=%0d ci=%0d co=%0d kh=%0d kw=%0d hi=%0d wi=%0d ho=%0d wo=%0d",
+                    cfg_pe_mode, cfg_cin, cfg_cout, cfg_kh, cfg_kw,
+                    cfg_hin, cfg_win, cfg_hout, cfg_wout));
+    end
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

@@ -38,6 +38,7 @@ module tb_compute_sequencer;
   logic [9:0]    agi_iter_cin_mux, ago_iter_cout_grp_mux;
   logic [3:0]    agi_iter_kh_mux;
   logic [9:0]    dbg_iter_mp5_ch;
+  logic          seq_window_flush;
 
   // ────────────────────────────────────────────────────────────
   // DUT instantiation
@@ -72,7 +73,8 @@ module tb_compute_sequencer;
     .agi_iter_cin_mux     (agi_iter_cin_mux),
     .agi_iter_kh_mux      (agi_iter_kh_mux),
     .ago_iter_cout_grp_mux(ago_iter_cout_grp_mux),
-    .dbg_iter_mp5_ch     (dbg_iter_mp5_ch)
+    .dbg_iter_mp5_ch     (dbg_iter_mp5_ch),
+    .seq_window_flush    (seq_window_flush)
   );
 
   // ────────────────────────────────────────────────────────────
@@ -109,10 +111,11 @@ module tb_compute_sequencer;
 
   // Run sequencer and count pe_enable + ppu_trigger cycles
   task automatic run_and_count(
-    output int pe_count,
-    output int ppu_count,
+    output integer pe_count,
+    output integer ppu_count,
     input int max_cycles = 5000
   );
+    integer cyc;
     pe_count  = 0;
     ppu_count = 0;
 
@@ -122,7 +125,7 @@ module tb_compute_sequencer;
     seq_start <= 1'b0;
 
     // Count until seq_done
-    for (int cyc = 0; cyc < max_cycles; cyc++) begin
+    for (cyc = 0; cyc < max_cycles; cyc++) begin
       @(posedge clk);
       if (pe_enable)   pe_count++;
       if (ppu_trigger) ppu_count++;
@@ -139,6 +142,7 @@ module tb_compute_sequencer;
   //             = 2 * 1 * 4 * 3 * 3 = 72
   // ================================================================
   task automatic test_T6_3_1();
+    integer pe_cnt, ppu_cnt;
     $display("\n===== T6.3.1: PE_RS3 iteration count =====");
     do_reset();
 
@@ -152,7 +156,6 @@ module tb_compute_sequencer;
     cfg_stride  <= 3'd1;
     @(posedge clk);
 
-    int pe_cnt, ppu_cnt;
     run_and_count(pe_cnt, ppu_cnt);
 
     $display("  PE_RS3: pe_enable cycles = %0d (expected 72)", pe_cnt);
@@ -170,6 +173,7 @@ module tb_compute_sequencer;
   //   PE cycles = 2 * 1 * 4 * 8 = 64
   // ================================================================
   task automatic test_T6_3_2();
+    integer pe_cnt, ppu_cnt;
     $display("\n===== T6.3.2: PE_OS1 iteration count =====");
     do_reset();
 
@@ -183,7 +187,6 @@ module tb_compute_sequencer;
     cfg_stride  <= 3'd1;
     @(posedge clk);
 
-    int pe_cnt, ppu_cnt;
     run_and_count(pe_cnt, ppu_cnt);
 
     $display("  PE_OS1: pe_enable cycles = %0d (expected 64)", pe_cnt);
@@ -199,6 +202,7 @@ module tb_compute_sequencer;
   //   PE cycles = Hout * Wblks * Ch_groups * kw = 2 * 1 * 2 * 3 = 12
   // ================================================================
   task automatic test_T6_3_3();
+    integer pe_cnt, ppu_cnt;
     $display("\n===== T6.3.3: PE_DW3 iteration count =====");
     do_reset();
 
@@ -212,7 +216,6 @@ module tb_compute_sequencer;
     cfg_stride  <= 3'd1;
     @(posedge clk);
 
-    int pe_cnt, ppu_cnt;
     run_and_count(pe_cnt, ppu_cnt);
 
     $display("  PE_DW3: pe_enable cycles = %0d (expected 12)", pe_cnt);
@@ -229,6 +232,10 @@ module tb_compute_sequencer;
   //   => Cout_groups=2, triggers should be at cout_base=0 and 4
   // ================================================================
   task automatic test_T6_3_4();
+    integer cyc;
+    integer ppu_count;
+    integer ppu_idx;
+    logic [9:0] ppu_bases [0:15];
     $display("\n===== T6.3.4: ppu_trigger timing =====");
     do_reset();
 
@@ -247,14 +254,15 @@ module tb_compute_sequencer;
     @(posedge clk);
     seq_start <= 1'b0;
 
-    // Collect ppu_trigger events
-    logic [9:0] ppu_bases [$];
-    int ppu_count = 0;
-
-    for (int cyc = 0; cyc < 2000; cyc++) begin
+    ppu_count = 0;
+    ppu_idx   = 0;
+    for (cyc = 0; cyc < 2000; cyc++) begin
       @(posedge clk);
       if (ppu_trigger) begin
-        ppu_bases.push_back(ppu_cout_base);
+        if (ppu_idx <= 15) begin
+          ppu_bases[ppu_idx] = ppu_cout_base;
+          ppu_idx++;
+        end
         ppu_count++;
         $display("  ppu_trigger #%0d: ppu_cout_base = %0d", ppu_count, ppu_cout_base);
       end
@@ -263,7 +271,7 @@ module tb_compute_sequencer;
 
     // Expected: 1 (Hout) * 1 (Wblks) * 2 (Cout_groups) = 2 triggers
     check("T6.3.4-a ppu_count=2", ppu_count == 2);
-    if (ppu_bases.size() >= 2) begin
+    if (ppu_idx >= 2) begin
       check("T6.3.4-b base[0]=0",  ppu_bases[0] == 10'd0);
       check("T6.3.4-c base[1]=4",  ppu_bases[1] == 10'd4);
     end else begin
@@ -280,34 +288,41 @@ module tb_compute_sequencer;
   //   to minimize total cycles. Expected pe_cycles = Wblks * 1 * 1 * 1 = Wblks
   // ================================================================
   task automatic test_T6_3_5();
+    integer i;
+    integer pe_cnt, ppu_cnt;
+    integer wv;
+    integer ebexp;
     $display("\n===== T6.3.5: LANES=20 exact division =====");
     do_reset();
 
-    int wout_vals [5]   = '{320, 160, 80, 40, 20};
-    int expected_blks[5] = '{16,  8,   4,  2,  1};
+    for (i = 0; i < 5; i++) begin
+      case (i)
+        0: begin wv = 320; ebexp = 16; end
+        1: begin wv = 160; ebexp = 8; end
+        2: begin wv = 80;  ebexp = 4; end
+        3: begin wv = 40;  ebexp = 2; end
+        default: begin wv = 20; ebexp = 1; end
+      endcase
 
-    for (int i = 0; i < 5; i++) begin
       do_reset();
 
       cfg_pe_mode <= PE_RS3;
       cfg_cin     <= 10'd1;
       cfg_cout    <= 10'd4;   // 1 cout_group
       cfg_hout    <= 10'd1;
-      cfg_wout    <= wout_vals[i][9:0];
+      cfg_wout    <= 10'(wv);
       cfg_kh      <= 4'd3;
       cfg_kw      <= 4'd1;
       cfg_stride  <= 3'd1;
       @(posedge clk);
 
-      int pe_cnt, ppu_cnt;
       run_and_count(pe_cnt, ppu_cnt, 10000);
 
       // PE cycles = Hout(1) * Wblks * Cout_groups(1) * Cin(1) * kw(1) = Wblks
-      int exp = expected_blks[i];
       $display("  W=%0d: pe_enable=%0d (expected %0d), ppu=%0d (expected %0d)",
-               wout_vals[i], pe_cnt, exp, ppu_cnt, exp);
-      check($sformatf("T6.3.5-%0d W=%0d pe_cycles=%0d", i, wout_vals[i], exp),
-            pe_cnt == exp);
+               wv, pe_cnt, ebexp, ppu_cnt, ebexp);
+      check($sformatf("T6.3.5-%0d W=%0d pe_cycles=%0d", i, wv, ebexp),
+            pe_cnt == ebexp);
     end
   endtask
 

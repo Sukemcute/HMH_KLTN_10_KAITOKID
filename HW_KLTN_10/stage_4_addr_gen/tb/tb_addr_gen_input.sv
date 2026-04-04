@@ -23,20 +23,27 @@ module tb_addr_gen_input;
   logic [9:0]  cfg_hin, cfg_win, cfg_cin;
   logic [2:0]  cfg_stride, cfg_padding;
   int8_t       cfg_zp_x;
-  logic [9:0]  iter_h_out, iter_wblk, iter_cin;
+  pe_mode_e    cfg_pe_mode;
+  logic [9:0]  iter_h_out, iter_wblk, iter_cin, iter_cout_group;
   logic [3:0]  iter_kh_row;
 
   logic [1:0]  bank_id;
   logic [11:0] sram_addr;
+  logic [11:0] sram_addr_row [3];
   logic        is_padding;
   int8_t       pad_value;
+  logic [1:0]  bank_id_row_d [3];
+  logic        is_padding_row_d [3];
+  logic [11:0] bank_rd_addr_d [3];
+  logic [11:0] bank_rd_addr_col_d [3][PE_COLS];
 
   // ──────────────────────────────────────────────────────────────
   //  DUT instantiation
   // ──────────────────────────────────────────────────────────────
-  addr_gen_input #(.LANES(LANES)) u_dut (
+  addr_gen_input #(.LANES(LANES), .PE_COLS(PE_COLS)) u_dut (
     .clk          (clk),
     .rst_n        (rst_n),
+    .cfg_pe_mode  (cfg_pe_mode),
     .cfg_hin      (cfg_hin),
     .cfg_win      (cfg_win),
     .cfg_cin      (cfg_cin),
@@ -46,11 +53,17 @@ module tb_addr_gen_input;
     .iter_h_out   (iter_h_out),
     .iter_wblk    (iter_wblk),
     .iter_cin     (iter_cin),
+    .iter_cout_group(iter_cout_group),
     .iter_kh_row  (iter_kh_row),
     .bank_id      (bank_id),
     .sram_addr    (sram_addr),
+    .sram_addr_row(sram_addr_row),
     .is_padding   (is_padding),
-    .pad_value    (pad_value)
+    .pad_value    (pad_value),
+    .bank_id_row    (bank_id_row_d),
+    .is_padding_row (is_padding_row_d),
+    .bank_rd_addr   (bank_rd_addr_d),
+    .bank_rd_addr_col(bank_rd_addr_col_d)
   );
 
   // ──────────────────────────────────────────────────────────────
@@ -85,6 +98,7 @@ module tb_addr_gen_input;
     iter_h_out  <= h_out_v;
     iter_wblk   <= wblk_v;
     iter_cin    <= cin_v;
+    iter_cout_group <= 10'd0;
     iter_kh_row <= kh_row_v;
     @(posedge clk);  // wait for registered output
     #1;
@@ -100,9 +114,10 @@ module tb_addr_gen_input;
 
     // Reset
     rst_n       = 1'b0;
+    cfg_pe_mode = PE_OS1;  // legacy single-bank path; sram_addr_row mirrors sram_addr
     cfg_hin     = '0; cfg_win = '0; cfg_cin = '0;
     cfg_stride  = '0; cfg_padding = '0; cfg_zp_x = 8'sd0;
-    iter_h_out  = '0; iter_wblk = '0; iter_cin = '0; iter_kh_row = '0;
+    iter_h_out  = '0; iter_wblk = '0; iter_cin = '0; iter_cout_group = '0; iter_kh_row = '0;
     repeat (4) @(posedge clk);
     rst_n = 1'b1;
     @(posedge clk);

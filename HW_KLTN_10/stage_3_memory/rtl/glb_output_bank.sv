@@ -14,7 +14,9 @@
 // ============================================================================
 `timescale 1ns / 1ps
 
-module glb_output_bank #(
+module glb_output_bank
+  import accel_pkg::*;
+#(
   parameter LANES = 20,
   parameter DEPTH = 512
 )(
@@ -39,8 +41,6 @@ module glb_output_bank #(
   input  logic [$clog2(DEPTH)-1:0]   drain_addr,
   output logic [LANES*8-1:0]         drain_data
 );
-
-  import accel_pkg::*;
 
   // --------------------------------------------------------------------------
   //  Wide SRAM — LANES subbanks, each DEPTH × 32-bit
@@ -107,5 +107,32 @@ module glb_output_bank #(
 
     end // gen_lane
   endgenerate
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (psum_wr_en)
+        $display("  [OBANK] %0t PSUM_WR addr=%0d  d[0]=%0d d[1]=%0d",
+                 $time, psum_addr, psum_wr_data[0], psum_wr_data[1]);
+      if (act_wr_en)
+        $display("  [OBANK] %0t ACT_WR  addr=%0d  d[0]=%0d d[1]=%0d",
+                 $time, act_addr, act_wr_data[0], act_wr_data[1]);
+    end
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n) begin
+      if (psum_wr_en)
+        rtl_trace_pkg::rtl_trace_line("S3_OUT_PSUM",
+          $sformatf("addr=%0d d0=%0d d1=%0d", psum_addr, psum_wr_data[0], psum_wr_data[1]));
+      if (act_wr_en)
+        rtl_trace_pkg::rtl_trace_line("S3_OUT_ACT",
+          $sformatf("addr=%0d d0=%0d d1=%0d", act_addr, act_wr_data[0], act_wr_data[1]));
+    end
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

@@ -351,10 +351,10 @@ module tb_dsp_pair_int8;
       $display("\n── TEST 8: Random Multi-Cycle Accumulation ──");
 
       for (int seq = 0; seq < 20; seq++) begin
+        integer len;
         do_reset();
         golden_a = 0; golden_b = 0;
-        // Random length 3-20
-        automatic int len = 3 + ($urandom % 18);
+        len = 3 + ($urandom % 18);
         for (int k = 0; k < len; k++) begin
           ra = $random; rb = $random; rw = $random;
           golden_a += 32'(ra) * 32'(rw);

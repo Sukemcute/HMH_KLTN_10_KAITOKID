@@ -26,7 +26,8 @@
 module pe_unit
   import accel_pkg::*;
 #(
-  parameter int LANES = accel_pkg::LANES  // 20
+  parameter int LANES = accel_pkg::LANES,  // 20
+  parameter bit TRACE_CLUSTER = 1'b0     // simulation: 1 = log this PE only
 )(
   input  logic              clk,
   input  logic              rst_n,
@@ -105,7 +106,13 @@ module pe_unit
       // DSP pair #g: handles lane 2g (psum_a) and lane 2g+1 (psum_b)
       // Weight is shared: w_sel[2g] == w_sel[2g+1] by architecture guarantee
       //
-      dsp_pair_int8 u_dsp_pair (
+      dsp_pair_int8
+`ifdef RTL_TRACE
+      #(
+        .TRACE_EN((g == 0) ? 1'b1 : 1'b0)
+      )
+`endif
+      u_dsp_pair (
         .clk    (clk),
         .rst_n  (rst_n),
         .x_a    (x_in[2*g]),         // Activation for even lane
@@ -118,5 +125,16 @@ module pe_unit
       );
     end
   endgenerate
+
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && TRACE_CLUSTER && pe_enable)
+      rtl_trace_pkg::rtl_trace_line("S1_PEU",
+        $sformatf("mode=%0d x0=%0d x1=%0d w0=%0d clr=%b psum_v=%b p0=%0d",
+                  pe_mode, x_in[0], x_in[1], w_sel[0], clear_acc, psum_valid, psum_out[0]));
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

@@ -1,0 +1,1 @@
+-mt "off" "work.tb_tile_fsm_probe" -s "sim_probe" -timescale "1ns/1ps" 

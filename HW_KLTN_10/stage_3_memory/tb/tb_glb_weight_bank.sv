@@ -115,7 +115,8 @@ module tb_glb_weight_bank;
                                 output int8_t data [N_READ_PORTS][LANES]);
     @(posedge clk);
     for (int p = 0; p < N_READ_PORTS; p++) rd_addr[p] <= addrs[p];
-    @(posedge clk); // 1-cycle registered latency
+    @(posedge clk); // addr sampled by SRAM
+    @(posedge clk); // registered output available
     for (int p = 0; p < N_READ_PORTS; p++)
       for (int i = 0; i < LANES; i++)
         data[p][i] = rd_data[p][i];

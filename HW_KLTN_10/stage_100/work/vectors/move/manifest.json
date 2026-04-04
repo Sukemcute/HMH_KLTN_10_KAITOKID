@@ -1,0 +1,11 @@
+{
+  "primitive": "move",
+  "pe_mode": "PE_PASS",
+  "cin": 4,
+  "cout": 4,
+  "hin": 2,
+  "win": 20,
+  "hout": 2,
+  "wout": 20,
+  "seed": 42
+}

@@ -1,0 +1,1 @@
+"work.tb_addr_gen_input" -s "sim_agi" -timescale "1ns/1ps" 

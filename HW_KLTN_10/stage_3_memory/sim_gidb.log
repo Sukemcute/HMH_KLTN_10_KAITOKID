@@ -1,0 +1,29 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:13:15 2026
+# Process ID: 17524
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory
+# Command line: xsim.exe -log sim_gidb.log -mode tcl -source {xsim.dir/sim_gidb/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/sim_gidb.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_gidb/xsim_script.tcl
+# xsim {sim_gidb} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+[PASS] T3.1.1 Basic write->swap->read
+[PASS] T3.1.2 Double-buffer independence
+[PASS] T3.1.3 Concurrent read+write no interference
+[PASS] T3.1.4 Lane mask partial update
+[PASS] T3.1.5 Address sweep (2048 addrs)
+
+==============================================================
+  tb_glb_input_bank_db — 5/5 tests PASSED
+  >>> ALL TESTS PASSED <<<
+==============================================================
+$finish called at time : 41230 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_glb_input_bank_db.sv" Line 364
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:13:18 2026...

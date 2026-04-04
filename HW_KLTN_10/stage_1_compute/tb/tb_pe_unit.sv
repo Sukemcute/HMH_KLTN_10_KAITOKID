@@ -85,11 +85,13 @@ module tb_pe_unit;
           w_seq[k][l]  = $random;
         end
 
-      // Golden computation
+      // Golden: each DSP pair shares w from even lane 2*(l/2) (matches pe_unit / dsp_pair)
       for (int l = 0; l < L; l++) begin
+        integer wb;
         golden[l] = 0;
+        wb = (l / 2) * 2;
         for (int k = 0; k < 9; k++)
-          golden[l] += 32'(xa_seq[k][l]) * 32'(w_seq[k][l]);
+          golden[l] += 32'(xa_seq[k][l]) * 32'(w_seq[k][wb]);
       end
 
       // Drive 9 beats
@@ -186,11 +188,13 @@ module tb_pe_unit;
           w_v[k][l]  = $random;
         end
 
-      // Golden: each lane independently sums 3 products
+      // Golden: shared weight per pair = w_v[*][2*(l/2)]
       for (int l = 0; l < L; l++) begin
+        integer wb;
         golden[l] = 0;
+        wb = (l / 2) * 2;
         for (int k = 0; k < 3; k++)
-          golden[l] += 32'(xa_v[k][l]) * 32'(w_v[k][l]);
+          golden[l] += 32'(xa_v[k][l]) * 32'(w_v[k][wb]);
       end
 
       // Drive

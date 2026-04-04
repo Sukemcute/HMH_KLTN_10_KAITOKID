@@ -1,0 +1,63 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:02:05 2026
+# Process ID: 3308
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute
+# Command line: xsim.exe -log sim_pe.log -mode tcl -source {xsim.dir/sim_pe/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/sim_pe.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_pe/xsim_script.tcl
+# xsim {sim_pe} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+══════════════════════════════════════════════════════════
+ TB: pe_unit — V4 (LANES=20, 5-stage, 250 MHz)
+══════════════════════════════════════════════════════════
+
+── TEST 1: PE_RS3 (9-cycle, per-lane) ──
+  ERR lane 1: got=-24212 exp=-1513
+  ERR lane 3: got=-16460 exp=33026
+  ERR lane 5: got=-21248 exp=21534
+  ERR lane 7: got=11109 exp=4596
+  ERR lane 9: got=16979 exp=-5789
+  ERR lane 11: got=22617 exp=-23734
+  ERR lane 13: got=15892 exp=6779
+  ERR lane 15: got=20433 exp=-27817
+  ERR lane 17: got=-5950 exp=51516
+  ERR lane 19: got=15285 exp=-26723
+  TEST 1 FAIL (10 lane errors)
+
+── TEST 2: PE_OS1 (broadcast weight) ──
+  TEST 2 PASS (0 lane errors)
+
+── TEST 3: PE_DW3 (per-channel, 3 cycles) ──
+  ERR lane 1: got=1269 exp=27360
+  ERR lane 3: got=-5517 exp=4215
+  ERR lane 5: got=2629 exp=-8309
+  ERR lane 7: got=-49 exp=-15349
+  ERR lane 9: got=-5034 exp=6970
+  ERR lane 11: got=-1796 exp=20088
+  ERR lane 13: got=14725 exp=4151
+  ERR lane 15: got=1201 exp=12216
+  ERR lane 17: got=-13322 exp=-12352
+  ERR lane 19: got=4879 exp=-14484
+  TEST 3 FAIL (10 lane errors)
+
+── TEST 4: Enable Gating ──
+  TEST 4 PASS
+
+── TEST 5: Clear + Immediate Start ──
+  TEST 5 PASS
+
+══════════════════════════════════════════════════════════
+ FINAL: 5 tests, 20 errors
+ ✗✗✗ FAIL — 20 errors ✗✗✗
+══════════════════════════════════════════════════════════
+
+$finish called at time : 638 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_pe_unit.sv" Line 322
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:02:07 2026...

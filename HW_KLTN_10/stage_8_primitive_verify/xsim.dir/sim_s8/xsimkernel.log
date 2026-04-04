@@ -1,0 +1,7 @@
+Running: xsim.dir/sim_s8/xsimk.exe -runall -simmode gui -wdb sim_s8.wdb -simrunnum 0 -socket 53030
+Design successfully loaded
+Design Loading Memory Usage: 13052 KB (Peak: 13052 KB)
+Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 14596 KB (Peak: 14596 KB)
+Simulation CPU Usage: 312 ms

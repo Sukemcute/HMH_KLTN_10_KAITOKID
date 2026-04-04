@@ -75,7 +75,9 @@ module tile_fsm
   output tile_state_e   state,
   output logic          tile_done,         // Pulse: tile execution complete
   // ★ DW7 multipass: which k pass (0 .. num_k_pass-1) for PSUM namespace / accum
-  output logic [3:0]    cur_k_pass_idx
+  output logic [3:0]    cur_k_pass_idx,
+  output logic [3:0]    dbg_mode_reg,
+  output logic          dbg_ppu_done_latch
 );
 
   // ═══════════════════════════════════════════════════════════════
@@ -83,11 +85,12 @@ module tile_fsm
   // ═══════════════════════════════════════════════════════════════
   tile_state_e cur_state, nxt_state;
   assign state = cur_state;
-  assign cur_k_pass_idx = k_pass_cnt;
 
   // ── Latched descriptor fields ──
   pe_mode_e   mode_reg;
   logic [3:0] k_pass_cnt, k_pass_max;
+  assign cur_k_pass_idx = k_pass_cnt;
+  assign dbg_mode_reg = mode_reg[3:0];
   logic       is_pass_mode;
   logic       need_swizzle_reg;
   logic       need_writeback_reg;
@@ -96,6 +99,21 @@ module tile_fsm
 
   // ── Pipeline drain counter (5-stage pipeline) ──
   logic [3:0] drain_cnt;
+
+  // ── Sticky PPU-done latch ──
+  // The delayed PPU trigger may cause act_valid to pulse 1 cycle before
+  // the FSM enters TS_PPU_RUN. This latch captures the pulse so it's
+  // not missed.
+  logic ppu_done_latch;
+  assign dbg_ppu_done_latch = ppu_done_latch;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+      ppu_done_latch <= 1'b0;
+    else if (cur_state == TS_COMPUTE || cur_state == TS_IDLE)
+      ppu_done_latch <= 1'b0;
+    else if (ppu_done)
+      ppu_done_latch <= 1'b1;
+  end
 
   // ═══════════════════════════════════════════════════════════════
   // State register
@@ -158,13 +176,13 @@ module tile_fsm
           end else if (k_pass_cnt < k_pass_max - 4'd1) begin
             nxt_state = TS_COMPUTE;  // DW7x7: next k pass
           end else begin
-            nxt_state = TS_PPU_RUN;  // Final pass → PPU
+            nxt_state = TS_PPU_RUN;  // Final pass → wait for PPU pipeline
           end
         end
       end
 
       TS_PPU_RUN: begin
-        if (ppu_done) begin
+        if (ppu_done || ppu_done_latch) begin
           if (need_swizzle_reg)
             nxt_state = TS_SWIZZLE;
           else if (need_writeback_reg)
@@ -303,5 +321,40 @@ module tile_fsm
       default: ;
     endcase
   end
+
+  // synthesis translate_off
+`ifdef S8_DBG
+  `define FSM_DBG_PREV 1
+`endif
+`ifdef RTL_TRACE
+  `define FSM_DBG_PREV 1
+`endif
+`ifdef FSM_DBG_PREV
+  tile_state_e cur_prev;
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) cur_prev <= TS_IDLE;
+    else        cur_prev <= cur_state;
+  end
+`endif
+`ifdef S8_DBG
+  always @(posedge clk) begin
+    if (rst_n && cur_state != cur_prev)
+      $display("  [FSM] %0t state %0d -> %0d  mode=%0d k_pass=%0d seq_done=%b ppu_done_l=%b",
+               $time, cur_prev, cur_state,
+               mode_reg, k_pass_cnt, seq_done, ppu_done_latch);
+  end
+`endif
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n && cur_state != cur_prev)
+      rtl_trace_pkg::rtl_trace_line("S6_FSM",
+        $sformatf("st=%0d->%0d mode=%0d kpass=%0d seq_done=%b ppu_done_l=%b",
+                  cur_prev, cur_state, mode_reg, k_pass_cnt, seq_done, ppu_done_latch));
+  end
+`endif
+`ifdef FSM_DBG_PREV
+  `undef FSM_DBG_PREV
+`endif
+  // synthesis translate_on
 
 endmodule

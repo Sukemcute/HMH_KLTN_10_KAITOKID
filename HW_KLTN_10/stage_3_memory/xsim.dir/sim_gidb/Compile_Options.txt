@@ -1,0 +1,1 @@
+"work.tb_glb_input_bank_db" -s "sim_gidb" -timescale "1ns/1ps" 

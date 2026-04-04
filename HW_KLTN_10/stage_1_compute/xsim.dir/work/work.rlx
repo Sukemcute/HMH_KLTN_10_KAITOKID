@@ -1,0 +1,13 @@
+0.7
+2020.2
+Oct 14 2022
+05:20:55
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_0_packages/rtl/accel_pkg.sv,1775036569,systemVerilog,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/comparator_tree.sv;E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/comparator_tree.sv,,accel_pkg,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/column_reduce.sv,1775036509,systemVerilog,,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_column_reduce.sv,,column_reduce,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/comparator_tree.sv,1775031878,systemVerilog,,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv,,comparator_tree,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/dsp_pair_int8.sv,1775031878,systemVerilog,,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/pe_unit.sv,,dsp_pair_int8,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/rtl/pe_unit.sv,1775031878,systemVerilog,,E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_pe_unit.sv,,pe_unit,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_column_reduce.sv,1775036712,systemVerilog,,,,tb_column_reduce,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_comparator_tree.sv,1775199843,systemVerilog,,,,tb_comparator_tree,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_dsp_pair_int8.sv,1775199814,systemVerilog,,,,tb_dsp_pair_int8,,,,,,,,
+E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_1_compute/tb/tb_pe_unit.sv,1775199855,systemVerilog,,,,tb_pe_unit,,,,,,,,

@@ -1,0 +1,68 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:54:17 2026
+# Process ID: 12584
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control
+# Command line: xsim.exe -log sim_tfsm.log -mode tcl -source {xsim.dir/sim_tfsm/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/sim_tfsm.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_tfsm/xsim_script.tcl
+# xsim {sim_tfsm} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+========================================
+ tb_tile_fsm — Stage 6 Control
+========================================
+
+===== T6.1.1: Normal Conv flow (PE_RS3) =====
+[PASS] T6.1.1-a tile_accept
+[PASS] T6.1.1-b shadow_latch
+[PASS] T6.1.1-c page_swap
+[PASS] T6.1.1-d dma_start (wt)
+[PASS] T6.1.1-e dma_is_write=0
+[PASS] T6.1.1-f dma_start (in)
+[PASS] T6.1.1-g seq_start
+[PASS] T6.1.1-h ppu_start
+[PASS] T6.1.1-i dma_is_write=1
+[PASS] T6.1.1-j tile_done
+[PASS] T6.1.1-k barrier_signal
+[PASS] T6.1.1-l back_to_IDLE
+
+===== T6.1.2: DW7x7 multipass (num_k_pass=3) =====
+  Pass 0: entered COMPUTE
+  Pass 0: entered PE_DRAIN
+  Pass 1: entered COMPUTE
+  Pass 1: entered PE_DRAIN
+  Pass 2: entered COMPUTE
+  Pass 2: entered PE_DRAIN
+[PASS] T6.1.2-a compute_loops=3
+[PASS] T6.1.2-b drain_loops=3
+[PASS] T6.1.2-c reached PPU_RUN
+[PASS] T6.1.2-d tile_done
+[PASS] T6.1.2-e back_to_IDLE
+
+===== T6.1.3: PE_PASS mode (bypass path) =====
+[PASS] T6.1.3-a skip_WT (in PREFILL_IN)
+[PASS] T6.1.3-b skip_COMPUTE (in SWIZZLE)
+[PASS] T6.1.3-c tile_done
+[PASS] T6.1.3-d back_to_IDLE
+
+===== T6.1.4: Barrier wait =====
+[PASS] T6.1.4-a stays_IDLE (no grant)
+[PASS] T6.1.4-b barrier_wait_req
+[PASS] T6.1.4-c tile_accept=0
+[PASS] T6.1.4-d tile_accept=1 after grant
+[PASS] T6.1.4-e in LOAD_DESC
+[PASS] T6.1.4-f tile_done
+
+========================================
+ SUMMARY: 27 tests, 27 PASS, 0 FAIL
+ >>> ALL TESTS PASSED <<<
+========================================
+$finish called at time : 438 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_6_control/tb/tb_tile_fsm.sv" Line 425
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:54:19 2026...

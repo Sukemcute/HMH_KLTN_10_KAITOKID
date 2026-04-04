@@ -1,0 +1,13 @@
+{
+  "primitive": "concat",
+  "pe_mode": "PE_PASS",
+  "swizzle": "SWZ_CONCAT",
+  "c_a": 4,
+  "c_b": 4,
+  "cout": 8,
+  "hin": 2,
+  "win": 20,
+  "hout": 2,
+  "wout": 20,
+  "seed": 42
+}

@@ -142,6 +142,7 @@ module tb_glb_output_bank;
     psum_rd_en <= 1'b1;
     @(posedge clk);
     psum_rd_en <= 1'b0;
+    @(posedge clk); // registered output available
     for (int i = 0; i < LANES; i++) data[i] = psum_rd_data[i];
   endtask
 
@@ -160,6 +161,7 @@ module tb_glb_output_bank;
     act_rd_en <= 1'b1;
     @(posedge clk);
     act_rd_en <= 1'b0;
+    @(posedge clk); // registered output available
     for (int i = 0; i < LANES; i++) data[i] = act_rd_data[i];
   endtask
 
@@ -167,7 +169,8 @@ module tb_glb_output_bank;
                             output logic [LANES*8-1:0] data);
     @(posedge clk);
     drain_addr <= addr;
-    @(posedge clk); // 1-cycle registered latency
+    @(posedge clk); // addr sampled by SRAM
+    @(posedge clk); // registered output available
     data = drain_data;
   endtask
 

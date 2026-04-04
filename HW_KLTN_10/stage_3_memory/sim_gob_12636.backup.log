@@ -1,0 +1,148 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 05:00:03 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Apr  3 14:08:18 2026
+# Process ID: 12636
+# Current directory: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory
+# Command line: xsim.exe -log sim_gob.log -mode tcl -source {xsim.dir/sim_gob/xsim_script.tcl}
+# Log file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/sim_gob.log
+# Journal file: E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory\xsim.jou
+# Running On: DESKTOP-BIO81U9, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 8403 MB
+#-----------------------------------------------------------
+source xsim.dir/sim_gob/xsim_script.tcl
+# xsim {sim_gob} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+  T3.3.1 lane 0: exp 0xdead0000 got 0x00000000
+  T3.3.1 lane 1: exp 0xdead0001 got 0x00000000
+  T3.3.1 lane 2: exp 0xdead0002 got 0x00000000
+  T3.3.1 lane 3: exp 0xdead0003 got 0x00000000
+  T3.3.1 lane 4: exp 0xdead0004 got 0x00000000
+  T3.3.1 lane 5: exp 0xdead0005 got 0x00000000
+  T3.3.1 lane 6: exp 0xdead0006 got 0x00000000
+  T3.3.1 lane 7: exp 0xdead0007 got 0x00000000
+  T3.3.1 lane 8: exp 0xdead0008 got 0x00000000
+  T3.3.1 lane 9: exp 0xdead0009 got 0x00000000
+  T3.3.1 lane 10: exp 0xdead000a got 0x00000000
+  T3.3.1 lane 11: exp 0xdead000b got 0x00000000
+  T3.3.1 lane 12: exp 0xdead000c got 0x00000000
+  T3.3.1 lane 13: exp 0xdead000d got 0x00000000
+  T3.3.1 lane 14: exp 0xdead000e got 0x00000000
+  T3.3.1 lane 15: exp 0xdead000f got 0x00000000
+  T3.3.1 lane 16: exp 0xdead0010 got 0x00000000
+  T3.3.1 lane 17: exp 0xdead0011 got 0x00000000
+  T3.3.1 lane 18: exp 0xdead0012 got 0x00000000
+  T3.3.1 lane 19: exp 0xdead0013 got 0x00000000
+[FAIL] T3.3.1 PSUM write->read INT32 verify
+  T3.3.2 lane 0: exp -50 got 0
+  T3.3.2 lane 1: exp -45 got 0
+  T3.3.2 lane 2: exp -40 got 0
+  T3.3.2 lane 3: exp -35 got 0
+  T3.3.2 lane 4: exp -30 got 0
+  T3.3.2 lane 5: exp -25 got 0
+  T3.3.2 lane 6: exp -20 got 0
+  T3.3.2 lane 7: exp -15 got 0
+  T3.3.2 lane 8: exp -10 got 0
+  T3.3.2 lane 9: exp -5 got 0
+  T3.3.2 lane 11: exp 5 got 0
+  T3.3.2 lane 12: exp 10 got 0
+  T3.3.2 lane 13: exp 15 got 0
+  T3.3.2 lane 14: exp 20 got 0
+  T3.3.2 lane 15: exp 25 got 0
+  T3.3.2 lane 16: exp 30 got 0
+  T3.3.2 lane 17: exp 35 got 0
+  T3.3.2 lane 18: exp 40 got 0
+  T3.3.2 lane 19: exp 45 got 0
+[FAIL] T3.3.2 ACT write->read INT8 verify
+  T3.3.3 PSUM lane 0: exp 0x0abc0000 got 0x00000000
+  T3.3.3 PSUM lane 1: exp 0x0abc0100 got 0x00000000
+  T3.3.3 PSUM lane 2: exp 0x0abc0200 got 0x00000000
+  T3.3.3 PSUM lane 3: exp 0x0abc0300 got 0x00000000
+  T3.3.3 PSUM lane 4: exp 0x0abc0400 got 0x00000000
+  T3.3.3 PSUM lane 5: exp 0x0abc0500 got 0x00000000
+  T3.3.3 PSUM lane 6: exp 0x0abc0600 got 0x00000000
+  T3.3.3 PSUM lane 7: exp 0x0abc0700 got 0x00000000
+  T3.3.3 PSUM lane 8: exp 0x0abc0800 got 0x00000000
+  T3.3.3 PSUM lane 9: exp 0x0abc0900 got 0x00000000
+  T3.3.3 PSUM lane 10: exp 0x0abc0a00 got 0x00000000
+  T3.3.3 PSUM lane 11: exp 0x0abc0b00 got 0x00000000
+  T3.3.3 PSUM lane 12: exp 0x0abc0c00 got 0x00000000
+  T3.3.3 PSUM lane 13: exp 0x0abc0d00 got 0x00000000
+  T3.3.3 PSUM lane 14: exp 0x0abc0e00 got 0x00000000
+  T3.3.3 PSUM lane 15: exp 0x0abc0f00 got 0x00000000
+  T3.3.3 PSUM lane 16: exp 0x0abc1000 got 0x00000000
+  T3.3.3 PSUM lane 17: exp 0x0abc1100 got 0x00000000
+  T3.3.3 PSUM lane 18: exp 0x0abc1200 got 0x00000000
+  T3.3.3 PSUM lane 19: exp 0x0abc1300 got 0x00000000
+  T3.3.3 ACT lane 0: exp -10 got 0
+  T3.3.3 ACT lane 1: exp -11 got 0
+  T3.3.3 ACT lane 2: exp -12 got 0
+  T3.3.3 ACT lane 3: exp -13 got 0
+  T3.3.3 ACT lane 4: exp -14 got 0
+  T3.3.3 ACT lane 5: exp -15 got 0
+  T3.3.3 ACT lane 6: exp -16 got 0
+  T3.3.3 ACT lane 7: exp -17 got 0
+  T3.3.3 ACT lane 8: exp -18 got 0
+  T3.3.3 ACT lane 9: exp -19 got 0
+  T3.3.3 ACT lane 10: exp -20 got 0
+  T3.3.3 ACT lane 11: exp -21 got 0
+  T3.3.3 ACT lane 12: exp -22 got 0
+  T3.3.3 ACT lane 13: exp -23 got 0
+  T3.3.3 ACT lane 14: exp -24 got 0
+  T3.3.3 ACT lane 15: exp -25 got 0
+  T3.3.3 ACT lane 16: exp -26 got 0
+  T3.3.3 ACT lane 17: exp -27 got 0
+  T3.3.3 ACT lane 18: exp -28 got 0
+  T3.3.3 ACT lane 19: exp -29 got 0
+[FAIL] T3.3.3 Namespace independence (PSUM vs ACT)
+  T3.3.4 lane 0: exp 3000 got 1000
+  T3.3.4 lane 1: exp 3004 got 1001
+  T3.3.4 lane 2: exp 3008 got 1002
+  T3.3.4 lane 3: exp 3012 got 1003
+  T3.3.4 lane 4: exp 3016 got 1004
+  T3.3.4 lane 5: exp 3020 got 1005
+  T3.3.4 lane 6: exp 3024 got 1006
+  T3.3.4 lane 7: exp 3028 got 1007
+  T3.3.4 lane 8: exp 3032 got 1008
+  T3.3.4 lane 9: exp 3036 got 1009
+  T3.3.4 lane 10: exp 3040 got 1010
+  T3.3.4 lane 11: exp 3044 got 1011
+  T3.3.4 lane 12: exp 3048 got 1012
+  T3.3.4 lane 13: exp 3052 got 1013
+  T3.3.4 lane 14: exp 3056 got 1014
+  T3.3.4 lane 15: exp 3060 got 1015
+  T3.3.4 lane 16: exp 3064 got 1016
+  T3.3.4 lane 17: exp 3068 got 1017
+  T3.3.4 lane 18: exp 3072 got 1018
+  T3.3.4 lane 19: exp 3076 got 1019
+[FAIL] T3.3.4 DW7x7 multipass PSUM accumulation
+  T3.3.5 lane 0: exp 0xc0 got 0xxx
+  T3.3.5 lane 1: exp 0xc7 got 0xxx
+  T3.3.5 lane 2: exp 0xce got 0xxx
+  T3.3.5 lane 3: exp 0xd5 got 0xxx
+  T3.3.5 lane 4: exp 0xdc got 0xxx
+  T3.3.5 lane 5: exp 0xe3 got 0xxx
+  T3.3.5 lane 6: exp 0xea got 0xxx
+  T3.3.5 lane 7: exp 0xf1 got 0xxx
+  T3.3.5 lane 8: exp 0xf8 got 0xxx
+  T3.3.5 lane 9: exp 0xff got 0xxx
+  T3.3.5 lane 10: exp 0x06 got 0xxx
+  T3.3.5 lane 11: exp 0x0d got 0xxx
+  T3.3.5 lane 12: exp 0x14 got 0xxx
+  T3.3.5 lane 13: exp 0x1b got 0xxx
+  T3.3.5 lane 14: exp 0x22 got 0xxx
+  T3.3.5 lane 15: exp 0x29 got 0xxx
+  T3.3.5 lane 16: exp 0x30 got 0xxx
+  T3.3.5 lane 17: exp 0x37 got 0xxx
+  T3.3.5 lane 18: exp 0x3e got 0xxx
+  T3.3.5 lane 19: exp 0x45 got 0xxx
+[FAIL] T3.3.5 DMA drain packed bus verification
+
+==============================================================
+  tb_glb_output_bank — 0/5 tests PASSED
+  >>> 5 TEST(S) FAILED <<<
+==============================================================
+$finish called at time : 210 ns : File "E:/FINAL_HMH_KLTN_10_HMH/HMH_KLTN_10_KAITOKID/HW_KLTN_10/stage_3_memory/tb/tb_glb_output_bank.sv" Line 364
+exit
+INFO: [Common 17-206] Exiting xsim at Fri Apr  3 14:08:19 2026...

@@ -52,7 +52,7 @@ module addr_gen_weight
   // ── Combinational: bank selection ──
   // Weight banks organized by kernel row: bank_id = iter_kh_row mod 3
   always_comb begin
-    wgt_bank_id = iter_kh_row[1:0] % 2'd3;
+    wgt_bank_id = iter_kh_row % 4'd3;
   end
 
   // ── Combinational: 4 per-column addresses ──
@@ -126,5 +126,17 @@ module addr_gen_weight
       endcase
     end
   end
+
+  // synthesis translate_off
+`ifdef RTL_TRACE
+  always @(posedge clk) begin
+    if (rst_n)
+      rtl_trace_pkg::rtl_trace_line("S4_AGW",
+        $sformatf("mode=%0d bk=%0d a0=%0d a1=%0d cin=%0d cg=%0d kw=%0d kh=%0d",
+                  cfg_pe_mode, wgt_bank_id, wgt_addr[0], wgt_addr[1],
+                  iter_cin, iter_cout_group, iter_kw, iter_kh_row));
+  end
+`endif
+  // synthesis translate_on
 
 endmodule

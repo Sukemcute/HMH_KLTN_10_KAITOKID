@@ -33,8 +33,8 @@ module tb_glb_input_bank_db;
   logic              rst_n;
   logic              page_swap;
 
-  logic [AW-1:0]     rd_addr;
-  int8_t             rd_data [LANES];
+  logic [AW-1:0]     rd_addr [1];
+  int8_t             rd_data [1][LANES];
 
   logic [AW-1:0]     wr_addr;
   int8_t             wr_data [LANES];
@@ -45,8 +45,9 @@ module tb_glb_input_bank_db;
   //  DUT instantiation
   // --------------------------------------------------------------------------
   glb_input_bank_db #(
-    .LANES (LANES),
-    .DEPTH (DEPTH)
+    .LANES        (LANES),
+    .DEPTH        (DEPTH),
+    .N_READ_PORTS (1)
   ) u_dut (
     .clk          (clk),
     .rst_n        (rst_n),
@@ -100,7 +101,7 @@ module tb_glb_input_bank_db;
     page_swap  <= 1'b0;
     wr_en      <= 1'b0;
     wr_addr    <= '0;
-    rd_addr    <= '0;
+    rd_addr[0] <= '0;
     wr_lane_mask <= '0;
     for (int i = 0; i < LANES; i++) wr_data[i] <= 8'sd0;
     repeat (4) @(posedge clk);
@@ -121,9 +122,10 @@ module tb_glb_input_bank_db;
 
   task automatic read_word(input logic [AW-1:0] addr, output int8_t data [LANES]);
     @(posedge clk);
-    rd_addr <= addr;
-    @(posedge clk); // registered output — 1-cycle latency
-    for (int i = 0; i < LANES; i++) data[i] = rd_data[i];
+    rd_addr[0] <= addr;
+    @(posedge clk); // addr sampled by SRAM
+    @(posedge clk); // registered output available
+    for (int i = 0; i < LANES; i++) data[i] = rd_data[0][i];
   endtask
 
   task automatic pulse_page_swap();
@@ -245,7 +247,7 @@ module tb_glb_input_bank_db;
       // write to shadow page B addr 70 at the same time.
       for (int i = 0; i < LANES; i++) wr_data[i] <= int8_t'(i + 70);
       @(posedge clk);
-      rd_addr      <= 11'd60;
+      rd_addr[0]   <= 11'd60;
       wr_addr      <= 11'd70;
       wr_en        <= 1'b1;
       wr_lane_mask <= {LANES{1'b1}};
@@ -255,8 +257,8 @@ module tb_glb_input_bank_db;
       // Wait 1 cycle for registered read output.
       @(posedge clk);
       for (int i = 0; i < LANES; i++) begin
-        if (rd_data[i] !== wdataA[i]) begin
-          $display("  T3.1.3 lane %0d: exp %0d got %0d", i, wdataA[i], rd_data[i]);
+        if (rd_data[0][i] !== wdataA[i]) begin
+          $display("  T3.1.3 lane %0d: exp %0d got %0d", i, wdataA[i], rd_data[0][i]);
           ok = 0;
         end
       end

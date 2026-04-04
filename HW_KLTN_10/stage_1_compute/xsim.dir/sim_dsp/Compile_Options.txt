@@ -1,0 +1,1 @@
+"work.tb_dsp_pair_int8" -s "sim_dsp" -timescale "1ns/1ps" 

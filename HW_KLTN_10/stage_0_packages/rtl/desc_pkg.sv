@@ -109,8 +109,9 @@ package desc_pkg;
 
   // ═══════════════════════════════════════════════════════════════════
   //  ROUTER PROFILE (data movement configuration)
+  //  Unpacked struct: Vivado/xvlog rejects unpacked arrays inside packed struct.
   // ═══════════════════════════════════════════════════════════════════
-  typedef struct packed {
+  typedef struct {
     logic [2:0]       rin_src   [3];  // Input bank → PE row mapping
     logic [2:0]       rwt_src   [3];  // Weight bank → PE row mapping
     logic             rwt_h_multicast; // Multicast same activation to all rows
